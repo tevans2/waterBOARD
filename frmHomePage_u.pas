@@ -33,6 +33,7 @@ type
     procedure imgLoginHoverMouseLeave(Sender: TObject);
     procedure imgMapViewMouseEnter(Sender: TObject);
     procedure imgMapViewHoverMouseLeave(Sender: TObject);
+    procedure imgDamListHoverClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,6 +56,11 @@ begin
   pnlHomePage.ScaleBy(Trunc(Ratio * 100), 100);
 end;
 
+procedure TfrmHomePage.imgDamListHoverClick(Sender: TObject);
+begin
+  Self.Close;
+end;
+
 procedure TfrmHomePage.imgLoginHoverMouseLeave(Sender: TObject);
 begin
   imgLogin.Visible := True;
@@ -75,12 +81,6 @@ begin
   frmHomePage.Hide;
   Sleep(1000);
   frmHomePage.Show;
-                ASDADAD FDSFSDF
-                FDSFS
-                FDSFSDF
-                SDFS
-                FSDF
-                SDFSD
 end;
 
 procedure TfrmHomePage.imgMapViewMouseEnter(Sender: TObject);

@@ -25,10 +25,12 @@ object frmHomePage: TfrmHomePage
     Align = alClient
     BevelOuter = bvNone
     Color = 5388294
-    Constraints.MinHeight = 720
-    Constraints.MinWidth = 1280
+    Constraints.MinHeight = 719
+    Constraints.MinWidth = 1276
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 1276
+    ExplicitHeight = 719
     object Panel1: TPanel
       AlignWithMargins = True
       Left = 100
@@ -50,6 +52,8 @@ object frmHomePage: TfrmHomePage
       ParentBackground = False
       TabOrder = 0
       OnResize = Panel1Resize
+      ExplicitWidth = 1076
+      ExplicitHeight = 428
       object Shape2: TShape
         Left = 0
         Top = 0
@@ -1247,6 +1251,7 @@ object frmHomePage: TfrmHomePage
             0049454E44AE426082}
           Proportional = True
           Visible = False
+          OnClick = imgDamListHoverClick
         end
         object imgMapViewHover: TImage
           Left = 314
@@ -2029,6 +2034,7 @@ object frmHomePage: TfrmHomePage
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitWidth = 1276
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -2057,6 +2063,7 @@ object frmHomePage: TfrmHomePage
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 1076
         object Image1: TImage
           AlignWithMargins = True
           Left = 10
