@@ -27,7 +27,6 @@ type
     imgSignUpHover: TImage;
     imgLoginHover: TImage;
     procedure FormResize(Sender: TObject);
-    procedure Panel4Resize(Sender: TObject);
     procedure Panel1Resize(Sender: TObject);
     procedure imgLoginMouseEnter(Sender: TObject);
     procedure imgLoginHoverMouseLeave(Sender: TObject);
@@ -77,10 +76,6 @@ procedure TfrmHomePage.imgMapViewHoverMouseLeave(Sender: TObject);
 begin
   imgMapView.Visible := True;
   imgMapView.Visible := False;
-  // test test test
-  frmHomePage.Hide;
-  Sleep(1000);
-  frmHomePage.Show;
 end;
 
 procedure TfrmHomePage.imgMapViewMouseEnter(Sender: TObject);
@@ -101,13 +96,6 @@ begin
     Left := (Panel1.Width - Width) div 2;
     Top := (Panel1.Height - Height) div 2;
   end;
-end;
-
-procedure TfrmHomePage.Panel4Resize(Sender: TObject);
-var
-  Ratio: Real;
-begin
-
 end;
 
 end.

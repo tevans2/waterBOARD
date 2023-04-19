@@ -85,7 +85,6 @@ object frmHomePage: TfrmHomePage
         Constraints.MaxHeight = 233
         Constraints.MaxWidth = 1027
         TabOrder = 0
-        OnResize = Panel4Resize
         object ingDamList: TImage
           Left = 65
           Top = 1
