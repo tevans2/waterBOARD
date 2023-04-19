@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Math,
-  Vcl.Imaging.pngimage, Vcl.StdCtrls;
+  Vcl.Imaging.pngimage, Vcl.StdCtrls, frmDamList_u;
 
 type
   TfrmHomePage = class(TForm)
@@ -17,7 +17,7 @@ type
     Panel3: TPanel;
     Image1: TImage;
     Panel4: TPanel;
-    ingDamList: TImage;
+    imgDamList: TImage;
     imgMapView: TImage;
     imgSignUp: TImage;
     imgLogin: TImage;
@@ -32,6 +32,10 @@ type
     procedure imgLoginHoverMouseLeave(Sender: TObject);
     procedure imgMapViewMouseEnter(Sender: TObject);
     procedure imgMapViewHoverMouseLeave(Sender: TObject);
+    procedure imgSignUpMouseEnter(Sender: TObject);
+    procedure imgSignUpHoverMouseLeave(Sender: TObject);
+    procedure imgDamListMouseEnter(Sender: TObject);
+    procedure imgDamListHoverMouseLeave(Sender: TObject);
     procedure imgDamListHoverClick(Sender: TObject);
   private
     { Private declarations }
@@ -57,7 +61,14 @@ end;
 
 procedure TfrmHomePage.imgDamListHoverClick(Sender: TObject);
 begin
-  Self.Close;
+  frmDamList.Show;
+  Self.Hide;
+end;
+
+procedure TfrmHomePage.imgDamListHoverMouseLeave(Sender: TObject);
+begin
+  imgDamList.Visible := True;
+  imgDamListHover.Visible := False;
 end;
 
 procedure TfrmHomePage.imgLoginHoverMouseLeave(Sender: TObject);
@@ -75,13 +86,31 @@ end;
 procedure TfrmHomePage.imgMapViewHoverMouseLeave(Sender: TObject);
 begin
   imgMapView.Visible := True;
-  imgMapView.Visible := False;
+  imgMapViewHover.Visible := False;
 end;
 
 procedure TfrmHomePage.imgMapViewMouseEnter(Sender: TObject);
 begin
   imgMapView.Visible := False;
-  imgMapView.Visible := True;
+  imgMapViewHover.Visible := True;
+end;
+
+procedure TfrmHomePage.imgSignUpHoverMouseLeave(Sender: TObject);
+begin
+  imgSignUp.Visible := True;
+  imgSignUpHover.Visible := False;
+end;
+
+procedure TfrmHomePage.imgSignUpMouseEnter(Sender: TObject);
+begin
+  imgSignUp.Visible := False;
+  imgSignUpHover.Visible := True;
+end;
+
+procedure TfrmHomePage.imgDamListMouseEnter(Sender: TObject);
+begin
+  imgDamList.Visible := False;
+  imgDamListHover.Visible := True;
 end;
 
 procedure TfrmHomePage.Panel1Resize(Sender: TObject);

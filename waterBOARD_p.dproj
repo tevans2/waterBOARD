@@ -102,6 +102,10 @@
             <Form>frmHomePage</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="frmDamList_u.pas">
+            <Form>frmDamList</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

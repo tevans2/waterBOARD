@@ -85,8 +85,8 @@ object frmHomePage: TfrmHomePage
         Constraints.MaxHeight = 233
         Constraints.MaxWidth = 1027
         TabOrder = 0
-        object ingDamList: TImage
-          Left = 65
+        object imgDamList: TImage
+          Left = 57
           Top = 1
           Width = 191
           Height = 208
@@ -288,9 +288,10 @@ object frmHomePage: TfrmHomePage
             EC5CEFA42DEC36223632D31FCAF9C39676C221EDBC27FFCF9E4A8C39EFC774F3
             0D6AAC117A147EFE1FCF7718533A5FAA3C0000000049454E44AE426082}
           Proportional = True
+          OnMouseEnter = imgDamListMouseEnter
         end
         object imgMapView: TImage
-          Left = 314
+          Left = 298
           Top = 1
           Width = 191
           Height = 208
@@ -521,7 +522,7 @@ object frmHomePage: TfrmHomePage
           OnMouseEnter = imgMapViewMouseEnter
         end
         object imgSignUp: TImage
-          Left = 546
+          Left = 538
           Top = 1
           Width = 191
           Height = 208
@@ -785,9 +786,10 @@ object frmHomePage: TfrmHomePage
             0BDB90258721EB33F95E6DB438687D1E875AAF11832644147EFC3FE7222AAD38
             03A4AC0000000049454E44AE426082}
           Proportional = True
+          OnMouseEnter = imgSignUpMouseEnter
         end
         object imgLogin: TImage
-          Left = 770
+          Left = 778
           Top = 1
           Width = 191
           Height = 208
@@ -1040,7 +1042,7 @@ object frmHomePage: TfrmHomePage
           OnMouseEnter = imgLoginMouseEnter
         end
         object imgDamListHover: TImage
-          Left = 65
+          Left = 57
           Top = 1
           Width = 191
           Height = 208
@@ -1251,9 +1253,10 @@ object frmHomePage: TfrmHomePage
           Proportional = True
           Visible = False
           OnClick = imgDamListHoverClick
+          OnMouseLeave = imgDamListHoverMouseLeave
         end
         object imgMapViewHover: TImage
-          Left = 314
+          Left = 298
           Top = 1
           Width = 191
           Height = 208
@@ -1490,7 +1493,7 @@ object frmHomePage: TfrmHomePage
           OnMouseLeave = imgMapViewHoverMouseLeave
         end
         object imgSignUpHover: TImage
-          Left = 546
+          Left = 538
           Top = 1
           Width = 191
           Height = 208
@@ -1753,9 +1756,10 @@ object frmHomePage: TfrmHomePage
             FF0158922AADF4E12B1E0000000049454E44AE426082}
           Proportional = True
           Visible = False
+          OnMouseLeave = imgSignUpHoverMouseLeave
         end
         object imgLoginHover: TImage
-          Left = 770
+          Left = 778
           Top = 1
           Width = 191
           Height = 208
