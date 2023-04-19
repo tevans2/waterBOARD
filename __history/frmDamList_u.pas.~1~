@@ -1,0 +1,37 @@
+unit frmDamList_u;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.pngimage;
+
+type
+  TfrmDamList = class(TForm)
+    Image1: TImage;
+    procedure Image1MouseEnter(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmDamList: TfrmDamList;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmDamList.Image1MouseEnter(Sender: TObject);
+begin
+  while Image1.Height <> 70 do
+  begin
+    Image1.Height := Image1.Height + 1;
+    sleep(1);
+  end;
+
+end;
+
+end.

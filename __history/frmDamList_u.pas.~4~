@@ -1,0 +1,60 @@
+unit frmDamList_u;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.pngimage;
+
+type
+  TfrmDamList = class(TForm)
+    Image1: TImage;
+    procedure Image1MouseEnter(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+const
+  DamListCardHeight = 65;
+
+var
+  frmDamList: TfrmDamList;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  frmHomePage_u;
+
+procedure TfrmDamList.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  frmHomePage.Close;
+end;
+
+procedure TfrmDamList.Image1MouseEnter(Sender: TObject);
+var
+  Ratio: Real;
+begin
+  Ratio := (Image1.Height / Image1.Width) * 100;
+  if (Image1.Height < 100) then
+    repeat
+    begin
+      Image1.Proportional := False;
+      Image1.Width := Image1.Width + 2;
+
+      Image1.Height := trunc(Image1.Width * Ratio) div 100;
+      // Image1.Proportional := True;
+      Image1.Refresh;
+
+      sleep(5);
+    end;
+    until (Image1.Height > 100);
+
+end;
+
+end.

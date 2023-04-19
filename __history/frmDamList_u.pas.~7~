@@ -1,0 +1,160 @@
+unit frmDamList_u;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.pngimage;
+
+type
+  TfrmDamList = class(TForm)
+    imgBergRiver: TImage;
+    imgWemmershoek: TImage;
+    imgSteenbrasUp: TImage;
+    imgSteenbrasLow: TImage;
+    imgVoelvlei: TImage;
+    imgTheewaterskloof: TImage;
+    procedure imgBergRiverMouseEnter(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure imgBergRiverMouseLeave(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ExpandImage(Image: TImage);
+    procedure RetractImage(Image: TImage);
+    procedure imgSteenbrasLowMouseEnter(Sender: TObject);
+    procedure imgSteenbrasLowMouseLeave(Sender: TObject);
+    procedure imgSteenbrasUpMouseEnter(Sender: TObject);
+    procedure imgSteenbrasUpMouseLeave(Sender: TObject);
+    procedure imgWemmershoekMouseEnter(Sender: TObject);
+    procedure imgWemmershoekMouseLeave(Sender: TObject);
+    procedure imgVoelvleiMouseEnter(Sender: TObject);
+    procedure imgVoelvleiMouseLeave(Sender: TObject);
+    procedure imgTheewaterskloofMouseEnter(Sender: TObject);
+    procedure imgTheewaterskloofMouseLeave(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+const
+  DamListOrigionalHeight = 65;
+  DamListOrigionalWidth = 283;
+
+  DamListExpandedHeight = 85;
+
+var
+  Ratio: Real;
+  frmDamList: TfrmDamList;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  frmHomePage_u;
+
+procedure TfrmDamList.ExpandImage(Image: TImage);
+begin
+  if (Image.Height < DamListExpandedHeight) then
+    repeat
+    begin
+      Image.Proportional := False;
+      Image.Width := imgBergRiver.Width + 2;
+
+      Image.Height := trunc(imgBergRiver.Width * Ratio) div 100;
+
+      Image.Proportional := True;
+      Image.Refresh;
+
+    end;
+    until (Image.Height > DamListExpandedHeight);
+end;
+
+procedure TfrmDamList.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  frmHomePage.Close;
+end;
+
+procedure TfrmDamList.FormShow(Sender: TObject);
+begin
+  Ratio := (imgBergRiver.Height / imgBergRiver.Width) * 100;
+end;
+
+procedure TfrmDamList.imgSteenbrasLowMouseEnter(Sender: TObject);
+begin
+  ExpandImage(imgSteenbrasLow);
+end;
+
+procedure TfrmDamList.imgSteenbrasLowMouseLeave(Sender: TObject);
+begin
+  RetractImage(imgSteenbrasLow);
+end;
+
+procedure TfrmDamList.imgSteenbrasUpMouseEnter(Sender: TObject);
+begin
+  ExpandImage(imgSteenbrasUp);
+end;
+
+procedure TfrmDamList.imgSteenbrasUpMouseLeave(Sender: TObject);
+begin
+  RetractImage(imgSteenbrasUp);
+end;
+
+procedure TfrmDamList.imgTheewaterskloofMouseEnter(Sender: TObject);
+begin
+  ExpandImage(imgTheewaterskloof);
+end;
+
+procedure TfrmDamList.imgTheewaterskloofMouseLeave(Sender: TObject);
+begin
+  RetractImage(imgTheewaterskloof);
+end;
+
+procedure TfrmDamList.imgVoelvleiMouseEnter(Sender: TObject);
+begin
+  ExpandImage(imgVoelvlei);
+end;
+
+procedure TfrmDamList.imgVoelvleiMouseLeave(Sender: TObject);
+begin
+  RetractImage(imgVoelvlei);
+end;
+
+procedure TfrmDamList.imgWemmershoekMouseEnter(Sender: TObject);
+begin
+  ExpandImage(imgWemmershoek);
+end;
+
+procedure TfrmDamList.imgWemmershoekMouseLeave(Sender: TObject);
+begin
+  RetractImage(imgWemmershoek);
+end;
+
+procedure TfrmDamList.imgBergRiverMouseEnter(Sender: TObject);
+begin
+  ExpandImage(imgBergRiver);
+end;
+
+procedure TfrmDamList.imgBergRiverMouseLeave(Sender: TObject);
+begin
+  RetractImage(imgBergRiver);
+end;
+
+procedure TfrmDamList.RetractImage(Image: TImage);
+begin
+  if (Image.Height > DamListOrigionalHeight) then
+    repeat
+    begin
+      Image.Proportional := False;
+      Image.Width := imgBergRiver.Width - 2;
+
+      Image.Height := trunc(imgBergRiver.Width * Ratio) div 100;
+
+      Image.Proportional := True;
+      Image.Refresh;
+    end;
+    until (Image.Height = DamListOrigionalHeight);
+end;
+
+end.
