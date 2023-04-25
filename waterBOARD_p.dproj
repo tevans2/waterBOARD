@@ -106,6 +106,10 @@
             <Form>frmDamList</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="frmDamGraphView_u.pas">
+            <Form>frmDamGraph</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

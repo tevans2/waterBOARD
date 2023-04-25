@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.pngimage,
-  Math;
+  Math, frmDamGraphView_u;
 
 type
   TfrmDamList = class(TForm)
@@ -41,6 +41,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure pnlContainerResize(Sender: TObject);
     procedure pnlCardsResize(Sender: TObject);
+    procedure imgBergRiverClick(Sender: TObject);
   private
     { Private declarations }
     MainRatio: Real;
@@ -74,7 +75,7 @@ begin
     begin
 
       Image.Proportional := False;
-      Image.Width := Image.Width + Round(DamListExpandedHeight/32);
+      Image.Width := Image.Width + Round(DamListExpandedHeight / 32);
 
       Image.Height := trunc(Image.Width * MainRatio) div 100;
       Image.Proportional := True;
@@ -174,9 +175,15 @@ begin
   ResetDimensions;
   with pnlCards do
   begin
-    Left := (pnlContainer.Width - Width);
-    Top := (pnlContainer.Height - Height);
+    Left := (pnlContainer.Width - Width) div 2;
+    Top := (pnlContainer.Height - Height) div 2;
   end;
+end;
+
+procedure TfrmDamList.imgBergRiverClick(Sender: TObject);
+begin
+  frmDamGraph.Show;
+  Self.Hide;
 end;
 
 procedure TfrmDamList.imgBergRiverMouseEnter(Sender: TObject);
@@ -206,7 +213,7 @@ begin
     repeat
     begin
       Image.Proportional := False;
-      Image.Width := Image.Width - Round(DamListExpandedHeight/32);
+      Image.Width := Image.Width - Round(DamListExpandedHeight / 32);
 
       Image.Height := trunc(Image.Width * MainRatio) div 100;
 
