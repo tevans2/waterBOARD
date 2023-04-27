@@ -26,8 +26,8 @@ object frmDamList: TfrmDamList
     Constraints.MinWidth = 1276
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = 8
+    ExplicitWidth = 1276
+    ExplicitHeight = 719
     object pnlContainer: TPanel
       AlignWithMargins = True
       Left = 100
@@ -49,6 +49,8 @@ object frmDamList: TfrmDamList
       ParentBackground = False
       TabOrder = 0
       OnResize = pnlContainerResize
+      ExplicitWidth = 1076
+      ExplicitHeight = 428
       object rectContainer: TShape
         Left = 0
         Top = 0
@@ -63,9 +65,9 @@ object frmDamList: TfrmDamList
         ExplicitWidth = 1017
       end
       object pnlCards: TPanel
-        Left = 160
+        Left = 48
         Top = 0
-        Width = 937
+        Width = 991
         Height = 429
         Margins.Left = 100
         Margins.Top = 100
@@ -77,8 +79,8 @@ object frmDamList: TfrmDamList
         TabOrder = 0
         OnResize = pnlCardsResize
         object imgBergRiver: TImage
-          Left = 0
-          Top = 32
+          Left = 120
+          Top = 56
           Width = 283
           Height = 65
           Center = True
@@ -3496,12 +3498,13 @@ object frmDamList: TfrmDamList
             82}
           Proportional = True
           Stretch = True
+          OnClick = imgBergRiverClick
           OnMouseEnter = imgBergRiverMouseEnter
           OnMouseLeave = imgBergRiverMouseLeave
         end
         object imgSteenbrasLow: TImage
-          Left = 464
-          Top = 160
+          Left = 584
+          Top = 184
           Width = 283
           Height = 65
           Center = True
@@ -7411,8 +7414,8 @@ object frmDamList: TfrmDamList
           OnMouseLeave = imgSteenbrasLowMouseLeave
         end
         object imgSteenbrasUp: TImage
-          Left = 0
-          Top = 160
+          Left = 120
+          Top = 184
           Width = 283
           Height = 65
           Center = True
@@ -11116,8 +11119,8 @@ object frmDamList: TfrmDamList
           OnMouseLeave = imgSteenbrasUpMouseLeave
         end
         object imgTheewaterskloof: TImage
-          Left = 464
-          Top = 32
+          Left = 584
+          Top = 56
           Width = 283
           Height = 65
           Center = True
@@ -14156,8 +14159,8 @@ object frmDamList: TfrmDamList
           OnMouseLeave = imgTheewaterskloofMouseLeave
         end
         object imgVoelvlei: TImage
-          Left = 464
-          Top = 288
+          Left = 584
+          Top = 312
           Width = 283
           Height = 65
           Center = True
@@ -17402,8 +17405,8 @@ object frmDamList: TfrmDamList
           OnMouseLeave = imgVoelvleiMouseLeave
         end
         object imgWemmershoek: TImage
-          Left = 0
-          Top = 288
+          Left = 120
+          Top = 312
           Width = 283
           Height = 65
           Center = True
@@ -20403,9 +20406,7 @@ object frmDamList: TfrmDamList
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitLeft = -16
-      ExplicitTop = -3
-      ExplicitWidth = 1384
+      ExplicitWidth = 1276
       object rectHeaderBand: TShape
         AlignWithMargins = True
         Left = 3
@@ -20434,6 +20435,7 @@ object frmDamList: TfrmDamList
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 1076
         object imgHeader: TImage
           AlignWithMargins = True
           Left = 10
