@@ -30,10 +30,14 @@ type
     procedure imgHomeMouseEnter(Sender: TObject);
     procedure imgBackArrowHoverMouseLeave(Sender: TObject);
     procedure imgHomeHoverMouseLeave(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure imgBackArrowHoverClick(Sender: TObject);
+    procedure imgHomeHoverClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    OrigionForm: integer;
   end;
 
 var
@@ -43,17 +47,42 @@ implementation
 
 {$R *.dfm}
 
-uses frmHomePage_u;
+uses frmHomePage_u, frmDamList_u, frmMapView_u;
 
 procedure TfrmDamGraph.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   frmHomePage.close;
 end;
 
+procedure TfrmDamGraph.FormResize(Sender: TObject);
+begin
+  imgHomeHover.Left := imgHome.Left;
+  imgHomeHover.Top := imgHome.Top;
+
+  imgBackArrowHover.Left := imgBackArrow.Left;
+  imgBackArrowHover.Top := imgBackArrow.Top;
+
+  frmHomePage.MasterWindowState := Self.WindowState;
+end;
+
 procedure TfrmDamGraph.FormShow(Sender: TObject);
 begin
   imgHomeHover.Visible := False;
   imgBackArrowHover.Visible := False;
+
+  WindowState := frmHomePage.MasterWindowState;
+end;
+
+procedure TfrmDamGraph.imgBackArrowHoverClick(Sender: TObject);
+begin
+  case OrigionForm of
+    1:
+      frmDamList.Show;
+    2:
+      frmMapView.Show;
+  end;
+
+  Self.Hide;
 end;
 
 procedure TfrmDamGraph.imgBackArrowHoverMouseLeave(Sender: TObject);
@@ -64,6 +93,12 @@ end;
 procedure TfrmDamGraph.imgBackArrowMouseEnter(Sender: TObject);
 begin
   imgBackArrowHover.Visible := True;
+end;
+
+procedure TfrmDamGraph.imgHomeHoverClick(Sender: TObject);
+begin
+  frmHomePage.Show;
+  Self.Hide;
 end;
 
 procedure TfrmDamGraph.imgHomeHoverMouseLeave(Sender: TObject);

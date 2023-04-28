@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Math,
-  Vcl.Imaging.pngimage, Vcl.StdCtrls, frmDamList_u;
+  Vcl.Imaging.pngimage, Vcl.StdCtrls, frmDamList_u, frmMapView_u;
 
 type
   TfrmHomePage = class(TForm)
@@ -37,10 +37,13 @@ type
     procedure imgDamListMouseEnter(Sender: TObject);
     procedure imgDamListHoverMouseLeave(Sender: TObject);
     procedure imgDamListHoverClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure imgMapViewHoverClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    MasterWindowState: TWindowState;
   end;
 
 var
@@ -57,6 +60,13 @@ begin
   Ratio := min(ClientWidth / pnlHomePage.Width,
     ClientHeight / pnlHomePage.Height);
   pnlHomePage.ScaleBy(Trunc(Ratio * 100), 100);
+
+  frmHomePage.MasterWindowState := Self.WindowState;
+end;
+
+procedure TfrmHomePage.FormShow(Sender: TObject);
+begin
+  WindowState := frmHomePage.MasterWindowState;
 end;
 
 procedure TfrmHomePage.imgDamListHoverClick(Sender: TObject);
@@ -83,6 +93,12 @@ begin
   imgLoginHover.Visible := True;
 end;
 
+procedure TfrmHomePage.imgMapViewHoverClick(Sender: TObject);
+begin
+  frmMapView.Show;
+  Self.Hide;
+end;
+
 procedure TfrmHomePage.imgMapViewHoverMouseLeave(Sender: TObject);
 begin
   imgMapView.Visible := True;
@@ -93,6 +109,7 @@ procedure TfrmHomePage.imgMapViewMouseEnter(Sender: TObject);
 begin
   imgMapView.Visible := False;
   imgMapViewHover.Visible := True;
+
 end;
 
 procedure TfrmHomePage.imgSignUpHoverMouseLeave(Sender: TObject);

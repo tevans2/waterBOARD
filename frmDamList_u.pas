@@ -21,9 +21,11 @@ type
     rectContainer: TShape;
     pnlCards: TPanel;
     Panel2: TPanel;
-    rectHeaderBand: TShape;
+    Shape1: TShape;
     Panel3: TPanel;
-    imgHeader: TImage;
+    imgLogoIcon: TImage;
+    imgHome: TImage;
+    imgHomeHover: TImage;
     procedure imgBergRiverMouseEnter(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure imgBergRiverMouseLeave(Sender: TObject);
@@ -42,6 +44,14 @@ type
     procedure pnlContainerResize(Sender: TObject);
     procedure pnlCardsResize(Sender: TObject);
     procedure imgBergRiverClick(Sender: TObject);
+    procedure imgHomeMouseEnter(Sender: TObject);
+    procedure imgHomeHoverMouseLeave(Sender: TObject);
+    procedure imgHomeHoverClick(Sender: TObject);
+    procedure imgSteenbrasUpClick(Sender: TObject);
+    procedure imgWemmershoekClick(Sender: TObject);
+    procedure imgTheewaterskloofClick(Sender: TObject);
+    procedure imgSteenbrasLowClick(Sender: TObject);
+    procedure imgVoelvleiClick(Sender: TObject);
   private
     { Private declarations }
     MainRatio: Real;
@@ -98,11 +108,26 @@ begin
   Ratio := min(ClientWidth / pnlHomePage.Width,
     ClientHeight / pnlHomePage.Height);
   pnlHomePage.ScaleBy(trunc(Ratio * 100), 100);
+
+  frmHomePage.MasterWindowState := Self.WindowState;
+
+  imgHomeHover.Left := imgHome.Left;
+  imgHomeHover.Top := imgHome.Top;
 end;
 
 procedure TfrmDamList.FormShow(Sender: TObject);
 begin
   ResetDimensions;
+
+  imgHomeHover.Visible := False;
+  WindowState := frmHomePage.MasterWindowState;
+end;
+
+procedure TfrmDamList.imgSteenbrasLowClick(Sender: TObject);
+begin
+  frmDamGraph.Show;
+  Self.Hide;
+  frmDamGraph.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgSteenbrasLowMouseEnter(Sender: TObject);
@@ -115,6 +140,13 @@ begin
   RetractImage(imgSteenbrasLow);
 end;
 
+procedure TfrmDamList.imgSteenbrasUpClick(Sender: TObject);
+begin
+  frmDamGraph.Show;
+  Self.Hide;
+  frmDamGraph.OrigionForm := 1;
+end;
+
 procedure TfrmDamList.imgSteenbrasUpMouseEnter(Sender: TObject);
 begin
   ExpandImage(imgSteenbrasUp);
@@ -123,6 +155,13 @@ end;
 procedure TfrmDamList.imgSteenbrasUpMouseLeave(Sender: TObject);
 begin
   RetractImage(imgSteenbrasUp);
+end;
+
+procedure TfrmDamList.imgTheewaterskloofClick(Sender: TObject);
+begin
+  frmDamGraph.Show;
+  Self.Hide;
+  frmDamGraph.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgTheewaterskloofMouseEnter(Sender: TObject);
@@ -135,6 +174,13 @@ begin
   RetractImage(imgTheewaterskloof);
 end;
 
+procedure TfrmDamList.imgVoelvleiClick(Sender: TObject);
+begin
+  frmDamGraph.Show;
+  Self.Hide;
+  frmDamGraph.OrigionForm := 1;
+end;
+
 procedure TfrmDamList.imgVoelvleiMouseEnter(Sender: TObject);
 begin
   ExpandImage(imgVoelvlei);
@@ -143,6 +189,13 @@ end;
 procedure TfrmDamList.imgVoelvleiMouseLeave(Sender: TObject);
 begin
   RetractImage(imgVoelvlei);
+end;
+
+procedure TfrmDamList.imgWemmershoekClick(Sender: TObject);
+begin
+  frmDamGraph.Show;
+  Self.Hide;
+  frmDamGraph.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgWemmershoekMouseEnter(Sender: TObject);
@@ -184,6 +237,7 @@ procedure TfrmDamList.imgBergRiverClick(Sender: TObject);
 begin
   frmDamGraph.Show;
   Self.Hide;
+  frmDamGraph.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgBergRiverMouseEnter(Sender: TObject);
@@ -194,6 +248,22 @@ end;
 procedure TfrmDamList.imgBergRiverMouseLeave(Sender: TObject);
 begin
   RetractImage(imgBergRiver);
+end;
+
+procedure TfrmDamList.imgHomeHoverClick(Sender: TObject);
+begin
+  frmHomePage.Show;
+  Self.Hide;
+end;
+
+procedure TfrmDamList.imgHomeHoverMouseLeave(Sender: TObject);
+begin
+  imgHomeHover.Visible := False;
+end;
+
+procedure TfrmDamList.imgHomeMouseEnter(Sender: TObject);
+begin
+  imgHomeHover.Visible := True;
 end;
 
 procedure TfrmDamList.ResetDimensions;

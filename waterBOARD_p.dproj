@@ -108,6 +108,9 @@
         </DCCReference>
         <DCCReference Include="frmDamGraphView_u.pas">
             <Form>frmDamGraph</Form>
+        </DCCReference>
+        <DCCReference Include="frmMapView_u.pas">
+            <Form>frmMapView</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
