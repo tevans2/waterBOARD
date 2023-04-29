@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Math,
-  Vcl.Imaging.pngimage, Vcl.StdCtrls, frmDamList_u, frmMapView_u;
+  Vcl.Imaging.pngimage, Vcl.StdCtrls, frmDamList_u, frmMapView_u, frmLogin_u;
 
 type
   TfrmHomePage = class(TForm)
@@ -39,6 +39,7 @@ type
     procedure imgDamListHoverClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure imgMapViewHoverClick(Sender: TObject);
+    procedure imgLoginHoverClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,6 +80,11 @@ procedure TfrmHomePage.imgDamListHoverMouseLeave(Sender: TObject);
 begin
   imgDamList.Visible := True;
   imgDamListHover.Visible := False;
+end;
+
+procedure TfrmHomePage.imgLoginHoverClick(Sender: TObject);
+begin
+  frmLogin.Show;
 end;
 
 procedure TfrmHomePage.imgLoginHoverMouseLeave(Sender: TObject);

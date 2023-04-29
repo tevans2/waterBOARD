@@ -18,21 +18,21 @@ type
     Shape1: TShape;
     Panel3: TPanel;
     imgLogoIcon: TImage;
-    imgHome: TImage;
     imgBackArrow: TImage;
     Chart1: TChart;
     Series1: TLineSeries;
     imgBackArrowHover: TImage;
-    imgHomeHover: TImage;
+    imgHome_hover: TImage;
+    imgHome: TImage;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure imgBackArrowMouseEnter(Sender: TObject);
     procedure imgHomeMouseEnter(Sender: TObject);
     procedure imgBackArrowHoverMouseLeave(Sender: TObject);
-    procedure imgHomeHoverMouseLeave(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure imgBackArrowHoverClick(Sender: TObject);
-    procedure imgHomeHoverClick(Sender: TObject);
+    procedure imgHome_hoverMouseLeave(Sender: TObject);
+    procedure imgHome_hoverClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -51,13 +51,13 @@ uses frmHomePage_u, frmDamList_u, frmMapView_u;
 
 procedure TfrmDamGraph.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  frmHomePage.close;
+  frmHomePage.Close;
 end;
 
 procedure TfrmDamGraph.FormResize(Sender: TObject);
 begin
-  imgHomeHover.Left := imgHome.Left;
-  imgHomeHover.Top := imgHome.Top;
+  imgHome_hover.Left := imgHome.Left;
+  imgHome_hover.Top := imgHome.Top;
 
   imgBackArrowHover.Left := imgBackArrow.Left;
   imgBackArrowHover.Top := imgBackArrow.Top;
@@ -67,7 +67,7 @@ end;
 
 procedure TfrmDamGraph.FormShow(Sender: TObject);
 begin
-  imgHomeHover.Visible := False;
+  imgHome_hover.Visible := False;
   imgBackArrowHover.Visible := False;
 
   WindowState := frmHomePage.MasterWindowState;
@@ -95,20 +95,20 @@ begin
   imgBackArrowHover.Visible := True;
 end;
 
-procedure TfrmDamGraph.imgHomeHoverClick(Sender: TObject);
+procedure TfrmDamGraph.imgHomeMouseEnter(Sender: TObject);
+begin
+  imgHome_hover.Visible := True;
+end;
+
+procedure TfrmDamGraph.imgHome_hoverClick(Sender: TObject);
 begin
   frmHomePage.Show;
   Self.Hide;
 end;
 
-procedure TfrmDamGraph.imgHomeHoverMouseLeave(Sender: TObject);
+procedure TfrmDamGraph.imgHome_hoverMouseLeave(Sender: TObject);
 begin
-  imgHomeHover.Visible := False;
-end;
-
-procedure TfrmDamGraph.imgHomeMouseEnter(Sender: TObject);
-begin
-  imgHomeHover.Visible := True;
+  imgHome_hover.Visible := False;
 end;
 
 end.
