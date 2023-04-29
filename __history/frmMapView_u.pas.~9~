@@ -1,0 +1,88 @@
+unit frmMapView_u;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
+  Math,
+  Vcl.Imaging.jpeg, Vcl.StdCtrls;
+
+type
+  TfrmMapView = class(TForm)
+    pnlHomePage: TPanel;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Shape1: TShape;
+    Panel3: TPanel;
+    Image1: TImage;
+    Shape2: TShape;
+    imgMap: TImage;
+    lblDamName: TLabel;
+    imgVoelVlei: TImage;
+    imgWemmershoek: TImage;
+    imgSteenbrasUp: TImage;
+    imgSteenbrasLow: TImage;
+    imgBergRiver: TImage;
+    imgTheewaterskloof: TImage;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure Panel1Resize(Sender: TObject);
+    procedure imgVoelVleiMouseEnter(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmMapView: TfrmMapView;
+
+implementation
+
+{$R *.dfm}
+
+uses frmHomePage_u;
+
+procedure TfrmMapView.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  frmHomePage.close;
+end;
+
+procedure TfrmMapView.FormResize(Sender: TObject);
+var
+  Ratio: Real;
+begin
+  Ratio := min(ClientWidth / pnlHomePage.Width,
+    ClientHeight / pnlHomePage.Height);
+  pnlHomePage.ScaleBy(trunc(Ratio * 100), 100);
+
+  frmHomePage.MasterWindowState := Self.WindowState;
+
+  Label1.Caption := imgMap.Width.ToString + ' x ' + imgMap.Height.ToString;
+end;
+
+procedure TfrmMapView.FormShow(Sender: TObject);
+begin
+  WindowState := frmHomePage.MasterWindowState;
+end;
+
+procedure TfrmMapView.imgVoelVleiMouseEnter(Sender: TObject);
+begin
+  lblDamName.Caption := 'Voelvlei';
+  lblDamName.Top := imgVoelVlei.Top;
+  lblDamName.Left := imgVoelVlei.Left + imgVoelVlei.Width;
+end;
+
+procedure TfrmMapView.Panel1Resize(Sender: TObject);
+var
+  Ratio: Real;
+begin
+  Ratio := min(ClientWidth / pnlHomePage.Width,
+    ClientHeight / pnlHomePage.Height);
+  Panel1.ScaleBy(trunc(Ratio * 100), 100);
+end;
+
+end.

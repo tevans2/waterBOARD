@@ -35,8 +35,8 @@ object frmHomePage: TfrmHomePage
       AlignWithMargins = True
       Left = 100
       Top = 241
-      Width = 1080
-      Height = 429
+      Width = 1086
+      Height = 438
       Margins.Left = 100
       Margins.Top = 50
       Margins.Right = 100
@@ -52,11 +52,16 @@ object frmHomePage: TfrmHomePage
       ParentBackground = False
       TabOrder = 0
       OnResize = Panel1Resize
+<<<<<<< Updated upstream
+=======
+      ExplicitWidth = 1080
+      ExplicitHeight = 429
+>>>>>>> Stashed changes
       object Shape2: TShape
         Left = 0
         Top = 0
-        Width = 1080
-        Height = 429
+        Width = 1086
+        Height = 438
         Align = alClient
         Brush.Color = 9856779
         Pen.Color = 65408
@@ -2031,17 +2036,21 @@ object frmHomePage: TfrmHomePage
     object Panel2: TPanel
       Left = 0
       Top = 0
-      Width = 1280
+      Width = 1286
       Height = 191
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
+<<<<<<< Updated upstream
       ExplicitWidth = 1274
+=======
+      ExplicitWidth = 1280
+>>>>>>> Stashed changes
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
         Top = 55
-        Width = 1274
+        Width = 1280
         Height = 96
         Margins.Top = 55
         Margins.Bottom = 40
@@ -2057,7 +2066,7 @@ object frmHomePage: TfrmHomePage
         AlignWithMargins = True
         Left = 100
         Top = 3
-        Width = 1080
+        Width = 1086
         Height = 185
         Margins.Left = 100
         Margins.Right = 100
@@ -2065,12 +2074,16 @@ object frmHomePage: TfrmHomePage
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
+<<<<<<< Updated upstream
         ExplicitWidth = 1074
+=======
+        ExplicitWidth = 1080
+>>>>>>> Stashed changes
         object Image1: TImage
           AlignWithMargins = True
           Left = 10
           Top = 0
-          Width = 1060
+          Width = 1066
           Height = 185
           Margins.Left = 10
           Margins.Top = 0
@@ -2605,7 +2618,6 @@ object frmHomePage: TfrmHomePage
           Proportional = True
           Stretch = True
           ExplicitLeft = 51
-          ExplicitWidth = 1066
           ExplicitHeight = 175
         end
       end
