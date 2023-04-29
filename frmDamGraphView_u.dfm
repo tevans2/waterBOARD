@@ -10,14 +10,7 @@ object frmDamGraph: TfrmDamGraph
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-<<<<<<< Updated upstream
-  Position = poDesktopCenter
-  PrintScale = poPrintToFit
   OnClose = FormClose
-  OnResize = FormResize
-=======
-  OnClose = FormClose
->>>>>>> Stashed changes
   OnShow = FormShow
   TextHeight = 15
   object pnlHomePage: TPanel
@@ -30,18 +23,11 @@ object frmDamGraph: TfrmDamGraph
     BevelOuter = bvNone
     Color = 5388294
     Constraints.MinHeight = 719
-<<<<<<< Updated upstream
-    Constraints.MinWidth = 1274
-    ParentBackground = False
-    TabOrder = 0
-    ExplicitWidth = 1274
-    ExplicitHeight = 801
-=======
     Constraints.MinWidth = 1276
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 749
->>>>>>> Stashed changes
+    ExplicitWidth = 1276
+    ExplicitHeight = 809
     object Panel1: TPanel
       AlignWithMargins = True
       Left = 100
@@ -62,12 +48,8 @@ object frmDamGraph: TfrmDamGraph
       Locked = True
       ParentBackground = False
       TabOrder = 0
-<<<<<<< Updated upstream
-      ExplicitWidth = 1074
-      ExplicitHeight = 510
-=======
-      ExplicitHeight = 458
->>>>>>> Stashed changes
+      ExplicitWidth = 1076
+      ExplicitHeight = 518
       object Shape2: TShape
         Left = 0
         Top = 0
@@ -97,33 +79,7 @@ object frmDamGraph: TfrmDamGraph
         BorderRound = 66
         Title.Text.Strings = (
           'TChart')
-        BottomAxis.Automatic = False
-        BottomAxis.AutomaticMaximum = False
-        BottomAxis.AutomaticMinimum = False
-<<<<<<< Updated upstream
-        BottomAxis.Maximum = 27.782254466191650000
-        BottomAxis.Minimum = -3.782254466191599000
-        LeftAxis.Automatic = False
-        LeftAxis.AutomaticMaximum = False
-        LeftAxis.AutomaticMinimum = False
-        LeftAxis.Maximum = 734.541517109538100000
-        LeftAxis.Minimum = 50.458482890461860000
-=======
-        BottomAxis.Maximum = 27.782254466164860000
-        BottomAxis.Minimum = -3.782254466164779000
-        LeftAxis.Automatic = False
-        LeftAxis.AutomaticMaximum = False
-        LeftAxis.AutomaticMinimum = False
-        LeftAxis.Maximum = 387.941047121198500000
-        LeftAxis.Minimum = -40.441047121199420000
->>>>>>> Stashed changes
         Panning.MouseWheel = pmwNone
-        RightAxis.Automatic = False
-        RightAxis.AutomaticMaximum = False
-        RightAxis.AutomaticMinimum = False
-        TopAxis.Automatic = False
-        TopAxis.AutomaticMaximum = False
-        TopAxis.AutomaticMinimum = False
         View3D = False
         Zoom.MouseWheel = pmwNormal
         Zoom.Pen.Color = clDefault
@@ -133,12 +89,8 @@ object frmDamGraph: TfrmDamGraph
         BevelWidth = 8
         Color = clWhite
         TabOrder = 0
-<<<<<<< Updated upstream
-        ExplicitWidth = 974
-        ExplicitHeight = 410
-=======
-        ExplicitHeight = 358
->>>>>>> Stashed changes
+        ExplicitWidth = 976
+        ExplicitHeight = 418
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 13
         object Series1: TLineSeries
@@ -163,10 +115,7 @@ object frmDamGraph: TfrmDamGraph
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-<<<<<<< Updated upstream
-      ExplicitWidth = 1274
-=======
->>>>>>> Stashed changes
+      ExplicitWidth = 1276
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -195,10 +144,7 @@ object frmDamGraph: TfrmDamGraph
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
-<<<<<<< Updated upstream
-        ExplicitWidth = 1283
-=======
->>>>>>> Stashed changes
+        ExplicitWidth = 1276
         object imgLogoIcon: TImage
           AlignWithMargins = True
           Left = 121
@@ -1074,12 +1020,8 @@ object frmDamGraph: TfrmDamGraph
             01202344190032F2FF47126A75FE832E600000000049454E44AE426082}
           Proportional = True
           OnMouseEnter = imgHomeMouseEnter
-<<<<<<< Updated upstream
-          ExplicitLeft = 1162
-=======
           ExplicitLeft = -3
           ExplicitTop = 32
->>>>>>> Stashed changes
         end
         object imgBackArrow: TImage
           Left = 0
@@ -1383,18 +1325,10 @@ object frmDamGraph: TfrmDamGraph
             45883200284294014011A20C008A1065005084280380224419001421CA00A008
             5106004588320028F2FF9860725614FD05D90000000049454E44AE426082}
           Proportional = True
-<<<<<<< Updated upstream
-          OnClick = imgBackArrowHoverClick
-          OnMouseLeave = imgBackArrowHoverMouseLeave
-        end
-        object imgHomeHover: TImage
-          Left = 1162
-=======
           OnMouseLeave = imgBackArrowHoverMouseLeave
         end
         object imgHomeHover: TImage
           Left = 1159
->>>>>>> Stashed changes
           Top = 0
           Width = 121
           Height = 185
@@ -1741,10 +1675,6 @@ object frmDamGraph: TfrmDamGraph
             3402520600008D80940100402320650000D008481900003402520600008DF8FF
             337F9F55E5804CC40000000049454E44AE426082}
           Proportional = True
-<<<<<<< Updated upstream
-          OnClick = imgHomeHoverClick
-=======
->>>>>>> Stashed changes
           OnMouseLeave = imgHomeHoverMouseLeave
         end
       end
