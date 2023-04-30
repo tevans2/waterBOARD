@@ -132,6 +132,7 @@ procedure TfrmHomePage.imgSignUpHoverMouseLeave(Sender: TObject);
 begin
   imgSignUp.Visible := True;
   imgSignUpHover.Visible := False;
+  //hello
 end;
 
 procedure TfrmHomePage.imgSignUpMouseEnter(Sender: TObject);
