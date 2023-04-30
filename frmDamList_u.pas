@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.pngimage,
-  Math, frmDamGraphView_u;
+  Math, frmGraphView_u;
 
 type
   TfrmDamList = class(TForm)
@@ -76,7 +76,7 @@ implementation
 {$R *.dfm}
 
 uses
-  frmHomePage_u;
+  frmHomePage_u, frmHomeLoggedIn_u;
 
 procedure TfrmDamList.ExpandImage(Image: TImage);
 begin
@@ -125,9 +125,9 @@ end;
 
 procedure TfrmDamList.imgSteenbrasLowClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 1;
+  frmGraphView.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgSteenbrasLowMouseEnter(Sender: TObject);
@@ -142,9 +142,9 @@ end;
 
 procedure TfrmDamList.imgSteenbrasUpClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 1;
+  frmGraphView.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgSteenbrasUpMouseEnter(Sender: TObject);
@@ -159,9 +159,9 @@ end;
 
 procedure TfrmDamList.imgTheewaterskloofClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 1;
+  frmGraphView.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgTheewaterskloofMouseEnter(Sender: TObject);
@@ -176,9 +176,9 @@ end;
 
 procedure TfrmDamList.imgVoelvleiClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 1;
+  frmGraphView.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgVoelvleiMouseEnter(Sender: TObject);
@@ -193,9 +193,9 @@ end;
 
 procedure TfrmDamList.imgWemmershoekClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 1;
+  frmGraphView.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgWemmershoekMouseEnter(Sender: TObject);
@@ -235,9 +235,9 @@ end;
 
 procedure TfrmDamList.imgBergRiverClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 1;
+  frmGraphView.OrigionForm := 1;
 end;
 
 procedure TfrmDamList.imgBergRiverMouseEnter(Sender: TObject);
@@ -252,7 +252,13 @@ end;
 
 procedure TfrmDamList.imgHomeHoverClick(Sender: TObject);
 begin
-  frmHomePage.Show;
+  case frmHomeLoggedIn.bLoggedIn of
+    True:
+      frmHomeLoggedIn.Show;
+    False:
+      frmHomePage.Show;
+  end;
+
   Self.Hide;
 end;
 

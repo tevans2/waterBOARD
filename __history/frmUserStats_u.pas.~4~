@@ -1,0 +1,94 @@
+unit frmUserStats_u;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls;
+
+type
+  TfrmUserStats = class(TForm)
+    pnlHomePage: TPanel;
+    Panel1: TPanel;
+    Shape2: TShape;
+    Panel4: TPanel;
+    imgDamList: TImage;
+    imgMapView: TImage;
+    imgUserStats: TImage;
+    imgDamListHover: TImage;
+    imgMapViewHover: TImage;
+    imgUserStatsHover: TImage;
+    Panel2: TPanel;
+    Shape1: TShape;
+    Panel3: TPanel;
+    Image1: TImage;
+    procedure FormResize(Sender: TObject);
+    procedure ResizeRePos(MainImage, MovingImage: TImage);
+    procedure imgUserStatsMouseEnter(Sender: TObject);
+    procedure imgMapViewMouseEnter(Sender: TObject);
+    procedure imgDamListMouseEnter(Sender: TObject);
+    procedure imgDamListHoverMouseLeave(Sender: TObject);
+    procedure imgMapViewHoverMouseLeave(Sender: TObject);
+    procedure imgUserStatsHoverMouseLeave(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmUserStats: TfrmUserStats;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmUserStats.FormResize(Sender: TObject);
+begin
+  ResizeRePos(imgDamList, imgDamListHover);
+  ResizeRePos(imgMapView, imgMapViewHover);
+  ResizeRePos(imgUserStats, imgUserStatsHover);
+end;
+
+procedure TfrmUserStats.imgDamListHoverMouseLeave(Sender: TObject);
+begin
+  imgDamListHover.Visible := False;
+end;
+
+procedure TfrmUserStats.imgDamListMouseEnter(Sender: TObject);
+begin
+  imgDamListHover.Visible := True;
+end;
+
+procedure TfrmUserStats.imgMapViewHoverMouseLeave(Sender: TObject);
+begin
+  imgMapViewHover.Visible := True;
+end;
+
+procedure TfrmUserStats.imgMapViewMouseEnter(Sender: TObject);
+begin
+  imgMapViewHover.Visible := False;
+end;
+
+procedure TfrmUserStats.imgUserStatsHoverMouseLeave(Sender: TObject);
+begin
+  imgUserStatsHover.Visible := False;
+end;
+
+procedure TfrmUserStats.imgUserStatsMouseEnter(Sender: TObject);
+begin
+  imgUserStatsHover.Visible := True;
+
+end;
+
+procedure TfrmUserStats.ResizeRePos(MainImage, MovingImage: TImage);
+begin
+  MovingImage.Width := MainImage.Width;
+  MovingImage.Height := MainImage.Height;
+
+  MovingImage.Top := MainImage.Top;
+  MovingImage.Left := MainImage.Left;
+end;
+
+end.

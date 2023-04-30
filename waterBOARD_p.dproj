@@ -106,8 +106,8 @@
             <Form>frmDamList</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="frmDamGraphView_u.pas">
-            <Form>frmDamGraph</Form>
+        <DCCReference Include="frmGraphView_u.pas">
+            <Form>frmGraphView</Form>
         </DCCReference>
         <DCCReference Include="frmMapView_u.pas">
             <Form>frmMapView</Form>
@@ -117,6 +117,15 @@
             <Form>frmLogin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="frmSignUp_u.pas">
+            <Form>frmSignUp</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="frmHomeLoggedIn_u.pas">
+            <Form>frmHomeLoggedIn</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <None Include=".gitignore"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -139,6 +148,12 @@
                 </Source>
             </Delphi.Personality>
             <Deployment Version="4">
+                <DeployFile LocalName=".gitignore" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Win32\Debug\waterBOARD_p.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>waterBOARD_p.exe</RemoteName>

@@ -1,0 +1,57 @@
+unit frmSignUp_u;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Imaging.pngimage;
+
+type
+  TfrmSignUp = class(TForm)
+    pnlBody: TPanel;
+    imgSignUp: TImage;
+    imgSignUpHover: TImage;
+    pnlHeader: TPanel;
+    Shape1: TShape;
+    imgLogo: TImage;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Edit4: TEdit;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit1: TEdit;
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmSignUp: TfrmSignUp;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmSignUp.FormShow(Sender: TObject);
+begin
+  imgSignUpHover.Width := imgSignUp.Width;
+  imgSignUpHover.Height := imgSignUp.Height;
+
+  imgSignUpHover.Top := imgSignUp.Top;
+  imgSignUpHover.Left := imgSignUp.Left;
+end;
+
+end.

@@ -67,7 +67,7 @@ implementation
 
 {$R *.dfm}
 
-uses frmHomePage_u, frmDamGraphView_u;
+uses frmHomePage_u, frmGraphView_u, frmHomeLoggedIn_u;
 
 procedure TfrmMapView.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -96,9 +96,9 @@ end;
 
 procedure TfrmMapView.imgBergRiverClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 2;
+  frmGraphView.OrigionForm := 2;
 end;
 
 procedure TfrmMapView.imgBergRiverMouseEnter(Sender: TObject);
@@ -114,7 +114,13 @@ end;
 
 procedure TfrmMapView.imgHomeHoverClick(Sender: TObject);
 begin
-  frmHomePage.Show;
+  case frmHomeLoggedIn.bLoggedIn of
+    True:
+      frmHomeLoggedIn.Show;
+    False:
+      frmHomePage.Show;
+  end;
+
   Self.Hide;
 end;
 
@@ -130,9 +136,9 @@ end;
 
 procedure TfrmMapView.imgSteenbrasLowClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 2;
+  frmGraphView.OrigionForm := 2;
 end;
 
 procedure TfrmMapView.imgSteenbrasLowMouseEnter(Sender: TObject);
@@ -148,9 +154,9 @@ end;
 
 procedure TfrmMapView.imgSteenbrasUpClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 2;
+  frmGraphView.OrigionForm := 2;
 end;
 
 procedure TfrmMapView.imgSteenbrasUpMouseEnter(Sender: TObject);
@@ -166,9 +172,9 @@ end;
 
 procedure TfrmMapView.imgTheewaterskloofClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 2;
+  frmGraphView.OrigionForm := 2;
 end;
 
 procedure TfrmMapView.imgTheewaterskloofMouseEnter(Sender: TObject);
@@ -184,9 +190,9 @@ end;
 
 procedure TfrmMapView.imgVoelVleiClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 2;
+  frmGraphView.OrigionForm := 2;
 end;
 
 procedure TfrmMapView.imgVoelVleiMouseEnter(Sender: TObject);
@@ -202,9 +208,9 @@ end;
 
 procedure TfrmMapView.imgWemmershoekClick(Sender: TObject);
 begin
-  frmDamGraph.Show;
+  frmGraphView.Show;
   Self.Hide;
-  frmDamGraph.OrigionForm := 2;
+  frmGraphView.OrigionForm := 2;
 end;
 
 procedure TfrmMapView.imgWemmershoekMouseEnter(Sender: TObject);
