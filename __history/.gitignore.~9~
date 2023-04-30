@@ -1,6 +1,5 @@
-_history/
+_history.*
 _recovery/
 Win32/Debug/
 *.exe
 *.dcu
-*.identcache
