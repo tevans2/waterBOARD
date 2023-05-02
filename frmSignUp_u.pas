@@ -57,6 +57,8 @@ begin
   imgSignUpHover.Top := imgSignUp.Top;
   imgSignUpHover.Left := imgSignUp.Left;
 
+  //Reposition hover
+
 end;
 
 procedure TfrmSignUp.FormShow(Sender: TObject);
