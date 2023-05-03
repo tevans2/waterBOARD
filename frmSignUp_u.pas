@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
-  Vcl.Imaging.pngimage;
+  Vcl.Imaging.pngimage, clsUSER_u;
 
 type
   TfrmSignUp = class(TForm)
@@ -18,10 +18,10 @@ type
     imgLogo: TImage;
     Panel1: TPanel;
     Panel2: TPanel;
-    Edit4: TEdit;
-    Edit5: TEdit;
-    Edit6: TEdit;
-    Edit7: TEdit;
+    edtFirstName: TEdit;
+    edtStreetNo: TEdit;
+    edtEmail: TEdit;
+    edtSurname: TEdit;
     lblFirstName: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -29,15 +29,22 @@ type
     Label5: TLabel;
     Label7: TLabel;
     Label8: TLabel;
-    Edit1: TEdit;
-    Edit2: TEdit;
-    Edit3: TEdit;
+    edtUsername: TEdit;
+    edtPassword: TEdit;
+    edtConfirmPassword: TEdit;
+    edtStreetName: TEdit;
+    edtSuburb: TEdit;
+    lblStreetNo: TLabel;
+    lblStreetName: TLabel;
+    lblSuburb: TLabel;
     procedure FormShow(Sender: TObject);
     procedure imgSignUpMouseEnter(Sender: TObject);
     procedure imgSignUpHoverMouseLeave(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure imgSignUpHoverClick(Sender: TObject);
   private
     { Private declarations }
+    objNewUser: TUser;
   public
     { Public declarations }
   end;
@@ -51,14 +58,25 @@ implementation
 
 procedure TfrmSignUp.FormResize(Sender: TObject);
 begin
+  // GUI CODE BEGIN
+
+  // Reposition hover
   imgSignUpHover.Width := imgSignUp.Width;
   imgSignUpHover.Height := imgSignUp.Height;
 
   imgSignUpHover.Top := imgSignUp.Top;
   imgSignUpHover.Left := imgSignUp.Left;
 
-  //Reposition hover
+  // Lining up address labels
+  lblStreetNo.Left := edtStreetNo.Left;
+  lblStreetNo.Top := edtStreetNo.Top - 20;
 
+  lblStreetName.Left := edtStreetName.Left;
+  lblStreetName.Top := edtStreetName.Top - 20;
+
+  lblSuburb.Left := edtSuburb.Left;
+  lblSuburb.Top := edtSuburb.Top - 20;
+  // GUI CODE END
 end;
 
 procedure TfrmSignUp.FormShow(Sender: TObject);
@@ -67,14 +85,37 @@ begin
   imgSignUpHover.Visible := False;
 end;
 
+procedure TfrmSignUp.imgSignUpHoverClick(Sender: TObject);
+var
+  sFirstName, sSurname, sUsername, sPassword, sEmail: String;
+  sStreetName, sSuburb, sUnitNumber: String;
+begin
+  sFirstName := edtFirstName.Text;
+  sSurname := edtSurname.Text;
+  sUsername := edtUsername.Text;
+  sPassword := edtUsername.Text;
+  sEmail := edtEmail.Text;
+
+  // VALIDATE!!!
+
+  objNewUser := TUser.Create(sFirstName, sSurname, sUsername, sPassword, sEmail,
+    sStreetName, sSuburb, sUnitNumber);
+
+  objNewUser.InsertUserRecord;
+end;
+
 procedure TfrmSignUp.imgSignUpHoverMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START
   imgSignUpHover.Visible := False;
+  // GUI CODE END
 end;
 
 procedure TfrmSignUp.imgSignUpMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   imgSignUpHover.Visible := True;
+  // GUI CODE END
 end;
 
 end.

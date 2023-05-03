@@ -28,8 +28,8 @@ object frmGraphView: TfrmGraphView
     Constraints.MinWidth = 1274
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1274
-    ExplicitHeight = 801
+    ExplicitLeft = -8
+    ExplicitTop = 64
     object Panel1: TPanel
       AlignWithMargins = True
       Left = 100
@@ -50,8 +50,8 @@ object frmGraphView: TfrmGraphView
       Locked = True
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 1074
-      ExplicitHeight = 510
+      ExplicitWidth = 1076
+      ExplicitHeight = 518
       object Shape2: TShape
         Left = 0
         Top = 0
@@ -71,17 +71,33 @@ object frmGraphView: TfrmGraphView
       object Chart1: TChart
         AlignWithMargins = True
         Left = 50
-        Top = 50
+        Top = 60
         Width = 980
-        Height = 419
+        Height = 429
         Margins.Left = 50
-        Margins.Top = 50
+        Margins.Top = 60
         Margins.Right = 50
-        Margins.Bottom = 50
+        Margins.Bottom = 30
         BorderRound = 66
         Title.Text.Strings = (
           'TChart')
+        BottomAxis.Automatic = False
+        BottomAxis.AutomaticMaximum = False
+        BottomAxis.AutomaticMinimum = False
+        BottomAxis.Maximum = 12.000328007042370000
+        BottomAxis.Minimum = 11.999671992957660000
+        LeftAxis.Automatic = False
+        LeftAxis.AutomaticMaximum = False
+        LeftAxis.AutomaticMinimum = False
+        LeftAxis.Maximum = 531.256525280674700000
+        LeftAxis.Minimum = 531.243474719324800000
         Panning.MouseWheel = pmwNone
+        RightAxis.Automatic = False
+        RightAxis.AutomaticMaximum = False
+        RightAxis.AutomaticMinimum = False
+        TopAxis.Automatic = False
+        TopAxis.AutomaticMaximum = False
+        TopAxis.AutomaticMinimum = False
         View3D = False
         Zoom.MouseWheel = pmwNormal
         Zoom.Pen.Color = clDefault
@@ -91,8 +107,9 @@ object frmGraphView: TfrmGraphView
         BevelWidth = 8
         Color = clWhite
         TabOrder = 0
-        ExplicitWidth = 974
-        ExplicitHeight = 410
+        ExplicitTop = 50
+        ExplicitWidth = 976
+        ExplicitHeight = 418
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 13
         object Series1: TLineSeries
@@ -108,6 +125,63 @@ object frmGraphView: TfrmGraphView
           YValues.Order = loNone
         end
       end
+      object cbbTimeFrame: TComboBox
+        AlignWithMargins = True
+        Left = 70
+        Top = 30
+        Width = 300
+        Height = 23
+        Margins.Left = 70
+        Margins.Top = 30
+        Margins.Right = 710
+        Align = alClient
+        TabOrder = 1
+        ExplicitLeft = 240
+        ExplicitTop = 304
+        ExplicitWidth = 145
+      end
+      object btnAddReading: TButton
+        AlignWithMargins = True
+        Left = 390
+        Top = 30
+        Width = 300
+        Height = 486
+        Margins.Left = 390
+        Margins.Top = 30
+        Margins.Right = 390
+        Margins.Bottom = 466
+        Align = alClient
+        Caption = 'Add Water Meter Reading'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 2
+        StyleName = 'Windows'
+      end
+      object btnAddTarget: TButton
+        AlignWithMargins = True
+        Left = 710
+        Top = 30
+        Width = 300
+        Height = 23
+        Margins.Left = 710
+        Margins.Top = 30
+        Margins.Right = 70
+        Margins.Bottom = 466
+        Align = alClient
+        Caption = 'Add Water Meter Reading'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 3
+        StyleName = 'Windows'
+      end
     end
     object Panel2: TPanel
       Left = 0
@@ -117,7 +191,7 @@ object frmGraphView: TfrmGraphView
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1274
+      ExplicitWidth = 1276
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -146,7 +220,7 @@ object frmGraphView: TfrmGraphView
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1274
+        ExplicitWidth = 1276
         object imgHome: TImage
           Left = 1159
           Top = 0

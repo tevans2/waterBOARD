@@ -60,97 +60,124 @@ procedure TfrmHomePage.FormResize(Sender: TObject);
 var
   Ratio: Real;
 begin
+  // GUI CODE BEGIN
   Ratio := min(ClientWidth / pnlHomePage.Width,
     ClientHeight / pnlHomePage.Height);
   pnlHomePage.ScaleBy(Trunc(Ratio * 100), 100);
 
   frmHomePage.MasterWindowState := Self.WindowState;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.FormShow(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   WindowState := frmHomePage.MasterWindowState;
-
   frmHomeLoggedIn.bLoggedIn := False;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgDamListHoverClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   frmDamList.Show;
   Self.Hide;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgDamListHoverMouseLeave(Sender: TObject);
 begin
+  // GUI CODE BEGIN
+
   imgDamList.Visible := True;
   imgDamListHover.Visible := False;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgLoginHoverClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
+
   frmLogin.Show;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgLoginHoverMouseLeave(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   imgLogin.Visible := True;
   imgLoginHover.Visible := False;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgLoginMouseEnter(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   imgLogin.Visible := False;
   imgLoginHover.Visible := True;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgMapViewHoverClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   frmMapView.Show;
   Self.Hide;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgMapViewHoverMouseLeave(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   imgMapView.Visible := True;
   imgMapViewHover.Visible := False;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgMapViewMouseEnter(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   imgMapView.Visible := False;
   imgMapViewHover.Visible := True;
-
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgSignUpHoverClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   frmSignUp.Show;
-
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgSignUpHoverMouseLeave(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   imgSignUp.Visible := True;
   imgSignUpHover.Visible := False;
-  //hello
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgSignUpMouseEnter(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   imgSignUp.Visible := False;
   imgSignUpHover.Visible := True;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.imgDamListMouseEnter(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   imgDamList.Visible := False;
   imgDamListHover.Visible := True;
+  // GUI CODE END
 end;
 
 procedure TfrmHomePage.Panel1Resize(Sender: TObject);
 var
   Ratio: Real;
 begin
+  // GUI CODE BEGIN
   Ratio := min(Panel1.Width / Panel4.Width, Panel1.Height / Panel4.Height);
   Panel4.ScaleBy(Trunc(Ratio * 100), 100);
 
@@ -159,6 +186,7 @@ begin
     Left := (Panel1.Width - Width) div 2;
     Top := (Panel1.Height - Height) div 2;
   end;
+  // GUI CODE END
 end;
 
 end.

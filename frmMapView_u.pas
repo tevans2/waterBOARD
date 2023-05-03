@@ -71,13 +71,16 @@ uses frmHomePage_u, frmGraphView_u, frmHomeLoggedIn_u;
 
 procedure TfrmMapView.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  // GUI CODE START
   frmHomePage.close;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.FormResize(Sender: TObject);
 var
   Ratio: Real;
 begin
+  // GUI CODE START
   Ratio := min(ClientWidth / pnlHomePage.Width,
     ClientHeight / pnlHomePage.Height);
   pnlHomePage.ScaleBy(trunc(Ratio * 100), 100);
@@ -86,34 +89,44 @@ begin
 
   imgHomeHover.Left := imgHome.Left;
   imgHomeHover.Top := imgHome.Top;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.FormShow(Sender: TObject);
 begin
+  // GUI CODE START
   WindowState := frmHomePage.MasterWindowState;
   imgHomeHover.Visible := False;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgBergRiverClick(Sender: TObject);
 begin
+  // GUI CODE START
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 2;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgBergRiverMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   PositionDamTitle('Berg River', imgBergRiver);
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgBergRiverMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START
   lblDamName.Caption := '';
   lblDamName.Transparent := True;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgHomeHoverClick(Sender: TObject);
 begin
+  // GUI CODE START
   case frmHomeLoggedIn.bLoggedIn of
     True:
       frmHomeLoggedIn.Show;
@@ -122,123 +135,162 @@ begin
   end;
 
   Self.Hide;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgHomeHoverMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START
   imgHomeHover.Visible := False;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgHomeMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   imgHomeHover.Visible := True;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgSteenbrasLowClick(Sender: TObject);
 begin
+  // GUI CODE START
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 2;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgSteenbrasLowMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   PositionDamTitle('Steenbras Lower', imgSteenbrasLow);
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgSteenbrasLowMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START
   lblDamName.Caption := '';
   lblDamName.Transparent := True;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgSteenbrasUpClick(Sender: TObject);
 begin
+  // GUI CODE START
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 2;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgSteenbrasUpMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   PositionDamTitle('Steenbras Upper', imgSteenbrasUp);
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgSteenbrasUpMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START
   lblDamName.Caption := '';
   lblDamName.Transparent := True;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgTheewaterskloofClick(Sender: TObject);
 begin
+  // GUI CODE START
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 2;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgTheewaterskloofMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   PositionDamTitle('Theewaterskloof', imgTheewaterskloof);
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgTheewaterskloofMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START
   lblDamName.Caption := '';
   lblDamName.Transparent := True;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgVoelVleiClick(Sender: TObject);
 begin
+  // GUI CODE START
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 2;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgVoelVleiMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   PositionDamTitle('Voelvlei', imgVoelVlei);
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgVoelVleiMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START
   lblDamName.Caption := '';
   lblDamName.Transparent := True;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgWemmershoekClick(Sender: TObject);
 begin
+  // GUI CODE START
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 2;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgWemmershoekMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   PositionDamTitle('Wemmershoek', imgWemmershoek);
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.imgWemmershoekMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START
   lblDamName.Caption := '';
   lblDamName.Transparent := True;
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.Panel1Resize(Sender: TObject);
 var
   Ratio: Real;
 begin
+  // GUI CODE START
   Ratio := min(ClientWidth / pnlHomePage.Width,
     ClientHeight / pnlHomePage.Height);
   Panel1.ScaleBy(trunc(Ratio * 100), 100);
+  // GUI CODE END
 end;
 
 procedure TfrmMapView.PositionDamTitle(dam_name: String; DamPin: TImage);
 begin
+  // GUI CODE START
   lblDamName.Caption := dam_name;
   lblDamName.Top := DamPin.Top;
   lblDamName.Left := DamPin.Left + DamPin.Width;
   lblDamName.Transparent := False;
+  // GUI CODE END
 end;
 
 end.

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
-  Vcl.StdCtrls, frmHomeLoggedIn_u;
+  Vcl.StdCtrls, frmHomeLoggedIn_u, clsUser_u;
 
 type
   TfrmLogin = class(TForm)
@@ -27,6 +27,7 @@ type
     procedure imgLoginHoverClick(Sender: TObject);
   private
     { Private declarations }
+    objExistingUser: TUser;
   public
     { Public declarations }
   end;
@@ -42,37 +43,63 @@ uses frmHomePage_u;
 
 procedure TfrmLogin.FormResize(Sender: TObject);
 begin
+  // GUI CODE START
   imgLoginHover.Width := imgLogin.Width;
   imgLoginHover.Height := imgLogin.Height;
 
   imgLoginHover.Top := imgLogin.Top;
   imgLoginHover.Left := imgLogin.Left;
+  // GUI CODE END
 end;
 
 procedure TfrmLogin.FormShow(Sender: TObject);
 begin
+  // GUI CODE START
   imgLoginHover.Visible := False;
-
+  // GUI CODE END
 end;
 
 procedure TfrmLogin.imgLoginHoverClick(Sender: TObject);
+var
+  sUsername, sPassword: String;
+  bValidUser: Boolean;
 begin
-  // Logged In
-   frmHomeLoggedIn.Show;
-   frmLogin.Hide;
-   frmHomePage.hide;
+  objExistingUser := TUser.Create(sUsername, sPassword);
+  bValidUser := objExistingUser.CheckLogin;
 
-   frmHomeLoggedIn.bLoggedIn := True;
+  if bValidUser then
+  begin // success
+
+    // GUI CODE START
+    // Logged In
+    frmHomeLoggedIn.Show;
+    frmLogin.Hide;
+    frmHomePage.Hide;
+
+    frmHomeLoggedIn.bLoggedIn := True;
+    // GUI CODE END
+  end
+  else // error
+  begin
+    Showmessage('Username or password incorrect');
+    edtPassword.Clear;
+    edtPassword.SetFocus;
+  end;
+
 end;
 
 procedure TfrmLogin.imgLoginHoverMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START
   imgLoginHover.Visible := False;
+  // GUI CODE END
 end;
 
 procedure TfrmLogin.imgLoginMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   imgLoginHover.Visible := True;
+  // GUI CODE END
 end;
 
 end.

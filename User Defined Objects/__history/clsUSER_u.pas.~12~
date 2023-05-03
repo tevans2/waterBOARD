@@ -1,0 +1,49 @@
+unit clsUSER_u;
+
+interface
+
+uses SysUtils, clsADDRESS_u;
+
+type
+  TUser = class(TObject)
+  private
+    first_name: String;
+    surname: String;
+    username: String;
+    password: String;
+    email: String;
+    address_id: Integer;
+
+  public
+    constructor Create(first_name, surname, username, password, email,
+      street_name, suburb, unit_number: string);
+    procedure InsertUserRecord;
+  end;
+
+implementation
+
+{ TUser }
+
+constructor TUser.Create(first_name, surname, username, password, email,
+  street_name, suburb, unit_number: string);
+var
+  objAddress: TAddress;
+begin
+  objAddress := TAddress.Create(unit_number, street_name, suburb);
+  objAddress.InsertAddressRecord;
+
+  Self.address_id := objAddress.GetAddressID;
+
+  Self.first_name := first_name;
+  Self.surname := surname;
+  Self.email := email;
+  Self.username := username;
+  Self.password := password;
+end;
+
+procedure TUser.InsertUserRecord;
+begin
+
+end;
+
+end.

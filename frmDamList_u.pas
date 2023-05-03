@@ -42,7 +42,6 @@ type
     procedure imgTheewaterskloofMouseLeave(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure pnlContainerResize(Sender: TObject);
-    procedure pnlCardsResize(Sender: TObject);
     procedure imgBergRiverClick(Sender: TObject);
     procedure imgHomeMouseEnter(Sender: TObject);
     procedure imgHomeHoverMouseLeave(Sender: TObject);
@@ -80,6 +79,7 @@ uses
 
 procedure TfrmDamList.ExpandImage(Image: TImage);
 begin
+  // GUI CODE BEGIN
   if (Image.Height < DamListExpandedHeight) then
     repeat
     begin
@@ -93,17 +93,21 @@ begin
 
     end;
     until (Image.Height > DamListExpandedHeight);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  // GUI CODE BEGIN
   frmHomePage.Close;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.FormResize(Sender: TObject);
 var
   Ratio: Real;
 begin
+  // GUI CODE BEGIN
   ResetDimensions;
   Ratio := min(ClientWidth / pnlHomePage.Width,
     ClientHeight / pnlHomePage.Height);
@@ -113,107 +117,132 @@ begin
 
   imgHomeHover.Left := imgHome.Left;
   imgHomeHover.Top := imgHome.Top;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.FormShow(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   ResetDimensions;
 
   imgHomeHover.Visible := False;
   WindowState := frmHomePage.MasterWindowState;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgSteenbrasLowClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 1;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgSteenbrasLowMouseEnter(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   ExpandImage(imgSteenbrasLow);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgSteenbrasLowMouseLeave(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   RetractImage(imgSteenbrasLow);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgSteenbrasUpClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 1;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgSteenbrasUpMouseEnter(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   ExpandImage(imgSteenbrasUp);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgSteenbrasUpMouseLeave(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   RetractImage(imgSteenbrasUp);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgTheewaterskloofClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 1;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgTheewaterskloofMouseEnter(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   ExpandImage(imgTheewaterskloof);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgTheewaterskloofMouseLeave(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   RetractImage(imgTheewaterskloof);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgVoelvleiClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 1;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgVoelvleiMouseEnter(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   ExpandImage(imgVoelvlei);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgVoelvleiMouseLeave(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   RetractImage(imgVoelvlei);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgWemmershoekClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 1;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgWemmershoekMouseEnter(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   ExpandImage(imgWemmershoek);
-
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgWemmershoekMouseLeave(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   RetractImage(imgWemmershoek);
-end;
-
-procedure TfrmDamList.pnlCardsResize(Sender: TObject);
-var
-  Ratio: Real;
-begin
-
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.pnlContainerResize(Sender: TObject);
@@ -221,6 +250,7 @@ var
   Ratio: Real;
 begin
 
+  // GUI CODE START
   Ratio := min(pnlContainer.Width / pnlCards.Width, pnlContainer.Height /
     pnlCards.Height);
   pnlCards.ScaleBy(trunc(Ratio * 100), 100);
@@ -231,27 +261,34 @@ begin
     Left := (pnlContainer.Width - Width) div 2;
     Top := (pnlContainer.Height - Height) div 2;
   end;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgBergRiverClick(Sender: TObject);
 begin
+  // GUI CODE START
   frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 1;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgBergRiverMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   ExpandImage(imgBergRiver);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgBergRiverMouseLeave(Sender: TObject);
 begin
+  // GUI CODE START     // GUI CODE END
   RetractImage(imgBergRiver);
 end;
 
 procedure TfrmDamList.imgHomeHoverClick(Sender: TObject);
 begin
+  // GUI CODE START
   case frmHomeLoggedIn.bLoggedIn of
     True:
       frmHomeLoggedIn.Show;
@@ -260,6 +297,7 @@ begin
   end;
 
   Self.Hide;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.imgHomeHoverMouseLeave(Sender: TObject);
@@ -269,11 +307,14 @@ end;
 
 procedure TfrmDamList.imgHomeMouseEnter(Sender: TObject);
 begin
+  // GUI CODE START
   imgHomeHover.Visible := True;
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.ResetDimensions;
 begin
+  // GUI CODE START
   DamListOrigionalHeight := imgBergRiver.Height;
   DamListOrigionalWidth := imgBergRiver.Width;
 
@@ -281,10 +322,12 @@ begin
 
   DamListExpandedHeight := Round(DamListOrigionalHeight + DamListOrigionalHeight
     * ExpandFactor);
+  // GUI CODE END
 end;
 
 procedure TfrmDamList.RetractImage(Image: TImage);
 begin
+  // GUI CODE START
   if (Image.Height > DamListOrigionalHeight) then
     repeat
     begin
@@ -299,4 +342,5 @@ begin
     until (Image.Height <= DamListOrigionalHeight);
 end;
 
+// GUI CODE END
 end.

@@ -1,0 +1,53 @@
+unit clsADDRESS_u;
+
+interface
+
+uses dmWaterboard_u;
+
+type
+  TAddress = class(TObject)
+  private
+    unit_no: string;
+    street_name: string;
+    suburb: string;
+    address_id: integer;
+
+    function GenerateID: integer;
+
+  public
+    constructor Create(unit_no, street_name, suburb: string);
+    function GetAddressID: integer;
+    procedure InsertAddressRecord;
+  end;
+
+implementation
+
+{ TAddress }
+
+constructor TAddress.Create(unit_no, street_name, suburb: string);
+begin
+  Self.unit_no := unit_no;
+  Self.street_name := street_name;
+  Self.suburb := suburb;
+  Self.address_id := GenerateID;
+end;
+
+function TAddress.GenerateID: integer;
+begin
+  with dmWaterboard do
+  begin
+
+  end;
+end;
+
+function TAddress.GetAddressID: integer;
+begin
+
+end;
+
+procedure TAddress.InsertAddressRecord;
+begin
+
+end;
+
+end.

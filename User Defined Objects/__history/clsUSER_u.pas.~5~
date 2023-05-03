@@ -1,0 +1,20 @@
+unit clsUSER_u;
+
+interface
+
+type
+  TUser = class(TObject)
+  private
+    first_name: String;
+    surname: String;
+    username: String;
+    password: String;
+    email: String;
+    address: String;
+
+  public
+  end;
+
+implementation
+
+end.
