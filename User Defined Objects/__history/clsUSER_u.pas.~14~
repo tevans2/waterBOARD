@@ -16,8 +16,10 @@ type
 
   public
     constructor Create(first_name, surname, username, password, email,
-      street_name, suburb, unit_number: string);
+      street_name, suburb, unit_number: string); overload;
+    constructor Create(username, password: string); overload;
     procedure InsertUserRecord;
+    function CheckLogin: Boolean;
   end;
 
 implementation
@@ -39,6 +41,11 @@ begin
   Self.email := email;
   Self.username := username;
   Self.password := password;
+end;
+
+constructor TUser.Create(username, password: string);
+begin
+
 end;
 
 procedure TUser.InsertUserRecord;
@@ -63,6 +70,11 @@ begin
 
     qryWaterBoard.ExecSQL;
   end;
+end;
+
+function TUser.CheckLogin: Boolean;
+begin
+
 end;
 
 end.

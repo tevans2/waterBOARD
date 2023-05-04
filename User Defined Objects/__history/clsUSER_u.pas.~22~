@@ -42,8 +42,7 @@ end;
 
 constructor TUser.Create(username, password: string);
 begin
-  Self.username := username;
-  Self.password := password;
+
 end;
 
 procedure TUser.InsertUserRecord(objAddress: TAddress);
@@ -204,27 +203,9 @@ end;
 
 function TUser.CheckLogin: Boolean;
 var
-  objValidateLogin: Tvalidate;
-  sDBPassword: String;
+  objValidateLogin: TValidate;
 begin
-  objValidateLogin := Tvalidate.Create;
-  Result := False;
-  if not objValidateLogin.CheckUnique(Self.username, 'USER', 'username') then
-  begin
-    with dmWaterboard do
-    begin
-      qryWaterBoard.SQL.clear;
-      qryWaterBoard.SQL.Add
-        ('SELECT username, password FROM [USER] WHERE username = ' +
-        QuotedStr(Self.username));
-      qryWaterBoard.Open;
-
-      sDBPassword := qryWaterBoard['password'];
-
-      if sDBPassword = Self.password then
-        Result := True;
-    end;
-  end;
+//  objValidateLogin := TValidate
 end;
 
 end.

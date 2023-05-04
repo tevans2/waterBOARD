@@ -1,0 +1,182 @@
+unit clsUSER_u;
+
+interface
+
+uses SysUtils, Vcl.Dialogs, dmWaterBoard_u, clsADDRESS_u, clsValidation_u;
+
+type
+  TUser = class(TObject)
+  private
+    first_name: String;
+    surname: String;
+    username: String;
+    password: String;
+    email: String;
+    address_id: Integer;
+
+  public
+    constructor Create(first_name, surname, username, password, email,
+      street_name, suburb, unit_number: string); overload;
+    constructor Create(username, password: string); overload;
+    procedure InsertUserRecord;
+    function CheckLogin: Boolean;
+    function Validate: String;
+  end;
+
+implementation
+
+{ TUser }
+
+uses frmSignUp_u;
+
+constructor TUser.Create(first_name, surname, username, password, email,
+  street_name, suburb, unit_number: string);
+var
+  objAddress: TAddress;
+  sValidateStr: String;
+  iPos, iNum: Integer;
+begin
+  objAddress := TAddress.Create(unit_number, street_name, suburb);
+
+  // Validation
+  sValidateStr := objAddress.Validate;
+
+  if sValidateStr = '' then
+    objAddress.InsertAddressRecord
+  else
+  begin
+    repeat
+    begin
+      iPos := Pos('-', sValidateStr);
+
+      if iPos > 0 then
+      begin
+        iNum := strtoint(sValidateStr[iPos - 1]);
+
+        // Validation Result Key:
+        // 6 = Unit Number
+        // 7 = Street Name
+        // 8 = Suburb
+
+        case iNum of
+          6:
+            frmSignUp.edtStreetNo.clear;
+          7:
+            frmSignUp.edtStreetName.clear;
+          8:
+            frmSignUp.edtSuburb.clear;
+        end;
+
+        Delete(sValidateStr, iPos - 1, 2);
+      end;
+    end;
+    until iPos = 0;
+    frmSignUp.sValidateStr := sValidateStr;
+  end;
+  objAddress.InsertAddressRecord;
+
+  Self.address_id := objAddress.GetAddressID;
+
+  Self.first_name := first_name;
+  Self.surname := surname;
+  Self.email := email;
+  Self.username := username;
+  Self.password := password;
+end;
+
+constructor TUser.Create(username, password: string);
+begin
+
+end;
+
+procedure TUser.InsertUserRecord;
+begin
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.clear;
+    qryWaterBoard.SQL.Add('INSERT INTO USER');
+    qryWaterBoard.SQL.Add
+      ('(first_name, surname, email, username, password, address_id)');
+    qryWaterBoard.SQL.Add
+      ('VALUES (:first_name, :surname, :email, :username, :password, :address_id)');
+    with qryWaterBoard.Parameters do
+    begin
+      ParamByName('first_name').Value := Self.first_name;
+      ParamByName('surname').Value := Self.surname;
+      ParamByName('email').Value := Self.email;
+      ParamByName('username').Value := Self.username;
+      ParamByName('password').Value := Self.password;
+      ParamByName('address_id').Value := Self.address_id;
+    end;
+
+    qryWaterBoard.ExecSQL;
+  end;
+end;
+
+function TUser.Validate: String;
+var
+  objValidate: Tvalidate;
+begin
+  objValidate := Tvalidate.Create;
+
+  with objValidate do
+  begin
+    // Validation Result Key:
+    // 1 = First Name
+    // 2 = Surname
+    // 3 = Email
+    // 4 = Username
+    // 5 = Password
+
+    // Ensure no inputs are left blank
+    if CheckNull(Self.first_name) then
+      Result := Result + '1-Please enter your first name' + #13;
+
+    if CheckNull(Self.surname) then
+      Result := Result + '2-Please enter your surname' + #13;
+
+    if CheckNull(Self.email) then
+      Result := Result + '3-Please enter your email' + #13;
+
+    if CheckNull(Self.username) then
+      Result := Result + '4-Please enter your username' + #13;
+
+    if CheckNull(Self.password) then
+      Result := Result + '5-Please enter your password' + #13;
+
+    // Ensures all inputs are of a valid length
+    if CheckLength(Self.first_name, 20) then
+      Result := Result + '1-The first name you entered is too long' + #13;
+
+    if CheckLength(Self.surname, 20) then
+      Result := Result + '2-The surname you entered is too long' + #13;
+
+    if CheckLength(Self.first_name, 20) then
+      Result := Result + '1-The first name entered is too long' + #13;
+
+    if CheckLength(Self.first_name, 20) then
+      Result := Result + '1-The first name entered is too long' + #13;
+
+    if CheckLength(Self.first_name, 20) then
+      Result := Result + '1-The first name entered is too long' + #13;
+
+    // Validate string inputs
+    if not CheckStr(Self.first_name) then
+      Result := Result +
+        '1-Please remove any numbers from your first name' + #13;
+
+    if not CheckStr(Self.surname) then
+      Result := Result + '2-Please remove any numbers from your surname' + #13;
+
+    // Validate email address
+    if not CheckEmail(Self.email) then
+      Result := Result + '3-Please enter a valid Email address' + #13;
+  end;
+end;
+
+function TUser.CheckLogin: Boolean;
+begin
+
+end;
+
+end.

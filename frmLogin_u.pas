@@ -64,6 +64,9 @@ var
   sUsername, sPassword: String;
   bValidUser: Boolean;
 begin
+  sUsername := edtUsername.Text;
+  sPassword := edtPassword.Text;
+
   objExistingUser := TUser.Create(sUsername, sPassword);
   bValidUser := objExistingUser.CheckLogin;
 

@@ -18,19 +18,13 @@ type
     constructor Create(unit_no, street_name, suburb: string);
     function GetAddressID: integer;
     procedure InsertAddressRecord;
-    function Validate(var Validation_Str: String): TArray<integer>;
-    procedure AddToArray(var Input_Array: TArray<integer>; To_add: integer);
+    function Validate: String;
+    function CreateValidationString: String;
   end;
 
 implementation
 
 { TAddress }
-
-procedure TAddress.AddToArray(var Input_Array: TArray<integer>; To_add: integer);
-begin
-  SetLength(Input_Array, length(Input_Array) + 1);
-  Input_Array[length(Input_Array)-1] := To_add;
-end;
 
 constructor TAddress.Create(unit_no, street_name, suburb: string);
 begin
@@ -40,11 +34,45 @@ begin
   Self.address_id := GenerateID;
 end;
 
+function TAddress.CreateValidationString: String;
+var
+  sValidateStr: String;
+  iPos, iNum: Integer;
+begin
+ repeat
+    begin
+      iPos := Pos('-', sValidateStr);
+
+      if iPos > 0 then
+      begin
+        iNum := strtoint(sValidateStr[iPos - 1]);
+
+        // Validation Result Key:
+        // 6 = Unit Number
+        // 7 = Street Name
+        // 8 = Suburb
+
+        case iNum of
+          6:
+            frmSignUp.edtStreetNo.clear;
+          7:
+            frmSignUp.edtStreetName.clear;
+          8:
+            frmSignUp.edtSuburb.clear;
+        end;
+
+        Delete(sValidateStr, iPos - 1, 2);
+      end;
+    end;
+    until iPos = 0;
+    frmSignUp.sValidateStr := sValidateStr;
+end;
+
 function TAddress.GenerateID: integer;
 begin
   with dmWaterboard do
   begin
-    qryWaterBoard.SQL.clear;
+    qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('SELECT MAX(address_id) AS MaxID FROM ADDRESS');
     qryWaterBoard.Open;
 
@@ -64,7 +92,7 @@ procedure TAddress.InsertAddressRecord;
 begin
   with dmWaterboard do
   begin
-    qryWaterBoard.SQL.clear;
+    qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('INSERT INTO ADDRESS');
     qryWaterBoard.SQL.Add('(address_id, unit_no, street, suburb)');
     qryWaterBoard.SQL.Add('VALUES (:address_id, :unit_no, :street, :suburb)');
@@ -80,34 +108,23 @@ begin
   end;
 end;
 
-function TAddress.Validate(var Validation_Str: String): TArray<integer>;
+function TAddress.Validate: String;
 var
   objValidate: TValidate;
-  bAddToArray: Boolean;
 begin
   objValidate := TValidate.Create;
 
-  bAddToArray := False;
   with objValidate do
   begin
+    // Ensure no inputs are left blank
     if CheckNull(Self.unit_no) then
-    begin
-      Validation_Str := Validation_Str + 'Please enter your unit number' + #13;
-      AddToArray(Result, 6);
-    end;
+      Result := Result + '6-Please enter your unit number' + #13;
 
     if CheckNull(Self.street_name) then
-    begin
-      Validation_Str := Validation_Str + 'Please enter your street name' + #13;
-      AddToArray(Result, 7);
-    end;
+      Result := Result + '7-Please enter your street name' + #13;
 
     if CheckNull(Self.suburb) then
-    begin
-      Validation_Str := Validation_Str + 'Please enter your suburb' + #13;
-      AddToArray(Result, 8);
-    end;
-
+      Result := Result + '8-Please enter your suburb' + #13;
   end;
 end;
 

@@ -264,6 +264,7 @@ object frmSignUp: TfrmSignUp
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
+        OnExit = edtUsernameExit
       end
       object edtPassword: TEdit
         AlignWithMargins = True

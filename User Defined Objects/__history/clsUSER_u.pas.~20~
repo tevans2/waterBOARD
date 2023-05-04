@@ -42,8 +42,7 @@ end;
 
 constructor TUser.Create(username, password: string);
 begin
-  Self.username := username;
-  Self.password := password;
+
 end;
 
 procedure TUser.InsertUserRecord(objAddress: TAddress);
@@ -162,13 +161,13 @@ begin
     // Validate Username
     if CheckNull(Self.username) then
     begin
-      Validation_Str := Validation_Str + 'Please enter your username' + #13;
+      Validation_Str := Validation_Str + '4-Please enter your username' + #13;
       bAddToArray := True;
     end;
     if CheckLength(Self.username, 20) then
     begin
       Validation_Str := Validation_Str +
-        'The username entered is too long' + #13;
+        '4-The username entered is too long' + #13;
       bAddToArray := True;
     end;
     if bAddToArray then
@@ -179,13 +178,13 @@ begin
     // Validate Password
     if CheckNull(Self.password) then
     begin
-      Validation_Str := Validation_Str + 'Please enter your password' + #13;
+      Validation_Str := Validation_Str + '4-Please enter your password' + #13;
       bAddToArray := True;
     end;
     if CheckLength(Self.password, 20) then
     begin
       Validation_Str := Validation_Str +
-        'The password entered is too long' + #13;
+        '4-The password entered is too long' + #13;
       bAddToArray := True;
     end;
     if bAddToArray then
@@ -203,28 +202,8 @@ begin
 end;
 
 function TUser.CheckLogin: Boolean;
-var
-  objValidateLogin: Tvalidate;
-  sDBPassword: String;
 begin
-  objValidateLogin := Tvalidate.Create;
-  Result := False;
-  if not objValidateLogin.CheckUnique(Self.username, 'USER', 'username') then
-  begin
-    with dmWaterboard do
-    begin
-      qryWaterBoard.SQL.clear;
-      qryWaterBoard.SQL.Add
-        ('SELECT username, password FROM [USER] WHERE username = ' +
-        QuotedStr(Self.username));
-      qryWaterBoard.Open;
 
-      sDBPassword := qryWaterBoard['password'];
-
-      if sDBPassword = Self.password then
-        Result := True;
-    end;
-  end;
 end;
 
 end.

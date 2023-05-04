@@ -18,18 +18,19 @@ type
     constructor Create(unit_no, street_name, suburb: string);
     function GetAddressID: integer;
     procedure InsertAddressRecord;
-    function Validate(var Validation_Str: String): TArray<integer>;
-    procedure AddToArray(var Input_Array: TArray<integer>; To_add: integer);
+    function Validate(Validation_Str: String): TArray<integer>;
+    function CreateValidationString: String;
+    procedure AddToArray(Input_Array: TArray<Integer>; To_add: Integer);
   end;
 
 implementation
 
 { TAddress }
 
-procedure TAddress.AddToArray(var Input_Array: TArray<integer>; To_add: integer);
+procedure TAddress.AddToArray(Input_Array: TArray<Integer>; To_add: Integer);
 begin
   SetLength(Input_Array, length(Input_Array) + 1);
-  Input_Array[length(Input_Array)-1] := To_add;
+  Input_Array[length(Input_Array)] := To_add;
 end;
 
 constructor TAddress.Create(unit_no, street_name, suburb: string);
@@ -38,6 +39,40 @@ begin
   Self.street_name := street_name;
   Self.suburb := suburb;
   Self.address_id := GenerateID;
+end;
+
+function TAddress.CreateValidationString: String;
+var
+  sValidateStr: String;
+  iPos, iNum: integer;
+begin
+  repeat
+  begin
+    iPos := Pos('-', sValidateStr);
+
+    if iPos > 0 then
+    begin
+      iNum := strtoint(sValidateStr[iPos - 1]);
+
+      // Validation Result Key:
+      // 6 = Unit Number
+      // 7 = Street Name
+      // 8 = Suburb
+
+      case iNum of
+        6:
+          frmSignUp.edtStreetNo.clear;
+        7:
+          frmSignUp.edtStreetName.clear;
+        8:
+          frmSignUp.edtSuburb.clear;
+      end;
+
+      Delete(sValidateStr, iPos - 1, 2);
+    end;
+  end;
+  until iPos = 0;
+  frmSignUp.sValidateStr := sValidateStr;
 end;
 
 function TAddress.GenerateID: integer;
@@ -80,7 +115,7 @@ begin
   end;
 end;
 
-function TAddress.Validate(var Validation_Str: String): TArray<integer>;
+function TAddress.Validate(Validation_Str: String): TArray<integer>;
 var
   objValidate: TValidate;
   bAddToArray: Boolean;
@@ -92,20 +127,19 @@ begin
   begin
     if CheckNull(Self.unit_no) then
     begin
-      Validation_Str := Validation_Str + 'Please enter your unit number' + #13;
-      AddToArray(Result, 6);
+      Validation_Str := Validation_Str + '6-Please enter your unit number' + #13;
+        SetLength(Input_Array, length(Input_Array) + 1);
+  Input_Array[length(Input_Array)] := To_add;
     end;
 
     if CheckNull(Self.street_name) then
     begin
-      Validation_Str := Validation_Str + 'Please enter your street name' + #13;
-      AddToArray(Result, 7);
+      Validation_Str := Validation_Str + '7-Please enter your street name' + #13;
     end;
 
     if CheckNull(Self.suburb) then
     begin
-      Validation_Str := Validation_Str + 'Please enter your suburb' + #13;
-      AddToArray(Result, 8);
+      Validation_Str := Validation_Str + '8-Please enter your suburb' + #13;
     end;
 
   end;

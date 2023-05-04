@@ -7,13 +7,13 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
   VclTee.TeeGDIPlus, VclTee.TeEngine, VclTee.Series, VclTee.TeeProcs,
-  VclTee.Chart, Vcl.StdCtrls;
+  VclTee.Chart, Vcl.StdCtrls, Vcl.ControlList, Vcl.Buttons, Math;
 
 type
   TfrmGraphView = class(TForm)
     pnlHomePage: TPanel;
     Panel1: TPanel;
-    Shape2: TShape;
+    shpGraph: TShape;
     Panel2: TPanel;
     Shape1: TShape;
     Panel3: TPanel;
@@ -25,8 +25,11 @@ type
     imgHome_hover: TImage;
     imgHome: TImage;
     cbbTimeFrame: TComboBox;
-    btnAddReading: TButton;
-    btnAddTarget: TButton;
+    imgAddReading: TImage;
+    imgAddTarget: TImage;
+    Panel4: TPanel;
+    imgAddReadingHover: TImage;
+    imgAddTargetHover: TImage;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure imgBackArrowMouseEnter(Sender: TObject);
@@ -36,6 +39,10 @@ type
     procedure imgBackArrowHoverClick(Sender: TObject);
     procedure imgHome_hoverMouseLeave(Sender: TObject);
     procedure imgHome_hoverClick(Sender: TObject);
+    procedure imgAddTargetMouseEnter(Sender: TObject);
+    procedure imgAddTargetHoverMouseLeave(Sender: TObject);
+    procedure imgAddReadingHoverMouseLeave(Sender: TObject);
+    procedure imgAddReadingMouseEnter(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,6 +75,9 @@ begin
   imgBackArrowHover.Left := imgBackArrow.Left;
   imgBackArrowHover.Top := imgBackArrow.Top;
 
+  imgAddReadingHover.Left := imgAddReading.Left;
+  imgAddTargetHover.Top := imgAddTarget.Top;
+
   frmHomePage.MasterWindowState := Self.WindowState;
   // GUI CODE END
 end;
@@ -77,9 +87,31 @@ begin
   // GUI CODE BEGIN
   imgHome_hover.Visible := False;
   imgBackArrowHover.Visible := False;
+  imgAddReadingHover.Visible := False;
+  imgAddTargetHover.Visible := False;
 
   WindowState := frmHomePage.MasterWindowState;
   // GUI CODE END
+end;
+
+procedure TfrmGraphView.imgAddReadingHoverMouseLeave(Sender: TObject);
+begin
+  imgAddReadingHover.Hide;
+end;
+
+procedure TfrmGraphView.imgAddReadingMouseEnter(Sender: TObject);
+begin
+  imgAddReadingHover.Show;
+end;
+
+procedure TfrmGraphView.imgAddTargetHoverMouseLeave(Sender: TObject);
+begin
+  imgAddTargetHover.Hide;
+end;
+
+procedure TfrmGraphView.imgAddTargetMouseEnter(Sender: TObject);
+begin
+  imgAddTargetHover.Show;
 end;
 
 procedure TfrmGraphView.imgBackArrowHoverClick(Sender: TObject);
