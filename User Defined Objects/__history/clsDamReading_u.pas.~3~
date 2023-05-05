@@ -1,0 +1,121 @@
+unit clsDamReading_u;
+
+interface
+
+uses
+  System.SysUtils,
+  System.StrUtils,
+  REST.Types,
+  REST.Client;
+
+
+type
+  TDamReading = class(TObject)
+  private
+    dam_id: integer;
+    level_percent: Real;
+    reading_date: TDateTime;
+  public
+    constructor Create(dam_id: integer; level_percent: Real;
+      reading_date: TDateTime);
+    function FetchDamLevels: TArray<Real>;
+  end;
+
+implementation
+
+{ TDamReading }
+
+constructor TDamReading.Create(dam_id: integer; level_percent: Real;
+  reading_date: TDateTime);
+begin
+ Self.dam_id := dam_id;
+ Self.level_percent := level_percent;
+ Self.reading_date := reading_date;
+end;
+
+function TDamReading.FetchDamLevels: TArray<Real>;
+var
+  Client: TRESTClient;
+  request: TRESTRequest;
+  response: TCustomRESTResponse;
+  table_begin_pos, table_end_pos: Integer;
+  page, tag, table, val_str, level_percent: string;
+  i, j, tag_len, tag_start_pos, tag_end_pos: Integer;
+  arrDamData: TArray<real>;
+  iCount: Integer;
+begin
+  SetLength(arrDamData, 6);
+  Client := TRESTClient.Create(nil);
+  Client.BaseURL := 'https://www.capetown.gov.za/';
+
+  request := TRESTRequest.Create(nil);
+  request.Client := Client;
+  request.Method := rmGET;
+  request.Resource :=
+    'Family%20and%20home/residential-utility-services/residential-water-and-sanitation-services/this-weeks-dam-levels';
+
+  request.Execute;
+
+  response := request.response;
+
+  if response.Status.Success then
+  begin
+    iCount := 0;
+
+    page := response.Content;
+    table_begin_pos := Pos('Current Dam Water Levels', page);
+    table_end_pos := PosEx('Because each dam size is different', page,
+      table_begin_pos);
+
+    table := copy(page, table_begin_pos, table_end_pos);
+
+    tag := '&lt;/td&gt;&lt;td style="height:31px;text-align:right;"&gt;';
+    tag_len := length(tag);
+    tag_start_pos := Pos(tag, table);
+
+    // Get first dam (Berg River) data
+    for i := 1 to 2 do
+    begin
+      tag_end_pos := PosEx('&lt;br&gt;', table, tag_start_pos);
+      val_str := copy(table, tag_start_pos + tag_len,
+        tag_end_pos - tag_start_pos - tag_len);
+
+      tag_start_pos := PosEx(tag, table, tag_start_pos + tag_len);
+
+      if i mod 2 = 0 then //Get only level percent (ommit capacity)
+      begin
+        level_percent := StringReplace(val_str, '.', ',', []);
+        arrDamData[iCount] := strtofloat(level_percent);
+        inc(iCount);
+      end;
+    end;
+
+    // Get other 5 dam datas
+    tag := '&lt;/td&gt;&lt;td style="text-align:right;"&gt;';
+    tag_len := length(tag);
+    tag_start_pos := Pos(tag, table);
+
+    for j := 1 to 10 do
+    begin
+      tag_end_pos := PosEx('&lt;br&gt;', table, tag_start_pos);
+      val_str := copy(table, tag_start_pos + tag_len,
+        tag_end_pos - tag_start_pos - tag_len);
+
+      tag_start_pos := PosEx(tag, table, tag_start_pos + tag_len);
+
+      if j mod 2 = 0 then
+      begin
+        level_percent := StringReplace(val_str, '.', ',', []);
+        arrDamData[iCount] := strtofloat(level_percent);
+        inc(iCount);
+      end;
+    end;
+
+  end
+  else
+    Writeln('Failed with ' + response.StatusText + ': ' + response.Content);
+
+    Result := arrDamData;
+end;
+
+end.

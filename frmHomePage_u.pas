@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Math,
   Vcl.Imaging.pngimage, Vcl.StdCtrls, frmDamList_u, frmMapView_u, frmLogin_u,
-  frmSignUp_u, frmHomeLoggedIn_u;
+  frmSignUp_u, frmHomeLoggedIn_u, clsDamReading_u;
 
 type
   TfrmHomePage = class(TForm)
@@ -44,6 +44,7 @@ type
     procedure imgSignUpHoverClick(Sender: TObject);
   private
     { Private declarations }
+    objDamReading: TDamReading;
   public
     { Public declarations }
     MasterWindowState: TWindowState;
@@ -78,11 +79,25 @@ begin
 end;
 
 procedure TfrmHomePage.imgDamListHoverClick(Sender: TObject);
+var
+  arrDamData: TArray<Real>;
+  i: Integer;
+  sOutput: String;
 begin
   // GUI CODE BEGIN
   frmDamList.Show;
   Self.Hide;
   // GUI CODE END
+
+  objDamReading := TDamReading.Create;
+  SetLength(arrDamData, 6);
+  arrDamData := objDamReading.FetchDamLevels;
+
+  for i := 0 to 5 do
+    sOutput := sOutput + #13 + floattostr(arrDamData[i]);
+
+  SHowmessage(sOutput);
+
 end;
 
 procedure TfrmHomePage.imgDamListHoverMouseLeave(Sender: TObject);

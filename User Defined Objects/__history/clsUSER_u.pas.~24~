@@ -53,10 +53,10 @@ begin
 
   with dmWaterboard do
   begin
-    qryWaterBoard.SQL.Clear;
-    qryWaterBoard.SQL.Add('INSERT INTO [USER]');
+    qryWaterBoard.SQL.clear;
+    qryWaterBoard.SQL.Add('INSERT INTO USER');
     qryWaterBoard.SQL.Add
-      ('(first_name, surname, email, username, [password], address_id)');
+      ('(first_name, surname, email, username, password, address_id)');
     qryWaterBoard.SQL.Add
       ('VALUES (:first_name, :surname, :email, :username, :password, :address_id)');
     with qryWaterBoard.Parameters do

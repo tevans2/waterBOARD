@@ -1,0 +1,36 @@
+unit clsDamReading_u;
+
+interface
+
+uses SysUtils;
+
+type
+  TDamReading = class(TObject)
+  private
+    dam_id: integer;
+    level_percent: Real;
+    reading_date: TDateTime;
+  public
+    constructor Create(dam_id: integer; level_percent: Real;
+      reading_date: TDateTime);
+    function FetchDamLevels: TArray<Real>;
+  end;
+
+implementation
+
+{ TDamReading }
+
+constructor TDamReading.Create(dam_id: integer; level_percent: Real;
+  reading_date: TDateTime);
+begin
+ Self.dam_id := dam_id;
+ Self.level_percent := level_percent;
+ Self.reading_date := reading_date;
+end;
+
+function TDamReading.FetchDamLevels: TArray<Real>;
+begin
+
+end;
+
+end.

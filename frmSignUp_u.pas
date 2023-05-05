@@ -157,6 +157,7 @@ begin
   if sValidateStr = '' then
     objNewUser.InsertUserRecord(objNewAddress)
   else
+  begin
     for i := 0 to Length(arrErrorFields) - 1 do
     begin
       // Validation Result Key:
@@ -188,8 +189,9 @@ begin
           edtSuburb.Clear;
       end;
     end;
-  sValidateStr := trim(sValidateStr);
-  MessageDlg(sValidateStr, mtError, [mbOK], 0);
+    sValidateStr := trim(sValidateStr);
+    MessageDlg(sValidateStr, mtError, [mbOK], 0);
+  end;
 end;
 
 procedure TfrmSignUp.imgSignUpHoverMouseLeave(Sender: TObject);
