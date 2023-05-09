@@ -91,7 +91,7 @@ begin
 
   objDamReading := TDamReading.Create;
   SetLength(arrDamData, 6);
-  arrDamData := objDamReading.FetchDamLevels;
+  objDamReading.InsertDailyDamReadings;
 
   for i := 0 to 5 do
     sOutput := sOutput + #13 + floattostr(arrDamData[i]);
