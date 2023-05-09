@@ -14,8 +14,6 @@ type
     dam_id: integer;
     level_percent: Real;
     reading_date: TDateTime;
-
-    function FetchReadingDate(HTMLTable: String): TDate;
   public
     constructor Create(dam_id: integer; level_percent: Real;
       reading_date: TDateTime); overload;
@@ -23,10 +21,6 @@ type
     constructor CreateFromString(dam_id: integer; level_percent: Real;
       reading_date: TDateTime);
     function FetchDamLevels: TArray<Real>;
-
-    procedure SetDamLevel;
-    procedure SetDamID;
-    procedure SetReadingDate;
     procedure InsertDamReading;
   end;
 
@@ -63,7 +57,6 @@ var
   i, j, tag_len, tag_start_pos, tag_end_pos: integer;
   arrDamData: TArray<Real>;
   iCount: integer;
-  ReadingDate: TDate;
 begin
   SetLength(arrDamData, 6);
   Client := TRESTClient.Create(nil);
@@ -89,8 +82,6 @@ begin
       table_begin_pos);
 
     table := copy(page, table_begin_pos, table_end_pos);
-
-    ReadingDate := FetchReadingDate(table);
 
     tag := '&lt;/td&gt;&lt;td style="height:31px;text-align:right;"&gt;';
     tag_len := length(tag);
@@ -141,39 +132,7 @@ begin
   Result := arrDamData;
 end;
 
-function TDamReading.FetchReadingDate(HTMLTable: String): TDate;
-var
-  tag, val_str: String;
-  tag_len, tag_start_pos, tag_end_pos: integer;
-begin
-  tag := 'Current Dam Water Levels - ';
-  // 8/5/2023</b> </caption>&gt;';
-  tag_len := length(tag);
-  tag_start_pos := Pos(tag, HTMLTable);
-
-  tag_end_pos := PosEx('#$200B ''&lt;/b&gt; &lt;/caption&gt;', HTMLTable, tag_start_pos);
-  val_str := copy(HTMLTable, tag_start_pos + tag_len, tag_end_pos - tag_start_pos
-    - tag_len);
-
-    Result := StrtoDate(val_str);
-end;
-
 procedure TDamReading.InsertDamReading;
-begin
-
-end;
-
-procedure TDamReading.SetDamID;
-begin
-
-end;
-
-procedure TDamReading.SetDamLevel;
-begin
-
-end;
-
-procedure TDamReading.SetReadingDate;
 begin
 
 end;

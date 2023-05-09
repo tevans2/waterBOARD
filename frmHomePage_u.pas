@@ -96,7 +96,8 @@ begin
   for i := 0 to 5 do
     sOutput := sOutput + #13 + floattostr(arrDamData[i]);
 
-  SHowmessage(sOutput);
+  SHowmessage(sOutput);
+
 
 end;
 
