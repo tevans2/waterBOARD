@@ -24,9 +24,8 @@ type
     constructor Create(dam_id: integer; level_percent: Real;
       reading_date: TDate); overload;
     constructor Create; overload;
-    constructor CreateFromString(FormattedCSVString: String);
-    function ExtractFromString(FormattedCSVString: String)
-      : TArray<TArray<String>>;
+    constructor CreateFromString(dam_id: integer; level_percent: Real;
+      reading_date: TDate);
 
     procedure SetDamLevel;
     procedure SetDamID;
@@ -53,42 +52,9 @@ begin
 
 end;
 
-constructor TDamReading.CreateFromString(FormattedCSVString: String);
+constructor TDamReading.CreateFromString(dam_id: integer; level_percent: Real;
+  reading_date: TDate);
 begin
-
-end;
-
-function TDamReading.ExtractFromString(FormattedCSVString: String)
-  : TArray<TArray<String>>;
-var
-  dReadingDate: TDate;
-  sDate: String;
-  rLevelPercent: Real;
-  iDamID, i: integer;
-  fmt: TFormatSettings;
-begin
-  // Government CSV file format:  DATE,HEIGHT,STORAGE,Current(%),Last Year
-  // Dam Order:                   WEMMERSHOEK, STEENBRAS LOWER, STEENBRAS UPPER, VOËLVLEI ,(HELY-HUTCHINSON), (WOODHEAD), (VICTORIA), (ALEXANDRA), (DE VILLIERS), (KLEINPLAATS), (LEWIS GAY), THEEWATERSKLOOF, BERG RIVER, (TOTAL STORED - BIG 6,,,,LAND-en ZEEZICHT,,,)
-
-  fmt := TFormatSettings.Create;
-  fmt.ShortDateFormat := 'dd-Mmm-yy';
-  sDate := Copy(FormattedCSVString, 0, pos(',', FormattedCSVString) - 1);
-
-  for i := 1 to 12 do
-    sDate := sDate.Replace(fmt.ShortMonthNames[i], i.ToString);
-
-  dReadingDate := StrToDate(sDate, fmt);
-  // For WEMMERSHOEK
-
-  // For STEENBRAS LOWER
-
-  // For STEENBRAS UPPER
-
-  // For VOELVLEI
-
-  // For THEEWATERSKLOOF
-
-  // For BERG RIVER
 
 end;
 
@@ -107,13 +73,13 @@ begin
 
   tag := '&lt;/td&gt;&lt;td style="height:31px;text-align:right;"&gt;';
   tag_len := length(tag);
-  tag_start_pos := pos(tag, table);
+  tag_start_pos := Pos(tag, table);
 
   // Get first dam (Berg River) data
   for i := 1 to 2 do
   begin
     tag_end_pos := PosEx('&lt;br&gt;', table, tag_start_pos);
-    val_str := Copy(table, tag_start_pos + tag_len, tag_end_pos - tag_start_pos
+    val_str := copy(table, tag_start_pos + tag_len, tag_end_pos - tag_start_pos
       - tag_len);
 
     tag_start_pos := PosEx(tag, table, tag_start_pos + tag_len);
@@ -129,12 +95,12 @@ begin
   // Get other 5 dam datas
   tag := '&lt;/td&gt;&lt;td style="text-align:right;"&gt;';
   tag_len := length(tag);
-  tag_start_pos := pos(tag, table);
+  tag_start_pos := Pos(tag, table);
 
   for j := 1 to 10 do
   begin
     tag_end_pos := PosEx('&lt;br&gt;', table, tag_start_pos);
-    val_str := Copy(table, tag_start_pos + tag_len, tag_end_pos - tag_start_pos
+    val_str := copy(table, tag_start_pos + tag_len, tag_end_pos - tag_start_pos
       - tag_len);
 
     tag_start_pos := PosEx(tag, table, tag_start_pos + tag_len);
@@ -158,10 +124,10 @@ begin
   tag := 'Current Dam Water Levels - ';
 
   tag_len := length(tag);
-  tag_start_pos := pos(tag, HTMLTable);
+  tag_start_pos := Pos(tag, HTMLTable);
 
   tag_end_pos := PosEx('&lt;/b&gt; &lt;/caption&gt;', HTMLTable, tag_start_pos);
-  val_str := Copy(HTMLTable, tag_start_pos + tag_len,
+  val_str := copy(HTMLTable, tag_start_pos + tag_len,
     tag_end_pos - tag_start_pos - tag_len);
 
   val_str := StringReplace(val_str, #$200B, '', [rfReplaceAll]);
@@ -169,7 +135,7 @@ begin
   fmt := TFormatSettings.Create;
   fmt.ShortDateFormat := 'd/m/yyyy';
 
-  Result := StrToDate(val_str, fmt);
+  Result := StrtoDate(val_str, fmt);
 end;
 
 function TDamReading.FetchTable: String;
@@ -196,11 +162,11 @@ begin
   if response.Status.Success then
   begin
     page := response.Content;
-    table_begin_pos := pos('Current Dam Water Levels', page);
+    table_begin_pos := Pos('Current Dam Water Levels', page);
     table_end_pos := PosEx('Because each dam size is different', page,
       table_begin_pos);
 
-    table := Copy(page, table_begin_pos, table_end_pos);
+    table := copy(page, table_begin_pos, table_end_pos);
 
     Result := table;
   end

@@ -91,13 +91,14 @@ begin
 
   objDamReading := TDamReading.Create;
   SetLength(arrDamData, 6);
+  objDamReading.ExtractFromString
+    ('01-Jan-12,48.2,44621,76.1,,20.3,23549,70.3,,24.2,29620,93.2,,15,124100,75.6,,14.2,763,82.5,,35.3,743,77.8,,0,0,0,,10.6,100,74.4,,26.3,197,81,,6.2,337,25.9,,13.9,128,76.4,,24.8,357963,74.5,,39.3,115930,89.2,,695783,77.5,,,,,,');
   objDamReading.InsertDailyDamReadings;
 
   for i := 0 to 5 do
     sOutput := sOutput + #13 + floattostr(arrDamData[i]);
 
   SHowmessage(sOutput);
-
 
 end;
 
