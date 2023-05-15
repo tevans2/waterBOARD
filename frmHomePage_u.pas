@@ -83,6 +83,8 @@ var
   arrDamData: TArray<Real>;
   i: Integer;
   sOutput: String;
+  dReadingDate: TDate;
+  sHTMLTable: String;
 begin
   // GUI CODE BEGIN
   frmDamList.Show;
@@ -91,9 +93,18 @@ begin
 
   objDamReading := TDamReading.Create;
   SetLength(arrDamData, 6);
-  objDamReading.ExtractFromString
-    ('01-Jan-12,48.2,44621,76.1,,20.3,23549,70.3,,24.2,29620,93.2,,15,124100,75.6,,14.2,763,82.5,,35.3,743,77.8,,0,0,0,,10.6,100,74.4,,26.3,197,81,,6.2,337,25.9,,13.9,128,76.4,,24.8,357963,74.5,,39.3,115930,89.2,,695783,77.5,,,,,,');
-  objDamReading.InsertDailyDamReadings;
+
+  // Insert from STRING
+  objDamReading.ExtractFromString(dReadingDate,
+    '6-May-12,49.2,45,40.4,43.2,52.1,61.1,,');
+
+  objDamReading.InsertDailyDamReadings(dReadingDate, arrDamData);
+
+  // Insert from WEB
+  sHTMLTable := objDamReading.FetchTable;
+  arrDamData := objDamReading.FetchDamLevels(sHTMLTable);
+
+  objDamReading.InsertDailyDamReadings(dReadingDate, arrDamData);
 
   for i := 0 to 5 do
     sOutput := sOutput + #13 + floattostr(arrDamData[i]);

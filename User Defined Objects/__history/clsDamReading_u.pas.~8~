@@ -16,25 +16,24 @@ type
     dam_id: integer;
     level_percent: Real;
     reading_date: TDateTime;
+
+    function FetchReadingDate(HTMLTable: String): TDate;
+    function FetchTable: String;
+    function FetchDamLevels(HTMLTable: String): TArray<Real>;
   public
     constructor Create(dam_id: integer; level_percent: Real;
       reading_date: TDate); overload;
     constructor Create; overload;
     constructor CreateFromString(FormattedCSVString: String);
-    function ExtractFromString(var ReadingDate: TDate;
-      FormattedCSVString: String): TArray<TArray<String>>;
+    function ExtractFromString(FormattedCSVString: String)
+      : TArray<TArray<String>>;
 
     procedure SetDamLevel;
     procedure SetDamID;
     procedure SetReadingDate;
 
-    function FetchReadingDate(HTMLTable: String): TDate;
-    function FetchTable: String;
-    function FetchDamLevels(HTMLTable: String): TArray<Real>;
-
     procedure InsertDamReading;
-    procedure InsertDailyDamReadings(ReadingDate: TDate;
-      arrDamLevels: TArray<Real>);
+    procedure InsertDailyDamReadings;
   end;
 
 implementation
@@ -59,54 +58,38 @@ begin
 
 end;
 
-function TDamReading.ExtractFromString(var ReadingDate: TDate;
-  FormattedCSVString: String): TArray<TArray<String>>;
+function TDamReading.ExtractFromString(FormattedCSVString: String)
+  : TArray<TArray<String>>;
 var
-  sDate: string;
+  dReadingDate: TDate;
+  sDate: String;
   rLevelPercent: Real;
-  iDamID, i, iStartPos, iEndpos: integer;
+  iDamID, i: integer;
   fmt: TFormatSettings;
 begin
   // Government CSV file format:  DATE,HEIGHT,STORAGE,Current(%),Last Year
-  // Dam Order:                   WEMMERSHOEK, STEENBRAS LOWER, STEENBRAS UPPER, VOËLVLEI, THEEWATERSKLOOF, BERG RIVER
-  // Result Array Format:         [0]WEMMERSHOEK, [1]STEENBRAS LOWER, [2]STEENBRAS UPPER, [3]VOËLVLEI, [4]THEEWATERSKLOOF, [5]BERG RIVER
-  // Example String:               6-May-12,49.2,45,40.4,43.2,52.1,61.1,,
+  // Dam Order:                   WEMMERSHOEK, STEENBRAS LOWER, STEENBRAS UPPER, VOËLVLEI ,(HELY-HUTCHINSON), (WOODHEAD), (VICTORIA), (ALEXANDRA), (DE VILLIERS), (KLEINPLAATS), (LEWIS GAY), THEEWATERSKLOOF, BERG RIVER, (TOTAL STORED - BIG 6,,,,LAND-en ZEEZICHT,,,)
 
   fmt := TFormatSettings.Create;
-  fmt.ShortDateFormat := 'dd-m-yy';
+  fmt.ShortDateFormat := 'dd-Mmm-yy';
   sDate := Copy(FormattedCSVString, 0, pos(',', FormattedCSVString) - 1);
 
   for i := 1 to 12 do
     sDate := sDate.Replace(fmt.ShortMonthNames[i], i.ToString);
 
-  ReadingDate := StrToDate(sDate, fmt);
-
-  SetLength(Result, 2, 6);
+  dReadingDate := StrToDate(sDate, fmt);
   // For WEMMERSHOEK
-  Result[0, 0] := 'WEMMERSHOEK';
 
   // For STEENBRAS LOWER
-  Result[0, 1] := 'STEENBRAS LOWER';
 
   // For STEENBRAS UPPER
-  Result[0, 2] := 'STEENBRAS UPPER';
 
   // For VOELVLEI
-  Result[0, 3] := 'VOELVLEI';
 
   // For THEEWATERSKLOOF
-  Result[0, 4] := 'THEEWATERSKLOOF';
 
   // For BERG RIVER
-  Result[0, 5] := 'BERG RIVER';
 
-  iStartPos := pos(',', FormattedCSVString) + 1;
-  for i := 0 to 5 do
-  begin
-    iEndpos := pos(',', FormattedCSVString, iStartPos);
-    Result[1, i] := Copy(FormattedCSVString, iStartPos, iEndpos - iStartPos);
-    iStartPos := iEndpos + 1;
-  end;
 end;
 
 function TDamReading.FetchDamLevels(HTMLTable: String): TArray<Real>;
@@ -228,13 +211,16 @@ begin
   end;
 end;
 
-procedure TDamReading.InsertDailyDamReadings(ReadingDate: TDate;
-  arrDamLevels: TArray<Real>);
+procedure TDamReading.InsertDailyDamReadings;
 var
+  arrDamLevels: TArray<Real>;
   sHTMLTable: String;
   i: integer;
 begin
-  Self.reading_date := ReadingDate;
+  sHTMLTable := FetchTable;
+  arrDamLevels := FetchDamLevels(sHTMLTable);
+
+  Self.reading_date := FetchReadingDate(sHTMLTable);
   for i := 0 to length(arrDamLevels) - 1 do
   begin
     Self.level_percent := arrDamLevels[i];
