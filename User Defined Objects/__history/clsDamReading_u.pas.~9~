@@ -16,7 +16,6 @@ type
     dam_id: integer;
     level_percent: Real;
     reading_date: TDateTime;
-
   public
     constructor Create(dam_id: integer; level_percent: Real;
       reading_date: TDate); overload;
@@ -117,8 +116,6 @@ var
   arrDamData: TArray<Real>;
   iCount: integer;
   ReadingDate: TDate;
-const
-  Komma: TFormatSettings = (DecimalSeparator: ',');
 begin
   SetLength(arrDamData, 6);
   iCount := 0;
@@ -141,7 +138,7 @@ begin
     if i mod 2 = 0 then // Get only level percent (ommit capacity)
     begin
       level_percent := StringReplace(val_str, '.', ',', []);
-      arrDamData[iCount] := strtofloat(level_percent, Komma);
+      arrDamData[iCount] := strtofloat(level_percent);
       inc(iCount);
     end;
   end;
