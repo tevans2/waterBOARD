@@ -95,17 +95,19 @@ begin
   SetLength(arrDamData, 6);
 
   // Insert from STRING
-//  objDamReading.ExtractFromString(dReadingDate,
-//    '6-May-12,49.2,45,40.4,43.2,52.1,61.1,,');
-//
-//  objDamReading.InsertDailyDamReadings(dReadingDate, arrDamData);
+  // objDamReading.ExtractFromString(dReadingDate,
+  // '6-May-12,49.2,45,40.4,43.2,52.1,61.1,,');
+  //
+  // objDamReading.InsertDailyDamReadings(dReadingDate, arrDamData);
 
   // Insert from WEB
   sHTMLTable := objDamReading.FetchTable;
   arrDamData[1] := strtofloat('87.6');
   arrDamData := objDamReading.FetchDamLevels(sHTMLTable);
+  dReadingDate := objDamReading.FetchReadingDate(sHTMLTable);
 
-  objDamReading.InsertDailyDamReadings(dReadingDate, arrDamData);
+  if not objDamReading.CheckReadingDateInTable(dReadingDate) then
+    objDamReading.InsertDailyDamReadings(dReadingDate, arrDamData);
 
   for i := 0 to 5 do
     sOutput := sOutput + #13 + floattostr(arrDamData[i]);

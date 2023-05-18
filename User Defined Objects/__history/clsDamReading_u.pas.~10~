@@ -33,7 +33,6 @@ type
     function FetchTable: String;
     function FetchDamLevels(HTMLTable: String): TArray<Real>;
 
-    function CheckReadingDateInTable(ReadingDate: TDate): Boolean;
     procedure InsertDamReading;
     procedure InsertDailyDamReadings(ReadingDate: TDate;
       arrDamLevels: TArray<Real>);
@@ -49,31 +48,6 @@ begin
   Self.dam_id := dam_id;
   Self.level_percent := level_percent;
   Self.reading_date := reading_date;
-end;
-
-function TDamReading.CheckReadingDateInTable(ReadingDate: TDate): Boolean;
-var
-  DBDate: TDate;
-begin
-  with dmWaterboard do
-  begin
-    qryWaterBoard.SQL.Clear;
-    qryWaterBoard.SQL.Text := 'SELECT reading_date FROM [DAM_READING]';
-    qryWaterBoard.Open;
-    Result := False;
-
-    qryWaterBoard.First;
-    while not qryWaterBoard.Eof do
-    begin
-      DBDate := qryWaterBoard['reading_date'];
-      if DBDate = ReadingDate then
-      begin
-        Result := True;
-        exit
-      end;
-      qryWaterBoard.Next;
-    end;
-  end;
 end;
 
 constructor TDamReading.Create;
@@ -188,7 +162,7 @@ begin
     if j mod 2 = 0 then
     begin
       level_percent := StringReplace(val_str, '.', ',', []);
-      arrDamData[iCount] := strtofloat(level_percent, Komma);
+      arrDamData[iCount] := strtofloat(level_percent);
       inc(iCount);
     end;
   end;
@@ -253,7 +227,7 @@ begin
   else
   begin
     Showmessage('Failed with ' + response.StatusText + ': ' + response.Content);
-    exit
+    Exit
   end;
 end;
 
@@ -277,7 +251,7 @@ procedure TDamReading.InsertDamReading;
 begin
   with dmWaterboard do
   begin
-    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.clear;
     qryWaterBoard.SQL.Add('INSERT INTO DAM_READING');
     qryWaterBoard.SQL.Add('(reading_date, level_percent, dam_id)');
     qryWaterBoard.SQL.Add('VALUES (:reading_date, :level_percent, :dam_id)');
