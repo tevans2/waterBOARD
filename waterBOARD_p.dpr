@@ -13,7 +13,8 @@ uses
   clsUSER_u in 'User Defined Objects\clsUSER_u.pas',
   clsADDRESS_u in 'User Defined Objects\clsADDRESS_u.pas',
   clsValidation_u in 'User Defined Objects\clsValidation_u.pas',
-  clsDamReading_u in 'User Defined Objects\clsDamReading_u.pas';
+  clsDamReading_u in 'User Defined Objects\clsDamReading_u.pas',
+  Graph_u in 'Graph_u.pas';
 
 {$R *.res}
 

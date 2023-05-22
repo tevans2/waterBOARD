@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
   VclTee.TeeGDIPlus, VclTee.TeEngine, VclTee.Series, VclTee.TeeProcs,
-  VclTee.Chart, Vcl.StdCtrls, Vcl.ControlList, Vcl.Buttons, Math;
+  VclTee.Chart, Vcl.StdCtrls, Vcl.ControlList, Vcl.Buttons, Math, Graph_u;
 
 type
   TfrmGraphView = class(TForm)
@@ -45,6 +45,7 @@ type
     procedure imgAddReadingMouseEnter(Sender: TObject);
   private
     { Private declarations }
+    objGraph: TGraph;
   public
     { Public declarations }
     OrigionForm: integer;
@@ -83,6 +84,8 @@ begin
 end;
 
 procedure TfrmGraphView.FormShow(Sender: TObject);
+var
+  dStartDate, dEndDate: TDate;
 begin
   // GUI CODE BEGIN
   imgHome_hover.Visible := False;
@@ -92,6 +95,12 @@ begin
 
   WindowState := frmHomePage.MasterWindowState;
   // GUI CODE END
+
+  dStartDate := now;
+  dEndDate := now;
+
+  objGraph := TGraph.Create;
+  objGraph.DisplayGraph(dStartDate, dEndDate)
 end;
 
 procedure TfrmGraphView.imgAddReadingHoverMouseLeave(Sender: TObject);
