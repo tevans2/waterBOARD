@@ -270,6 +270,7 @@ object frmGraphView: TfrmGraphView
             49AC16BABBBBE70B3AC177BBD7D4D48CFAF6D0719CFF03252DFA565A48FD767B
             7BBBD0D3D3F389737F0028634E720F3F46180000000049454E44AE426082}
           Proportional = True
+          OnClick = imgAddReadingHoverClick
           OnMouseLeave = imgAddReadingHoverMouseLeave
         end
         object imgAddTargetHover: TImage
@@ -349,9 +350,16 @@ object frmGraphView: TfrmGraphView
           Margins.Right = 710
           Margins.Bottom = 0
           TabOrder = 0
+          OnChange = cbbTimeFrameChange
+          Items.Strings = (
+            '1 month'
+            '6 months'
+            '1 year'
+            '5 years'
+            '10 years')
         end
       end
-      object Chart1: TChart
+      object chrtGraph: TChart
         AlignWithMargins = True
         Left = 50
         Top = 60
@@ -361,19 +369,19 @@ object frmGraphView: TfrmGraphView
         Margins.Top = 60
         Margins.Right = 50
         Margins.Bottom = 30
+        AllowPanning = pmNone
         BorderRound = 66
+        Title.Font.Color = clBlack
+        Title.Font.Height = -23
+        Title.Font.Name = 'Montserrat ExtraBold'
+        Title.Font.Style = [fsBold, fsUnderline]
         Title.Text.Strings = (
           'TChart')
-        BottomAxis.Automatic = False
-        BottomAxis.AutomaticMaximum = False
-        BottomAxis.AutomaticMinimum = False
-        BottomAxis.Maximum = 12.000328007042370000
-        BottomAxis.Minimum = 11.999671992957660000
         LeftAxis.Automatic = False
         LeftAxis.AutomaticMaximum = False
         LeftAxis.AutomaticMinimum = False
-        LeftAxis.Maximum = 531.256525280674700000
-        LeftAxis.Minimum = 531.243474719324800000
+        LeftAxis.ExactDateTime = False
+        LeftAxis.Maximum = 150.000000000000000000
         Panning.MouseWheel = pmwNone
         RightAxis.Automatic = False
         RightAxis.AutomaticMaximum = False
@@ -382,7 +390,7 @@ object frmGraphView: TfrmGraphView
         TopAxis.AutomaticMaximum = False
         TopAxis.AutomaticMinimum = False
         View3D = False
-        Zoom.MouseWheel = pmwNormal
+        Zoom.Allow = False
         Zoom.Pen.Color = clDefault
         Zoom.Pen.Width = 1
         Align = alClient
@@ -393,14 +401,22 @@ object frmGraphView: TfrmGraphView
         ExplicitWidth = 982
         ExplicitHeight = 428
         DefaultCanvas = 'TGDIPlusCanvas'
+        PrintMargins = (
+          15
+          30
+          15
+          30)
         ColorPaletteIndex = 13
         object Series1: TLineSeries
           HoverElement = [heCurrent]
-          SeriesColor = 14653982
+          SeriesColor = 16742656
+          Shadow.Visible = False
           Brush.BackColor = clDefault
+          DrawStyle = dsAll
           LinePen.Width = 4
           Pointer.InflateMargins = True
           Pointer.Style = psRectangle
+          XValues.DateTime = True
           XValues.Name = 'X'
           XValues.Order = loAscending
           YValues.Name = 'Y'

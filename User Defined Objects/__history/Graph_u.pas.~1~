@@ -1,0 +1,41 @@
+unit clsGraph_u;
+
+interface
+
+uses sysutils, dmWaterBoard_u;
+
+type
+  TGraph = class(TObject)
+  private
+    dam_id: integer;
+    start_date: TDate;
+
+  public
+    constructor Create(dam_id: integer; start_date: TDate);
+  end;
+
+implementation
+
+{ TGraph }
+
+constructor TGraph.Create(dam_id: integer; start_date: TDate);
+begin
+  Self.dam_id := dam_id;
+  Self.start_date := start_date;
+
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add
+      ('SELECT reading_date, level_percent, dam_id FROM DAM_READING ');
+    qryWaterBoard.SQL.Add
+      ('WHERE (dam_id = :dam_id) AND (reading_date >= #' + DateToStr(start_date) + '#)');
+
+    qryWaterBoard.Parameters.ParamByName('dam_id').Value := dam_id;
+//    qryWaterBoard.Parameters.ParamByName('start_date').Value := start_date;
+
+    qryWaterBoard.Open;
+  end;
+end;
+
+end.

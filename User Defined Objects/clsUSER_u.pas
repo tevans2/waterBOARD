@@ -19,6 +19,7 @@ type
       email: string); overload;
     constructor Create(username, password: string); overload;
     procedure InsertUserRecord(objAddress: TAddress);
+    function GetAddressID: integer;
     function CheckLogin: Boolean;
     function Validate(var Validation_Str: String): TArray<Integer>;
     procedure AddToArray(var Input_Array: TArray<Integer>; To_add: Integer);
@@ -44,6 +45,11 @@ constructor TUser.Create(username, password: string);
 begin
   Self.username := username;
   Self.password := password;
+end;
+
+function TUser.GetAddressID: integer;
+begin
+  Result := Self.address_id;
 end;
 
 procedure TUser.InsertUserRecord(objAddress: TAddress);
@@ -213,16 +219,22 @@ begin
   begin
     with dmWaterboard do
     begin
-      qryWaterBoard.SQL.clear;
+      qryWaterBoard.SQL.Clear;
       qryWaterBoard.SQL.Add
-        ('SELECT username, password FROM [USER] WHERE username = ' +
-        QuotedStr(Self.username));
+        ('SELECT first_name, surname, username, password, address_id FROM [USER] WHERE username = '
+        + QuotedStr(Self.username));
       qryWaterBoard.Open;
 
       sDBPassword := qryWaterBoard['password'];
 
       if sDBPassword = Self.password then
+      begin
         Result := True;
+
+        Self.first_name := qryWaterBoard['first_name'];
+        Self.surname := qryWaterBoard['surname'];
+        Self.address_id := qryWaterBoard['address_id'];
+      end;
     end;
   end;
 end;

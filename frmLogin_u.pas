@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
-  Vcl.StdCtrls, frmHomeLoggedIn_u, clsUser_u;
+  Vcl.StdCtrls, frmHomeLoggedIn_u, clsUser_u, frmGraphView_u;
 
 type
   TfrmLogin = class(TForm)
@@ -80,6 +80,8 @@ begin
     frmHomePage.Hide;
 
     frmHomeLoggedIn.bLoggedIn := True;
+
+    frmGraphView.ActiveUser := objExistingUser;
     // GUI CODE END
   end
   else // error

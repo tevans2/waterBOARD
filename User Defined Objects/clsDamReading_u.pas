@@ -15,7 +15,7 @@ type
   private
     dam_id: integer;
     level_percent: Real;
-    reading_date: TDateTime;
+    reading_date: TDate;
 
   public
     constructor Create(dam_id: integer; level_percent: Real;

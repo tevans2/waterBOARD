@@ -4,10 +4,11 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
+  System.Classes, Vcl.Graphics, dmWaterBoard_u,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
   VclTee.TeeGDIPlus, VclTee.TeEngine, VclTee.Series, VclTee.TeeProcs,
-  VclTee.Chart, Vcl.StdCtrls, Vcl.ControlList, Vcl.Buttons, Math, Graph_u;
+  VclTee.Chart, Vcl.StdCtrls, Vcl.ControlList, Vcl.Buttons, Math, Graph_u,
+  clsUSER_u, clsValidation_u, clsWaterMeterReading_u, DateUtils;
 
 type
   TfrmGraphView = class(TForm)
@@ -19,8 +20,7 @@ type
     Panel3: TPanel;
     imgLogoIcon: TImage;
     imgBackArrow: TImage;
-    Chart1: TChart;
-    Series1: TLineSeries;
+    chrtGraph: TChart;
     imgBackArrowHover: TImage;
     imgHome_hover: TImage;
     imgHome: TImage;
@@ -30,6 +30,7 @@ type
     Panel4: TPanel;
     imgAddReadingHover: TImage;
     imgAddTargetHover: TImage;
+    Series1: TLineSeries;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure imgBackArrowMouseEnter(Sender: TObject);
@@ -43,12 +44,18 @@ type
     procedure imgAddTargetHoverMouseLeave(Sender: TObject);
     procedure imgAddReadingHoverMouseLeave(Sender: TObject);
     procedure imgAddReadingMouseEnter(Sender: TObject);
+    procedure cbbTimeFrameChange(Sender: TObject);
+    procedure imgAddReadingHoverClick(Sender: TObject);
   private
     { Private declarations }
     objGraph: TGraph;
+    procedure PopulateDamGraph;
   public
     { Public declarations }
     OrigionForm: integer;
+    DamID: integer;
+    ActiveUser: TUser;
+    objNewWaterMeterReading: TWaterMeterReading;
   end;
 
 var
@@ -59,6 +66,11 @@ implementation
 {$R *.dfm}
 
 uses frmHomePage_u, frmDamList_u, frmMapView_u, frmHomeLoggedIn_u;
+
+procedure TfrmGraphView.cbbTimeFrameChange(Sender: TObject);
+begin
+  PopulateDamGraph;
+end;
 
 procedure TfrmGraphView.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -86,6 +98,7 @@ end;
 procedure TfrmGraphView.FormShow(Sender: TObject);
 var
   dStartDate, dEndDate: TDate;
+  iDamID: integer;
 begin
   // GUI CODE BEGIN
   imgHome_hover.Visible := False;
@@ -93,14 +106,67 @@ begin
   imgAddReadingHover.Visible := False;
   imgAddTargetHover.Visible := False;
 
+  if OrigionForm = 3 then
+  begin
+    imgAddReading.Visible := True;
+    imgAddReadingHover.Visible := False;
+    imgAddTarget.Visible := True;
+    imgAddTargetHover.Visible := False;
+
+    cbbTimeFrame.Visible := False;
+  end
+  else
+  begin
+    imgAddReading.Visible := False;
+    imgAddReadingHover.Visible := False;
+    imgAddTarget.Visible := False;
+    imgAddTargetHover.Visible := False;
+
+    cbbTimeFrame.Visible := True;
+  end;
+
   WindowState := frmHomePage.MasterWindowState;
   // GUI CODE END
 
-  dStartDate := now;
-  dEndDate := now;
+  if OrigionForm <> 3 then
+  begin
+    cbbTimeFrame.ItemIndex := 2;
+    PopulateDamGraph;
+  end;
 
-  objGraph := TGraph.Create;
-  objGraph.DisplayGraph(dStartDate, dEndDate)
+end;
+
+procedure TfrmGraphView.imgAddReadingHoverClick(Sender: TObject);
+var
+  rReading: Real;
+  sReading: String;
+  dDate: TDate;
+  sDate: String;
+  iAddressID: integer;
+  fmt: TFormatSettings;
+begin
+  sReading := Inputbox('Water Meter Reading',
+    'Enter water meter reading (kl):', '');
+  try
+    rReading := strtofloat(sReading);
+  except
+    Showmessage
+      ('Please enter a valid water meter reading in kilo litres. Eg. 87,33 kl');
+    Exit
+  end;
+
+  iAddressID := ActiveUser.GetAddressID;
+  sDate := FormatDateTime('d/m/yyy', Now);
+
+  fmt := TFormatSettings.Create;
+  fmt.ShortDateFormat := 'd/m/yyyy';
+
+  dDate := StrToDate(sDate, fmt);
+
+  objNewWaterMeterReading := TWaterMeterReading.Create(rReading, dDate,
+    iAddressID);
+  objNewWaterMeterReading.InsertWaterMeterReading;
+
 end;
 
 procedure TfrmGraphView.imgAddReadingHoverMouseLeave(Sender: TObject);
@@ -131,6 +197,9 @@ begin
       frmDamList.Show;
     2:
       frmMapView.Show;
+    3:
+      frmHomeLoggedIn.Show;
+
   end;
 
   Self.Hide;
@@ -177,6 +246,32 @@ begin
   // GUI CODE BEGIN
   imgHome_hover.Visible := False;
   // GUI CODE END
+end;
+
+procedure TfrmGraphView.PopulateDamGraph;
+var
+  iCount: integer;
+  dStartDate: TDate;
+begin
+  chrtGraph.Series[0].Clear;
+
+  objGraph := TGraph.Create;
+  dStartDate := objGraph.CalculateStartDate(cbbTimeFrame.ItemIndex);
+  objGraph.SetupData(DamID, dStartDate);
+
+  chrtGraph.Title.Text.Clear;
+  chrtGraph.Title.Text.Add(objGraph.GetGraphTitle(DamID));
+
+  with dmWaterboard do
+  begin
+    qryWaterBoard.First;
+    while not qryWaterBoard.Eof do
+    begin
+      chrtGraph.Series[0].AddXY(qryWaterBoard['reading_date'],
+        qryWaterBoard['level_percent'], '', clTeeColor);
+      qryWaterBoard.Next;
+    end;
+  end;
 end;
 
 end.

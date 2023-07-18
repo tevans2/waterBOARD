@@ -14,7 +14,8 @@ uses
   clsADDRESS_u in 'User Defined Objects\clsADDRESS_u.pas',
   clsValidation_u in 'User Defined Objects\clsValidation_u.pas',
   clsDamReading_u in 'User Defined Objects\clsDamReading_u.pas',
-  Graph_u in 'Graph_u.pas';
+  Graph_u in 'User Defined Objects\Graph_u.pas',
+  clsWaterMeterReading_u in 'User Defined Objects\clsWaterMeterReading_u.pas';
 
 {$R *.res}
 

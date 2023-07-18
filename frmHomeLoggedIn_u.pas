@@ -124,6 +124,7 @@ end;
 procedure TfrmHomeLoggedIn.imgUserStatsHoverClick(Sender: TObject);
 begin
   // GUI CODE BEGIN
+  frmGraphView.OrigionForm := 3;
   frmGraphView.Show;
   frmHomeLoggedIn.Hide;
   // GUI CODE END

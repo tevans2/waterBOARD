@@ -1,0 +1,20 @@
+unit clsGraph_u;
+
+interface
+
+uses  SysUtils, dmWaterboard_u, clsValidation_u;;
+
+type
+  TDamGraph = class(TObject)
+  private
+    DamID: integer;
+    start_date: TDate;
+
+  public
+    constructor Create(DamID: integer; start_date: TDate);
+
+  end;
+
+implementation
+
+end.
