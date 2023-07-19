@@ -1,0 +1,27 @@
+unit clsTarget_u;
+
+interface
+
+//uses SysUtils, dmWaterboard_u, clsValidation_u;
+//
+//type
+//  TTarget = class(TObject)
+//  private
+//    target_set_date: TDate;
+//    street_name: string;
+//    suburb: string;
+//    address_id: integer;
+//
+//    function GenerateID: integer;
+//
+//  public
+//    constructor Create(unit_no, street_name, suburb: string);
+//    function GetAddressID: integer;
+//    procedure InsertAddressRecord;
+//    function Validate(var Validation_Str: String): TArray<integer>;
+//    procedure AddToArray(var Input_Array: TArray<integer>; To_add: integer);
+//  end;
+
+implementation
+
+end.

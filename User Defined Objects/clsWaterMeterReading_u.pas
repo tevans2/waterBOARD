@@ -7,7 +7,7 @@ uses Sysutils, dmWaterBoard_u;
 type
   TWaterMeterReading = class(TObject)
   private
-    reading_date: TDate;
+    reading_date: TDateTime;
     reading_in_kl: Real;
     address_id: integer;
   public

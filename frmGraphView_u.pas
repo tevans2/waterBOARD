@@ -55,6 +55,7 @@ type
     OrigionForm: integer;
     DamID: integer;
     ActiveUser: TUser;
+    objValidation: TValidate;
     objNewWaterMeterReading: TWaterMeterReading;
   end;
 
@@ -145,27 +146,31 @@ var
   iAddressID: integer;
   fmt: TFormatSettings;
 begin
+  objValidation := TValidate.Create;
+
   sReading := Inputbox('Water Meter Reading',
     'Enter water meter reading (kl):', '');
-  try
-    rReading := strtofloat(sReading);
-  except
+
+  if objValidation.CheckReal(sReading) then
+  begin
+    iAddressID := ActiveUser.GetAddressID;
+    sDate := FormatDateTime('d/m/yyy', Now);
+
+    fmt := TFormatSettings.Create;
+    fmt.ShortDateFormat := 'd/m/yyyy';
+
+    dDate := StrToDate(sDate, fmt);
+
+    objNewWaterMeterReading := TWaterMeterReading.Create(rReading, dDate,
+      iAddressID);
+    objNewWaterMeterReading.InsertWaterMeterReading;
+  end
+  else
+  begin
     Showmessage
       ('Please enter a valid water meter reading in kilo litres. Eg. 87,33 kl');
     Exit
   end;
-
-  iAddressID := ActiveUser.GetAddressID;
-  sDate := FormatDateTime('d/m/yyy', Now);
-
-  fmt := TFormatSettings.Create;
-  fmt.ShortDateFormat := 'd/m/yyyy';
-
-  dDate := StrToDate(sDate, fmt);
-
-  objNewWaterMeterReading := TWaterMeterReading.Create(rReading, dDate,
-    iAddressID);
-  objNewWaterMeterReading.InsertWaterMeterReading;
 
 end;
 

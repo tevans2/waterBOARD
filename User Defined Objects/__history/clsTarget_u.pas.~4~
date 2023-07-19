@@ -1,0 +1,24 @@
+unit clsTarget_u;
+
+interface
+
+uses SysUtils, dmWaterboard_u, clsValidation_u;
+
+type
+  TTarget = class(TObject)
+  private
+    target_set_date: TDate;
+    target_value: Real;
+    user_id: integer;
+
+  public
+    constructor Create(target_set_date: TDate; target_value: Real;
+      user_id: integer);
+    procedure InsertTargetRecord;
+    function Validate(var Validation_Str: String): TArray<integer>;
+    procedure AddToArray(var Input_Array: TArray<integer>; To_add: integer);
+  end;
+
+implementation
+
+end.

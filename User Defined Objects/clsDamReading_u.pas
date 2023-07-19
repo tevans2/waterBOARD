@@ -8,14 +8,15 @@ uses
   REST.Types,
   REST.Client,
   dmWaterBoard_u,
-  Vcl.Dialogs;
+  Vcl.Dialogs,
+  DateUtils;
 
 type
   TDamReading = class(TObject)
   private
     dam_id: integer;
     level_percent: Real;
-    reading_date: TDate;
+    reading_date: TDateTime;
 
   public
     constructor Create(dam_id: integer; level_percent: Real;
@@ -281,6 +282,7 @@ begin
     qryWaterBoard.SQL.Add('INSERT INTO DAM_READING');
     qryWaterBoard.SQL.Add('(reading_date, level_percent, dam_id)');
     qryWaterBoard.SQL.Add('VALUES (:reading_date, :level_percent, :dam_id)');
+
     with qryWaterBoard.Parameters do
     begin
       ParamByName('reading_date').Value := Self.reading_date;

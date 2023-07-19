@@ -13,6 +13,7 @@ type
     function CheckLength(InputStr: String; iLength: Integer): Boolean;
     function CheckStr(InputStr: String): Boolean;
     function CheckInt(InputStr: String): Boolean;
+    function CheckReal(InputStr: String): Boolean;
     function CheckDates(Date1, Date2: TDate): Boolean;
     function CheckEmail(InputStr: String): Boolean;
     function CheckCell(InputStr: String): Boolean;
@@ -24,6 +25,7 @@ type
       : Boolean; overload;
     function CheckUnique(InputDate: TDate; DB_table, DB_field: String)
       : Boolean; overload;
+
   end;
 
 implementation
@@ -140,6 +142,16 @@ begin
     Result := True
   else
     Result := False;
+end;
+
+function TValidate.CheckReal(InputStr: String): Boolean;
+begin
+  Result := True;
+  try
+    strtofloat(InputStr);
+  except
+    Result := False;
+  end;
 end;
 
 function TValidate.CheckSame(Str1, Str2: String): Boolean;
