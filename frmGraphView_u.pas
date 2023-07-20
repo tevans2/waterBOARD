@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
   VclTee.TeeGDIPlus, VclTee.TeEngine, VclTee.Series, VclTee.TeeProcs,
   VclTee.Chart, Vcl.StdCtrls, Vcl.ControlList, Vcl.Buttons, Math, Graph_u,
-  clsUSER_u, clsValidation_u, clsWaterMeterReading_u, DateUtils;
+  clsUSER_u, clsValidation_u, clsWaterMeterReading_u, clsTarget_u, DateUtils;
 
 type
   TfrmGraphView = class(TForm)
@@ -46,6 +46,7 @@ type
     procedure imgAddReadingMouseEnter(Sender: TObject);
     procedure cbbTimeFrameChange(Sender: TObject);
     procedure imgAddReadingHoverClick(Sender: TObject);
+    procedure imgAddTargetHoverClick(Sender: TObject);
   private
     { Private declarations }
     objGraph: TGraph;
@@ -57,6 +58,7 @@ type
     ActiveUser: TUser;
     objValidation: TValidate;
     objNewWaterMeterReading: TWaterMeterReading;
+    objNewTarget: TTarget;
   end;
 
 var
@@ -135,6 +137,8 @@ begin
     PopulateDamGraph;
   end;
 
+  objValidation := TValidate.Create;
+
 end;
 
 procedure TfrmGraphView.imgAddReadingHoverClick(Sender: TObject);
@@ -146,7 +150,6 @@ var
   iAddressID: integer;
   fmt: TFormatSettings;
 begin
-  objValidation := TValidate.Create;
 
   sReading := Inputbox('Water Meter Reading',
     'Enter water meter reading (kl):', '');
@@ -154,12 +157,15 @@ begin
   if objValidation.CheckReal(sReading) then
   begin
     iAddressID := ActiveUser.GetAddressID;
-    sDate := FormatDateTime('d/m/yyy', Now);
+
+    sDate := FormatDateTime('yyyy/mm/dd', Now);
 
     fmt := TFormatSettings.Create;
-    fmt.ShortDateFormat := 'd/m/yyyy';
+    fmt.ShortDateFormat := 'yyyy/mm/dd';
 
     dDate := StrToDate(sDate, fmt);
+
+    rReading := strtofloat(sReading);
 
     objNewWaterMeterReading := TWaterMeterReading.Create(rReading, dDate,
       iAddressID);
@@ -168,7 +174,7 @@ begin
   else
   begin
     Showmessage
-      ('Please enter a valid water meter reading in kilo litres. Eg. 87,33 kl');
+      ('Please enter a valid water meter reading in kilo litres. Eg. 7,33 kl');
     Exit
   end;
 
@@ -182,6 +188,43 @@ end;
 procedure TfrmGraphView.imgAddReadingMouseEnter(Sender: TObject);
 begin
   imgAddReadingHover.Show;
+end;
+
+procedure TfrmGraphView.imgAddTargetHoverClick(Sender: TObject);
+var
+  rTarget: Real;
+  sTarget: String;
+  dDate: TDate;
+  sDate: String;
+  iUserID: integer;
+  fmt: TFormatSettings;
+begin
+
+  sTarget := Inputbox('Target Water Usage',
+    'Update your monthly water usage target (kl):', '');
+
+  if objValidation.CheckReal(sTarget) then
+  begin
+    iUserID := ActiveUser.GetUserID;
+
+    sDate := FormatDateTime('yyyy/mm/dd', Now);
+
+    fmt := TFormatSettings.Create;
+    fmt.ShortDateFormat := 'yyyy/mm/dd';
+
+    dDate := StrToDate(sDate, fmt);
+
+    rTarget := strtofloat(sTarget);
+
+    objNewTarget := TTarget.Create(dDate, rTarget, iUserID);
+    objNewTarget.InsertTargetRecord;
+  end
+  else
+  begin
+    Showmessage
+      ('Please enter a valid monthly water usage target in kilo litres. Eg. 6,33 kl');
+    Exit
+  end;
 end;
 
 procedure TfrmGraphView.imgAddTargetHoverMouseLeave(Sender: TObject);

@@ -7,22 +7,26 @@ uses SysUtils, Vcl.Dialogs, dmWaterBoard_u, clsADDRESS_u, clsValidation_u;
 type
   TUser = class(TObject)
   private
+    user_id: integer;
     first_name: String;
     surname: String;
     username: String;
     password: String;
     email: String;
-    address_id: Integer;
+    address_id: integer;
 
   public
     constructor Create(first_name, surname, username, password,
       email: string); overload;
     constructor Create(username, password: string); overload;
     procedure InsertUserRecord(objAddress: TAddress);
+
+    function GetUserID: integer;
     function GetAddressID: integer;
+
     function CheckLogin: Boolean;
-    function Validate(var Validation_Str: String): TArray<Integer>;
-    procedure AddToArray(var Input_Array: TArray<Integer>; To_add: Integer);
+    function Validate(var Validation_Str: String): TArray<integer>;
+    procedure AddToArray(var Input_Array: TArray<integer>; To_add: integer);
   end;
 
 implementation
@@ -52,6 +56,11 @@ begin
   Result := Self.address_id;
 end;
 
+function TUser.GetUserID: integer;
+begin
+  Result := Self.user_id;
+end;
+
 procedure TUser.InsertUserRecord(objAddress: TAddress);
 begin
   objAddress.InsertAddressRecord;
@@ -79,7 +88,7 @@ begin
   end;
 end;
 
-function TUser.Validate(var Validation_Str: String): TArray<Integer>;
+function TUser.Validate(var Validation_Str: String): TArray<integer>;
 var
   objValidate: Tvalidate;
   bAddToArray: Boolean;
@@ -199,9 +208,9 @@ begin
   end;
 end;
 
-procedure TUser.AddToArray(var Input_Array: TArray<Integer>; To_add: Integer);
+procedure TUser.AddToArray(var Input_Array: TArray<integer>; To_add: integer);
 var
-  ilength: Integer;
+  ilength: integer;
 begin
   SetLength(Input_Array, length(Input_Array) + 1);
   ilength := length(Input_Array);
@@ -221,7 +230,7 @@ begin
     begin
       qryWaterBoard.SQL.Clear;
       qryWaterBoard.SQL.Add
-        ('SELECT first_name, surname, username, password, address_id FROM [USER] WHERE username = '
+        ('SELECT user_id, first_name, surname, username, password, address_id FROM [USER] WHERE username = '
         + QuotedStr(Self.username));
       qryWaterBoard.Open;
 
@@ -234,6 +243,7 @@ begin
         Self.first_name := qryWaterBoard['first_name'];
         Self.surname := qryWaterBoard['surname'];
         Self.address_id := qryWaterBoard['address_id'];
+        Self.user_id := qryWaterBoard['user_id'];
       end;
     end;
   end;

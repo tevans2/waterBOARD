@@ -18,18 +18,6 @@ type
     level_percent: Real;
     reading_date: TDateTime;
 
-  public
-    constructor Create(dam_id: integer; level_percent: Real;
-      reading_date: TDate); overload;
-    constructor Create; overload;
-    constructor CreateFromString(FormattedCSVString: String);
-    function ExtractFromString(var ReadingDate: TDate;
-      FormattedCSVString: String): TArray<TArray<String>>;
-
-    procedure SetDamLevel;
-    procedure SetDamID;
-    procedure SetReadingDate;
-
     function FetchReadingDate(HTMLTable: String): TDate;
     function FetchTable: String;
     function FetchDamLevels(HTMLTable: String): TArray<Real>;
@@ -38,6 +26,21 @@ type
     procedure InsertDamReading;
     procedure InsertDailyDamReadings(ReadingDate: TDate;
       arrDamLevels: TArray<Real>);
+
+  public
+    constructor Create(dam_id: integer; level_percent: Real;
+      reading_date: TDate); overload;
+    constructor Create; overload;
+    constructor CreateFromString(FormattedCSVString: String);
+
+    function ExtractFromString(var ReadingDate: TDate;
+      FormattedCSVString: String): TArray<TArray<String>>;
+
+    procedure InsertFromWeb;
+
+    procedure SetDamLevel;
+    procedure SetDamID;
+    procedure SetReadingDate;
   end;
 
 implementation
@@ -292,6 +295,24 @@ begin
 
     qryWaterBoard.ExecSQL;
   end;
+end;
+
+procedure TDamReading.InsertFromWeb;
+var
+  arrDamData: TArray<Real>;
+  sOutput: String;
+  dReadingDate: TDate;
+  sHTMLTable: String;
+begin
+  SetLength(arrDamData, 6);
+
+  // Insert from WEB
+  sHTMLTable := FetchTable;
+  arrDamData := FetchDamLevels(sHTMLTable);
+  dReadingDate := FetchReadingDate(sHTMLTable);
+
+  if not CheckReadingDateInTable(dReadingDate) then
+    InsertDailyDamReadings(dReadingDate, arrDamData);
 end;
 
 procedure TDamReading.SetDamID;

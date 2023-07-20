@@ -337,6 +337,7 @@ object frmGraphView: TfrmGraphView
             847282DF76AFA9A919B1F4D0308CFF0291167D8F3652BFE772B9C56C36FB8D73
             7F02072142726CEADDA20000000049454E44AE426082}
           Proportional = True
+          OnClick = imgAddTargetHoverClick
           OnMouseLeave = imgAddTargetHoverMouseLeave
         end
         object cbbTimeFrame: TComboBox
