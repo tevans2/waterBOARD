@@ -273,6 +273,7 @@ object frmSignUp: TfrmSignUp
         Top = 150
         Width = 316
         Height = 46
+        Hint = 'Click to show/hide password'
         Margins.Left = 100
         Margins.Top = 150
         Margins.Right = 100
@@ -287,8 +288,10 @@ object frmSignUp: TfrmSignUp
         Font.Name = 'Montserrat ExtraBold'
         Font.Style = [fsBold]
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 1
-        OnChange = edtPasswordChange
+        OnClick = edtPasswordClick
         ExplicitHeight = 45
       end
       object edtConfirmPassword: TEdit
@@ -297,6 +300,7 @@ object frmSignUp: TfrmSignUp
         Top = 240
         Width = 316
         Height = 46
+        Hint = 'Click to show/hide password'
         Margins.Left = 100
         Margins.Top = 240
         Margins.Right = 100
@@ -311,7 +315,10 @@ object frmSignUp: TfrmSignUp
         Font.Name = 'Montserrat ExtraBold'
         Font.Style = [fsBold]
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 2
+        OnClick = edtConfirmPasswordClick
         ExplicitHeight = 45
       end
     end

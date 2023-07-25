@@ -44,7 +44,8 @@ type
     procedure FormResize(Sender: TObject);
     procedure imgSignUpHoverClick(Sender: TObject);
     procedure edtUsernameExit(Sender: TObject);
-    procedure edtPasswordChange(Sender: TObject);
+    procedure edtConfirmPasswordClick(Sender: TObject);
+    procedure edtPasswordClick(Sender: TObject);
   private
     { Private declarations }
     objNewUser: TUser;
@@ -63,7 +64,20 @@ implementation
 
 {$R *.dfm}
 
-procedure TfrmSignUp.edtPasswordChange(Sender: TObject);
+uses frmHomeLoggedIn_u, frmLogin_u, frmHomePage_u, frmGraphView_u;
+
+procedure TfrmSignUp.edtConfirmPasswordClick(Sender: TObject);
+begin
+  if edtConfirmPassword.PasswordChar = #0 then
+    edtConfirmPassword.PasswordChar := '*'
+  else
+    edtConfirmPassword.PasswordChar := #0;
+
+  edtConfirmPassword.AutoSelect := False;
+end;
+
+procedure TfrmSignUp.edtPasswordClick(Sender: TObject);
+
 begin
   if edtPassword.PasswordChar = #0 then
     edtPassword.PasswordChar := '*'
@@ -174,6 +188,19 @@ begin
   if sValidateStr = '' then
   begin
     objNewUser.InsertUserRecord(objNewAddress);
+
+    // GUI CODE START
+    // Log In
+    frmHomeLoggedIn.Show;
+    frmLogin.Hide;
+    edtUsername.Clear;
+    edtPassword.Clear;
+    frmHomePage.Hide;
+
+    frmHomeLoggedIn.bLoggedIn := True;
+
+    frmGraphView.ActiveUser := objNewUser;
+    // GUI CODE END
 
     bComplete := False;
     Repeat
