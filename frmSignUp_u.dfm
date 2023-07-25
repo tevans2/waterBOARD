@@ -22,7 +22,7 @@ object frmSignUp: TfrmSignUp
     Left = 0
     Top = 185
     Width = 1025
-    Height = 501
+    Height = 502
     Margins.Left = 0
     Margins.Top = 16
     Margins.Right = 0
@@ -40,8 +40,8 @@ object frmSignUp: TfrmSignUp
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 1019
-    ExplicitHeight = 492
+    ExplicitWidth = 1021
+    ExplicitHeight = 500
     object imgSignUp: TImage
       AlignWithMargins = True
       Left = 300
@@ -202,13 +202,13 @@ object frmSignUp: TfrmSignUp
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 503
-      ExplicitHeight = 415
+      ExplicitLeft = 505
+      ExplicitHeight = 423
       object Label5: TLabel
         Left = 101
         Top = 24
-        Width = 158
-        Height = 40
+        Width = 140
+        Height = 34
         Caption = 'Username'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWhite
@@ -220,8 +220,8 @@ object frmSignUp: TfrmSignUp
       object Label7: TLabel
         Left = 101
         Top = 111
-        Width = 151
-        Height = 40
+        Width = 137
+        Height = 34
         Caption = 'Password'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWhite
@@ -233,8 +233,8 @@ object frmSignUp: TfrmSignUp
       object Label8: TLabel
         Left = 102
         Top = 200
-        Width = 285
-        Height = 40
+        Width = 257
+        Height = 34
         Caption = 'Confirm Password'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWhite
@@ -265,6 +265,7 @@ object frmSignUp: TfrmSignUp
         ParentFont = False
         TabOrder = 0
         OnExit = edtUsernameExit
+        ExplicitHeight = 45
       end
       object edtPassword: TEdit
         AlignWithMargins = True
@@ -287,6 +288,8 @@ object frmSignUp: TfrmSignUp
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 1
+        OnChange = edtPasswordChange
+        ExplicitHeight = 45
       end
       object edtConfirmPassword: TEdit
         AlignWithMargins = True
@@ -309,6 +312,7 @@ object frmSignUp: TfrmSignUp
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 2
+        ExplicitHeight = 45
       end
     end
     object Panel2: TPanel
@@ -319,12 +323,12 @@ object frmSignUp: TfrmSignUp
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitHeight = 415
+      ExplicitHeight = 423
       object lblFirstName: TLabel
         Left = 101
         Top = 24
-        Width = 168
-        Height = 40
+        Width = 150
+        Height = 34
         Caption = 'First Name'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWhite
@@ -336,8 +340,8 @@ object frmSignUp: TfrmSignUp
       object Label2: TLabel
         Left = 101
         Top = 111
-        Width = 139
-        Height = 40
+        Width = 124
+        Height = 34
         Caption = 'Surname'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWhite
@@ -349,8 +353,8 @@ object frmSignUp: TfrmSignUp
       object Label3: TLabel
         Left = 101
         Top = 200
-        Width = 85
-        Height = 40
+        Width = 77
+        Height = 34
         Caption = 'Email'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWhite
@@ -362,8 +366,8 @@ object frmSignUp: TfrmSignUp
       object Label4: TLabel
         Left = 60
         Top = 301
-        Width = 127
-        Height = 40
+        Width = 114
+        Height = 34
         Caption = 'Address'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWhite
@@ -432,6 +436,7 @@ object frmSignUp: TfrmSignUp
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
+        ExplicitHeight = 45
       end
       object edtStreetNo: TEdit
         AlignWithMargins = True
@@ -454,6 +459,7 @@ object frmSignUp: TfrmSignUp
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 1
+        ExplicitHeight = 45
       end
       object edtEmail: TEdit
         AlignWithMargins = True
@@ -476,6 +482,7 @@ object frmSignUp: TfrmSignUp
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 2
+        ExplicitHeight = 45
       end
       object edtSurname: TEdit
         AlignWithMargins = True
@@ -498,6 +505,7 @@ object frmSignUp: TfrmSignUp
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 3
+        ExplicitHeight = 45
       end
       object edtStreetName: TEdit
         AlignWithMargins = True
@@ -520,6 +528,7 @@ object frmSignUp: TfrmSignUp
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 4
+        ExplicitHeight = 45
       end
       object edtSuburb: TEdit
         AlignWithMargins = True
@@ -542,6 +551,7 @@ object frmSignUp: TfrmSignUp
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 5
+        ExplicitHeight = 45
       end
     end
   end
@@ -556,7 +566,7 @@ object frmSignUp: TfrmSignUp
     Color = 5388294
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 1019
+    ExplicitWidth = 1021
     object Shape1: TShape
       AlignWithMargins = True
       Left = 3

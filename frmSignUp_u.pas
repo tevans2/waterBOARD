@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics, UITypes,
+  System.Classes, Vcl.Graphics, UITypes, BCrypt,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.Imaging.pngimage, clsUSER_u, clsValidation_u, Data.DB, Vcl.Grids,
   Vcl.DBGrids, dmWaterBoard_u, clsADDRESS_u, clsTarget_u;
@@ -44,6 +44,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure imgSignUpHoverClick(Sender: TObject);
     procedure edtUsernameExit(Sender: TObject);
+    procedure edtPasswordChange(Sender: TObject);
   private
     { Private declarations }
     objNewUser: TUser;
@@ -61,6 +62,16 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfrmSignUp.edtPasswordChange(Sender: TObject);
+begin
+  if edtPassword.PasswordChar = #0 then
+    edtPassword.PasswordChar := '*'
+  else
+    edtPassword.PasswordChar := #0;
+
+  edtPassword.AutoSelect := False;
+end;
 
 procedure TfrmSignUp.edtUsernameExit(Sender: TObject);
 var
@@ -154,8 +165,10 @@ begin
   objNewAddress := TAddress.Create(sUnitNumber, sStreetName, sSuburb);
   arrErrorFields := objNewAddress.Validate(sValidateStr);
 
+  sPassword := TBCrypt.HashPassword(sPassword);
   objNewUser := TUser.Create(sFirstName, sSurname, sUsername,
     sPassword, sEmail);
+
   arrErrorFields := objNewUser.Validate(sValidateStr);
 
   if sValidateStr = '' then

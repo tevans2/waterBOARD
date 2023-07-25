@@ -32,8 +32,8 @@ object frmHomePage: TfrmHomePage
     Constraints.MinWidth = 1270
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1270
-    ExplicitHeight = 710
+    ExplicitWidth = 1272
+    ExplicitHeight = 718
     object Panel1: TPanel
       AlignWithMargins = True
       Left = 100
@@ -55,8 +55,8 @@ object frmHomePage: TfrmHomePage
       ParentBackground = False
       TabOrder = 0
       OnResize = Panel1Resize
-      ExplicitWidth = 1070
-      ExplicitHeight = 419
+      ExplicitWidth = 1072
+      ExplicitHeight = 427
       object Shape2: TShape
         Left = 0
         Top = 0
@@ -2043,7 +2043,7 @@ object frmHomePage: TfrmHomePage
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1270
+      ExplicitWidth = 1272
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -2072,7 +2072,7 @@ object frmHomePage: TfrmHomePage
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1070
+        ExplicitWidth = 1072
         object Image1: TImage
           AlignWithMargins = True
           Left = 10

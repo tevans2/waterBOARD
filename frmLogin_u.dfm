@@ -29,7 +29,7 @@ object frmLogin: TfrmLogin
     Color = 5388294
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 505
+    ExplicitWidth = 507
     object Shape1: TShape
       AlignWithMargins = True
       Left = 3
@@ -268,13 +268,13 @@ object frmLogin: TfrmLogin
     Constraints.MinWidth = 503
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 505
-    ExplicitHeight = 456
+    ExplicitWidth = 507
+    ExplicitHeight = 464
     object lblUsername: TLabel
       Left = 90
       Top = 24
-      Width = 130
-      Height = 33
+      Width = 114
+      Height = 29
       Caption = 'Username'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWhite
@@ -286,8 +286,8 @@ object frmLogin: TfrmLogin
     object lblPassword: TLabel
       Left = 90
       Top = 120
-      Width = 126
-      Height = 33
+      Width = 113
+      Height = 29
       Caption = 'Password'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWhite
@@ -453,15 +453,15 @@ object frmLogin: TfrmLogin
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 325
-      ExplicitHeight = 47
+      ExplicitWidth = 327
     end
     object edtPassword: TEdit
       AlignWithMargins = True
       Left = 90
       Top = 160
       Width = 331
-      Height = 46
+      Height = 45
+      Hint = 'Click to show/hide password'
       Margins.Left = 90
       Margins.Top = 160
       Margins.Right = 90
@@ -473,16 +473,19 @@ object frmLogin: TfrmLogin
       Color = 5388294
       Constraints.MaxHeight = 47
       Constraints.MaxWidth = 413
-      Constraints.MinHeight = 46
+      Constraints.MinHeight = 42
       Font.Charset = ANSI_CHARSET
       Font.Color = clWhite
       Font.Height = -29
       Font.Name = 'Montserrat ExtraBold'
       Font.Style = [fsBold]
       ParentFont = False
+      ParentShowHint = False
+      PasswordChar = '*'
+      ShowHint = True
       TabOrder = 1
-      ExplicitWidth = 325
-      ExplicitHeight = 47
+      OnClick = edtPasswordClick
+      ExplicitHeight = 42
     end
   end
 end

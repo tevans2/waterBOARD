@@ -91,46 +91,51 @@ begin
   WindowState := frmHomePage.MasterWindowState;
   frmHomeLoggedIn.bLoggedIn := False;
 
-  objDamReading := TDamReading.Create;
-  aTask := TTask.Create(
-    procedure
-    begin
-      SetLength(arrDamData, 6);
-
-      // Insert from WEB
-      with objDamReading do
-      begin
-        try
-          sHTMLTable := FetchTable;
-          arrDamData := FetchDamLevels(sHTMLTable);
-          dReadingDate := FetchReadingDate(sHTMLTable);
-          sleep(5000);
-          frmLoadingPage.imgTick.Visible := True;
-
-          frmLoadingPage.imgLoading.Visible := False;
-
-        except
-          Showmessage('Unable to fetch latest dam data.');
-        end;
-
-        TThread.Synchronize(TThread.Current,
-          procedure
-          begin
-            if not CheckReadingDateInTable(dReadingDate) then
-              InsertDailyDamReadings(dReadingDate, arrDamData);
-            bFetched := True;
-            frmLoadingPage.Refresh;
-          end);
-        frmLoadingPage.Refresh;
-        frmLoadingPage.Close;
-      end;
-    end);
-
-  if bFetched = False then
-  begin
-    aTask.Start;
-    frmLoadingPage.ShowModal;
-  end;
+//  objDamReading := TDamReading.Create;
+//  aTask := TTask.Create(
+//    procedure
+//    begin
+//      SetLength(arrDamData, 6);
+//
+//      // Insert from WEB
+//      with objDamReading do
+//      begin
+//        try
+//          sHTMLTable := FetchTable;
+//          arrDamData := FetchDamLevels(sHTMLTable);
+//          dReadingDate := FetchReadingDate(sHTMLTable);
+//          sleep(5000);
+//          frmLoadingPage.imgTick.Visible := True;
+//
+//          frmLoadingPage.imgLoading.Visible := False;
+//
+//        except
+//          Showmessage('Unable to fetch latest dam data.');
+//        end;
+//
+//        TThread.Synchronize(TThread.Current,
+//          procedure
+//          begin
+//            try
+//            if not CheckReadingDateInTable(dReadingDate) then
+//              InsertDailyDamReadings(dReadingDate, arrDamData);
+//            bFetched := True;
+//            frmLoadingPage.Refresh;
+//            except
+//            Showmessage('Unable to fetch latest dam data.');
+//            Exit
+//            end;
+//          end);
+//        frmLoadingPage.Refresh;
+//        frmLoadingPage.Close;
+//      end;
+//    end);
+//
+//  if bFetched = False then
+//  begin
+//    aTask.Start;
+//    frmLoadingPage.ShowModal;
+//  end;
 
 end;
 

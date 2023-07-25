@@ -25,6 +25,7 @@ type
     procedure imgLoginMouseEnter(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure imgLoginHoverClick(Sender: TObject);
+    procedure edtPasswordClick(Sender: TObject);
   private
     { Private declarations }
     objExistingUser: TUser;
@@ -41,6 +42,16 @@ implementation
 
 uses frmHomePage_u;
 
+procedure TfrmLogin.edtPasswordClick(Sender: TObject);
+begin
+  if edtPassword.PasswordChar = #0 then
+    edtPassword.PasswordChar := '*'
+  else
+    edtPassword.PasswordChar := #0;
+
+    edtPassword.AutoSelect := False;
+end;
+
 procedure TfrmLogin.FormResize(Sender: TObject);
 begin
   // GUI CODE START
@@ -56,6 +67,7 @@ procedure TfrmLogin.FormShow(Sender: TObject);
 begin
   // GUI CODE START
   imgLoginHover.Visible := False;
+  frmLogin.DoubleBuffered := True;
   // GUI CODE END
 end;
 
@@ -77,6 +89,8 @@ begin
     // Logged In
     frmHomeLoggedIn.Show;
     frmLogin.Hide;
+    edtUsername.Clear;
+    edtPassword.Clear;
     frmHomePage.Hide;
 
     frmHomeLoggedIn.bLoggedIn := True;

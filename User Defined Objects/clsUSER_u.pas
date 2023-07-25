@@ -2,7 +2,8 @@ unit clsUSER_u;
 
 interface
 
-uses SysUtils, Vcl.Dialogs, dmWaterBoard_u, clsADDRESS_u, clsValidation_u;
+uses SysUtils, Vcl.Dialogs, dmWaterBoard_u, clsADDRESS_u, clsValidation_u,
+  BCrypt;
 
 type
   TUser = class(TObject)
@@ -203,12 +204,6 @@ begin
       Validation_Str := Validation_Str + 'Please enter your password' + #13;
       bAddToArray := True;
     end;
-    if CheckLength(Self.password, 20) then
-    begin
-      Validation_Str := Validation_Str +
-        'The password entered is too long' + #13;
-      bAddToArray := True;
-    end;
     if bAddToArray then
       AddToArray(Result, 5);
   end;
@@ -226,7 +221,8 @@ end;
 function TUser.CheckLogin: Boolean;
 var
   objValidateLogin: Tvalidate;
-  sDBPassword: String;
+  sDBHash: String;
+  bReHash: Boolean;
 begin
   objValidateLogin := Tvalidate.Create;
   Result := False;
@@ -240,9 +236,9 @@ begin
         + QuotedStr(Self.username));
       qryWaterBoard.Open;
 
-      sDBPassword := qryWaterBoard['password'];
+      sDBHash := qryWaterBoard['password'];
 
-      if sDBPassword = Self.password then
+      if TBCrypt.CheckPassword(Self.password, sDBHash, bReHash) then
       begin
         Result := True;
 
