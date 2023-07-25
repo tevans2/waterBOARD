@@ -18,15 +18,6 @@ type
     level_percent: Real;
     reading_date: TDateTime;
 
-    function FetchReadingDate(HTMLTable: String): TDate;
-    function FetchTable: String;
-    function FetchDamLevels(HTMLTable: String): TArray<Real>;
-
-    function CheckReadingDateInTable(ReadingDate: TDate): Boolean;
-    procedure InsertDamReading;
-    procedure InsertDailyDamReadings(ReadingDate: TDate;
-      arrDamLevels: TArray<Real>);
-
   public
     constructor Create(dam_id: integer; level_percent: Real;
       reading_date: TDate); overload;
@@ -35,6 +26,15 @@ type
 
     function ExtractFromString(var ReadingDate: TDate;
       FormattedCSVString: String): TArray<TArray<String>>;
+
+    function FetchReadingDate(HTMLTable: String): TDate;
+    function FetchTable: String;
+    function FetchDamLevels(HTMLTable: String): TArray<Real>;
+
+    function CheckReadingDateInTable(ReadingDate: TDate): Boolean;
+    procedure InsertDamReading;
+    procedure InsertDailyDamReadings(ReadingDate: TDate;
+      arrDamLevels: TArray<Real>);
 
     procedure InsertFromWeb;
 

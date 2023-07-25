@@ -1,0 +1,118 @@
+unit clsDamGraph_u;
+
+interface
+
+uses sysutils, DateUtils, dmWaterBoard_u;
+
+type
+  TGraph = class(TObject)
+  private
+    dam_id: integer;
+    start_date: TDate;
+
+  public
+    constructor Create;
+
+    procedure SetupDamData(dam_id: integer; start_date: TDate);
+    procedure SetupUserData(user_id: integer; start_date: TDate);
+
+    function CalculateStartDate(time_frame: integer): TDate;
+
+    function GetGraphTitle(DamID: integer): String;
+  end;
+
+implementation
+
+{ TGraph }
+
+function TGraph.CalculateStartDate(time_frame: integer): TDate;
+begin
+  case time_frame of
+    0:
+      begin
+        Result := IncMonth(now, -1);
+      end;
+    1:
+      begin
+        Result := IncMonth(now, -6);
+      end;
+    2:
+      begin
+        Result := IncYear(now, -1);
+      end;
+    3:
+      begin
+        Result := IncYear(now, -5);
+      end;
+    4:
+      begin
+        Result := IncYear(now, -10);
+      end;
+  end;
+end;
+
+constructor TGraph.Create;
+begin
+
+end;
+
+function TGraph.GetGraphTitle(DamID: integer): String;
+begin
+  case DamID of
+    1:
+      Result := 'Berg River';
+    2:
+      Result := 'Steenbras Lower';
+    3:
+      Result := 'Steenbras Upper';
+    4:
+      Result := 'Theewaterskloof';
+    5:
+      Result := 'Voelvlei';
+    6:
+      Result := 'Wemmershoek';
+  end;
+
+  if length(Result) <> 0 then
+    Result := Result + ' Dam Capacity (%)';
+end;
+
+procedure TGraph.SetupDamData(dam_id: integer; start_date: TDate);
+begin
+  Self.dam_id := dam_id;
+  Self.start_date := start_date;
+
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add
+      ('SELECT reading_date, level_percent, dam_id FROM DAM_READING ');
+    qryWaterBoard.SQL.Add('WHERE (dam_id = :dam_id) AND (reading_date >= #' +
+      DateToStr(start_date) + '#)');
+
+    qryWaterBoard.Parameters.ParamByName('dam_id').Value := dam_id;
+
+    qryWaterBoard.Open;
+  end;
+end;
+
+procedure TGraph.SetupUserData(user_id: integer; start_date: TDate);
+begin
+  Self.dam_id := dam_id;
+  Self.start_date := start_date;
+
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add
+      ('SELECT reading_date, level_percent, dam_id FROM DAM_READING ');
+    qryWaterBoard.SQL.Add('WHERE (dam_id = :dam_id) AND (reading_date >= #' +
+      DateToStr(start_date) + '#)');
+
+    qryWaterBoard.Parameters.ParamByName('dam_id').Value := dam_id;
+
+    qryWaterBoard.Open;
+  end;
+end;
+
+end.

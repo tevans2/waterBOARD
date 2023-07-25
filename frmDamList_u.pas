@@ -127,6 +127,7 @@ begin
 
   imgHomeHover.Visible := False;
   WindowState := frmHomePage.MasterWindowState;
+
   // GUI CODE END
 end;
 
@@ -134,9 +135,10 @@ procedure TfrmDamList.imgSteenbrasLowClick(Sender: TObject);
 begin
   // GUI CODE BEGIN
   frmGraphView.DamID := 2;
+  frmGraphView.OrigionForm := 1;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 1;
+
   // GUI CODE END
 end;
 
@@ -158,9 +160,9 @@ procedure TfrmDamList.imgSteenbrasUpClick(Sender: TObject);
 begin
   // GUI CODE BEGIN
   frmGraphView.DamID := 3;
+  frmGraphView.OrigionForm := 1;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 1;
   // GUI CODE END
 end;
 
@@ -182,9 +184,9 @@ procedure TfrmDamList.imgTheewaterskloofClick(Sender: TObject);
 begin
   // GUI CODE BEGIN
   frmGraphView.DamID := 4;
+  frmGraphView.OrigionForm := 1;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 1;
   // GUI CODE END
 end;
 
@@ -206,9 +208,9 @@ procedure TfrmDamList.imgVoelvleiClick(Sender: TObject);
 begin
   // GUI CODE BEGIN
   frmGraphView.DamID := 5;
+  frmGraphView.OrigionForm := 1;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 1;
   // GUI CODE END
 end;
 
@@ -230,9 +232,9 @@ procedure TfrmDamList.imgWemmershoekClick(Sender: TObject);
 begin
   // GUI CODE BEGIN
   frmGraphView.DamID := 6;
+  frmGraphView.OrigionForm := 1;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 1;
   // GUI CODE END
 end;
 
@@ -273,9 +275,10 @@ procedure TfrmDamList.imgBergRiverClick(Sender: TObject);
 begin
   // GUI CODE START
   frmGraphView.DamID := 1;
+  frmGraphView.OrigionForm := 1;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 1;
+
   // GUI CODE END
 end;
 

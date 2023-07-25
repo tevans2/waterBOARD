@@ -22,7 +22,7 @@ object frmSignUp: TfrmSignUp
     Left = 0
     Top = 185
     Width = 1025
-    Height = 502
+    Height = 501
     Margins.Left = 0
     Margins.Top = 16
     Margins.Right = 0
@@ -40,8 +40,8 @@ object frmSignUp: TfrmSignUp
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 1021
-    ExplicitHeight = 500
+    ExplicitWidth = 1019
+    ExplicitHeight = 492
     object imgSignUp: TImage
       AlignWithMargins = True
       Left = 300
@@ -202,8 +202,8 @@ object frmSignUp: TfrmSignUp
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 505
-      ExplicitHeight = 423
+      ExplicitLeft = 503
+      ExplicitHeight = 415
       object Label5: TLabel
         Left = 101
         Top = 24
@@ -319,7 +319,7 @@ object frmSignUp: TfrmSignUp
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitHeight = 423
+      ExplicitHeight = 415
       object lblFirstName: TLabel
         Left = 101
         Top = 24
@@ -452,7 +452,6 @@ object frmSignUp: TfrmSignUp
         Font.Height = -29
         Font.Name = 'Montserrat ExtraBold'
         Font.Style = [fsBold]
-        NumbersOnly = True
         ParentFont = False
         TabOrder = 1
       end
@@ -519,7 +518,6 @@ object frmSignUp: TfrmSignUp
         Font.Height = -29
         Font.Name = 'Montserrat ExtraBold'
         Font.Style = [fsBold]
-        NumbersOnly = True
         ParentFont = False
         TabOrder = 4
       end
@@ -542,7 +540,6 @@ object frmSignUp: TfrmSignUp
         Font.Height = -29
         Font.Name = 'Montserrat ExtraBold'
         Font.Style = [fsBold]
-        NumbersOnly = True
         ParentFont = False
         TabOrder = 5
       end
@@ -559,7 +556,7 @@ object frmSignUp: TfrmSignUp
     Color = 5388294
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 1021
+    ExplicitWidth = 1019
     object Shape1: TShape
       AlignWithMargins = True
       Left = 3

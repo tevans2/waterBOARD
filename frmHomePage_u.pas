@@ -4,10 +4,10 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
+  System.Classes, Vcl.Graphics, System.Threading,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Math,
   Vcl.Imaging.pngimage, Vcl.StdCtrls, frmDamList_u, frmMapView_u, frmLogin_u,
-  frmSignUp_u, frmHomeLoggedIn_u, clsDamReading_u;
+  frmSignUp_u, frmHomeLoggedIn_u, clsDamReading_u, frmLoadingPage_u;
 
 type
   TfrmHomePage = class(TForm)
@@ -42,12 +42,14 @@ type
     procedure imgMapViewHoverClick(Sender: TObject);
     procedure imgLoginHoverClick(Sender: TObject);
     procedure imgSignUpHoverClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
-    objDamReading: TDamReading;
+    bFetched: Boolean;
   public
     { Public declarations }
     MasterWindowState: TWindowState;
+    objDamReading: TDamReading;
   end;
 
 var
@@ -56,6 +58,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfrmHomePage.FormCreate(Sender: TObject);
+begin
+  bFetched := False;
+end;
 
 procedure TfrmHomePage.FormResize(Sender: TObject);
 var
@@ -71,33 +78,68 @@ begin
 end;
 
 procedure TfrmHomePage.FormShow(Sender: TObject);
+var
+  aTask: ITask;
+  arrDamData: TArray<Real>;
+  sOutput: String;
+  dReadingDate: TDate;
+  sHTMLTable: String;
+  i: integer;
+
 begin
   // GUI CODE BEGIN
   WindowState := frmHomePage.MasterWindowState;
   frmHomeLoggedIn.bLoggedIn := False;
-  // GUI CODE END
 
   objDamReading := TDamReading.Create;
-  objDamReading.InsertFromWeb;
+  aTask := TTask.Create(
+    procedure
+    begin
+      SetLength(arrDamData, 6);
+
+      // Insert from WEB
+      with objDamReading do
+      begin
+        try
+          sHTMLTable := FetchTable;
+          arrDamData := FetchDamLevels(sHTMLTable);
+          dReadingDate := FetchReadingDate(sHTMLTable);
+          sleep(5000);
+          frmLoadingPage.imgTick.Visible := True;
+
+          frmLoadingPage.imgLoading.Visible := False;
+
+        except
+          Showmessage('Unable to fetch latest dam data.');
+        end;
+
+        TThread.Synchronize(TThread.Current,
+          procedure
+          begin
+            if not CheckReadingDateInTable(dReadingDate) then
+              InsertDailyDamReadings(dReadingDate, arrDamData);
+            bFetched := True;
+            frmLoadingPage.Refresh;
+          end);
+        frmLoadingPage.Refresh;
+        frmLoadingPage.Close;
+      end;
+    end);
+
+  if bFetched = False then
+  begin
+    aTask.Start;
+    frmLoadingPage.ShowModal;
+  end;
+
 end;
 
 procedure TfrmHomePage.imgDamListHoverClick(Sender: TObject);
-var
-  arrDamData: TArray<Real>;
-  i: Integer;
-  sOutput: String;
-  dReadingDate: TDate;
-  sHTMLTable: String;
 begin
   // GUI CODE BEGIN
   frmDamList.Show;
   Self.Hide;
   // GUI CODE END
-
-  for i := 0 to 5 do
-    sOutput := sOutput + #13 + floattostr(arrDamData[i]);
-
-  SHowmessage(sOutput + #13 + FormatDateTime('yyyy/mm/dd', dReadingDate));
 
 end;
 

@@ -7,8 +7,9 @@ uses
   System.Classes, Vcl.Graphics, dmWaterBoard_u,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
   VclTee.TeeGDIPlus, VclTee.TeEngine, VclTee.Series, VclTee.TeeProcs,
-  VclTee.Chart, Vcl.StdCtrls, Vcl.ControlList, Vcl.Buttons, Math, Graph_u,
-  clsUSER_u, clsValidation_u, clsWaterMeterReading_u, clsTarget_u, DateUtils;
+  VclTee.Chart, Vcl.StdCtrls, Vcl.ControlList, Vcl.Buttons, Math, clsDamGraph_u,
+  clsUSER_u, clsValidation_u, clsWaterMeterReading_u, clsTarget_u,
+  clsUserGraph_u, DateUtils;
 
 type
   TfrmGraphView = class(TForm)
@@ -31,6 +32,8 @@ type
     imgAddReadingHover: TImage;
     imgAddTargetHover: TImage;
     Series1: TLineSeries;
+    Series2: TLineSeries;
+    Series3: TLineSeries;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure imgBackArrowMouseEnter(Sender: TObject);
@@ -49,8 +52,13 @@ type
     procedure imgAddTargetHoverClick(Sender: TObject);
   private
     { Private declarations }
-    objGraph: TGraph;
+    objDamGraph: TDamGraph;
+    objUserGraph: TUserGraph;
+    objTargetGraph: TUserGraph;
+
     procedure PopulateDamGraph;
+    procedure PopulateUserGraph;
+    procedure PopulateTargetGraph;
   public
     { Public declarations }
     OrigionForm: integer;
@@ -59,6 +67,7 @@ type
     objValidation: TValidate;
     objNewWaterMeterReading: TWaterMeterReading;
     objNewTarget: TTarget;
+
   end;
 
 var
@@ -72,7 +81,12 @@ uses frmHomePage_u, frmDamList_u, frmMapView_u, frmHomeLoggedIn_u;
 
 procedure TfrmGraphView.cbbTimeFrameChange(Sender: TObject);
 begin
-  PopulateDamGraph;
+  if OrigionForm = 3 then
+  begin
+    PopulateUserGraph;
+  end
+  else
+    PopulateDamGraph;
 end;
 
 procedure TfrmGraphView.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -115,8 +129,6 @@ begin
     imgAddReadingHover.Visible := False;
     imgAddTarget.Visible := True;
     imgAddTargetHover.Visible := False;
-
-    cbbTimeFrame.Visible := False;
   end
   else
   begin
@@ -131,10 +143,16 @@ begin
   WindowState := frmHomePage.MasterWindowState;
   // GUI CODE END
 
-  if OrigionForm <> 3 then
+  if OrigionForm = 3 then
+  begin
+    cbbTimeFrame.ItemIndex := 1;
+    PopulateUserGraph;
+  end
+  else
   begin
     cbbTimeFrame.ItemIndex := 2;
     PopulateDamGraph;
+    chrtGraph.Refresh;
   end;
 
   objValidation := TValidate.Create;
@@ -170,6 +188,8 @@ begin
     objNewWaterMeterReading := TWaterMeterReading.Create(rReading, dDate,
       iAddressID);
     objNewWaterMeterReading.InsertWaterMeterReading;
+
+    PopulateUserGraph;
   end
   else
   begin
@@ -217,7 +237,13 @@ begin
     rTarget := strtofloat(sTarget);
 
     objNewTarget := TTarget.Create(dDate, rTarget, iUserID);
-    objNewTarget.InsertTargetRecord;
+
+    if objNewTarget.CheckTargetDateInTable then
+      objNewTarget.UpdateTargetRecord
+    else
+      objNewTarget.InsertTargetRecord;
+
+    PopulateUserGraph;
   end
   else
   begin
@@ -302,13 +328,16 @@ var
   dStartDate: TDate;
 begin
   chrtGraph.Series[0].Clear;
+  chrtGraph.Series[0].Visible := True;
+  chrtGraph.Series[1].Visible := False;
+  chrtGraph.Series[2].Visible := False;
 
-  objGraph := TGraph.Create;
-  dStartDate := objGraph.CalculateStartDate(cbbTimeFrame.ItemIndex);
-  objGraph.SetupData(DamID, dStartDate);
+  objDamGraph := TDamGraph.Create;
+  dStartDate := objDamGraph.CalculateStartDate(cbbTimeFrame.ItemIndex);
+  objDamGraph.SetupDamData(DamID, dStartDate);
 
   chrtGraph.Title.Text.Clear;
-  chrtGraph.Title.Text.Add(objGraph.GetGraphTitle(DamID));
+  chrtGraph.Title.Text.Add(objDamGraph.GetGraphTitle(DamID));
 
   with dmWaterboard do
   begin
@@ -320,6 +349,69 @@ begin
       qryWaterBoard.Next;
     end;
   end;
+end;
+
+procedure TfrmGraphView.PopulateTargetGraph;
+var
+  iCount: integer;
+  dStartDate: TDate;
+begin
+  chrtGraph.Series[2].Clear;
+
+  objUserGraph := TUserGraph.Create;
+  dStartDate := objUserGraph.CalculateStartDate(cbbTimeFrame.ItemIndex);
+  objUserGraph.SetupUserTargetData(ActiveUser.GetUserID, dStartDate);
+
+  with dmWaterboard do
+  begin
+    qryWaterBoard.First;
+    while not qryWaterBoard.Eof do
+    begin
+      chrtGraph.Series[2].AddXY(qryWaterBoard['target_set_date'],
+        qryWaterBoard['target_value'], '', clTeeColor);
+      qryWaterBoard.Next;
+    end;
+  end;
+
+end;
+
+procedure TfrmGraphView.PopulateUserGraph;
+var
+  iCount: integer;
+  dStartDate: TDate;
+  rMaxReading: Real;
+begin
+  chrtGraph.Series[1].Clear;
+
+  chrtGraph.Series[0].Visible := False;
+  chrtGraph.Series[1].Visible := True;
+  chrtGraph.Series[2].Visible := True;
+
+  chrtGraph.LeftAxis.StartPosition := 0;
+
+  // rMaxReading := objUserGraph.GetMaxReading(ActiveUser.GetAddressID);
+  // rMaxReading := rMaxReading + trunc(rMaxReading / 3);
+  // chrtGraph.LeftAxis.EndPosition := rMaxReading;
+
+  objUserGraph := TUserGraph.Create;
+  dStartDate := objUserGraph.CalculateStartDate(cbbTimeFrame.ItemIndex);
+  objUserGraph.SetupUserData(ActiveUser.GetAddressID, dStartDate);
+
+  chrtGraph.Title.Text.Clear;
+  chrtGraph.Title.Text.Add(ActiveUser.GetName + ' - Water Usage');
+
+  with dmWaterboard do
+  begin
+    qryWaterBoard.First;
+    while not qryWaterBoard.Eof do
+    begin
+      chrtGraph.Series[1].AddXY(qryWaterBoard['reading_date'],
+        qryWaterBoard['reading_in_kl'], '', clTeeColor);
+      qryWaterBoard.Next;
+    end;
+  end;
+
+  PopulateTargetGraph;
 end;
 
 end.

@@ -28,8 +28,8 @@ object frmGraphView: TfrmGraphView
     Constraints.MinWidth = 1274
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1282
-    ExplicitHeight = 809
+    ExplicitWidth = 1280
+    ExplicitHeight = 801
     object Panel1: TPanel
       AlignWithMargins = True
       Left = 100
@@ -50,8 +50,8 @@ object frmGraphView: TfrmGraphView
       Locked = True
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 1082
-      ExplicitHeight = 518
+      ExplicitWidth = 1080
+      ExplicitHeight = 510
       object shpGraph: TShape
         Left = 0
         Top = 0
@@ -80,8 +80,8 @@ object frmGraphView: TfrmGraphView
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 1076
-        ExplicitHeight = 22
+        ExplicitWidth = 1074
+        ExplicitHeight = 14
         object imgAddReading: TImage
           AlignWithMargins = True
           Left = 390
@@ -378,11 +378,7 @@ object frmGraphView: TfrmGraphView
         Title.Font.Style = [fsBold, fsUnderline]
         Title.Text.Strings = (
           'TChart')
-        LeftAxis.Automatic = False
-        LeftAxis.AutomaticMaximum = False
-        LeftAxis.AutomaticMinimum = False
         LeftAxis.ExactDateTime = False
-        LeftAxis.Maximum = 150.000000000000000000
         Panning.MouseWheel = pmwNone
         RightAxis.Automatic = False
         RightAxis.AutomaticMaximum = False
@@ -399,24 +395,58 @@ object frmGraphView: TfrmGraphView
         BevelWidth = 8
         Color = clWhite
         TabOrder = 0
-        ExplicitWidth = 982
-        ExplicitHeight = 428
+        ExplicitWidth = 980
+        ExplicitHeight = 420
         DefaultCanvas = 'TGDIPlusCanvas'
         PrintMargins = (
           15
           30
           15
           30)
-        ColorPaletteIndex = 13
+        ColorPaletteIndex = 3
         object Series1: TLineSeries
           HoverElement = [heCurrent]
           SeriesColor = 16742656
           Shadow.Visible = False
+          Title = 'Dam Capacity'
           Brush.BackColor = clDefault
           DrawStyle = dsAll
           LinePen.Width = 4
           Pointer.InflateMargins = True
           Pointer.Style = psRectangle
+          XValues.DateTime = True
+          XValues.Name = 'X'
+          XValues.Order = loAscending
+          YValues.Name = 'Y'
+          YValues.Order = loNone
+        end
+        object Series2: TLineSeries
+          HoverElement = [heCurrent]
+          SeriesColor = clAqua
+          Shadow.Visible = False
+          Title = 'Water Meter Reading'
+          Brush.BackColor = clDefault
+          DrawStyle = dsAll
+          LinePen.Width = 4
+          Pointer.InflateMargins = True
+          Pointer.Style = psRectangle
+          XValues.DateTime = True
+          XValues.Name = 'X'
+          XValues.Order = loAscending
+          YValues.Name = 'Y'
+          YValues.Order = loNone
+        end
+        object Series3: TLineSeries
+          HoverElement = [heCurrent]
+          SeriesColor = 16661976
+          Shadow.Visible = False
+          Title = 'Monthly Target'
+          Brush.BackColor = clDefault
+          DrawStyle = dsAll
+          LinePen.Width = 4
+          Pointer.InflateMargins = True
+          Pointer.Style = psRectangle
+          Stairs = True
           XValues.DateTime = True
           XValues.Name = 'X'
           XValues.Order = loAscending
@@ -433,7 +463,7 @@ object frmGraphView: TfrmGraphView
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1282
+      ExplicitWidth = 1280
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -462,7 +492,7 @@ object frmGraphView: TfrmGraphView
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1282
+        ExplicitWidth = 1280
         object imgHome: TImage
           Left = 1165
           Top = 0

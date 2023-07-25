@@ -23,6 +23,7 @@ type
 
     function GetUserID: integer;
     function GetAddressID: integer;
+    function GetName: String;
 
     function CheckLogin: Boolean;
     function Validate(var Validation_Str: String): TArray<integer>;
@@ -54,6 +55,11 @@ end;
 function TUser.GetAddressID: integer;
 begin
   Result := Self.address_id;
+end;
+
+function TUser.GetName: String;
+begin
+  Result := Self.first_name + ' ' + Self.surname;
 end;
 
 function TUser.GetUserID: integer;

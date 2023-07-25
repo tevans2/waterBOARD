@@ -12,14 +12,47 @@ type
     user_id: integer;
 
   public
+    iTargetID: integer;
+
     constructor Create(target_set_date: TDate; target_value: Real;
       user_id: integer);
     procedure InsertTargetRecord;
+    procedure UpdateTargetRecord;
+    function CheckTargetDateInTable: Boolean;
   end;
 
 implementation
 
 { TTarget }
+
+function TTarget.CheckTargetDateInTable: Boolean;
+var
+  DBDate: TDate;
+  sDBDate, sTargetDate: String;
+begin
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Text := 'SELECT target_set_date, target_id FROM [TARGET]';
+    qryWaterBoard.Open;
+    Result := False;
+
+    qryWaterBoard.First;
+    while not qryWaterBoard.Eof do
+    begin
+      DBDate := qryWaterBoard['target_set_date'];
+      sDBDate := FormatDateTime('mm', DBDate);
+      sTargetDate := FormatDateTime('mm', Self.target_set_date);
+      if sDBDate = sTargetDate then
+      begin
+        Result := True;
+        iTargetID := qryWaterBoard['target_id'];
+        exit
+      end;
+      qryWaterBoard.Next;
+    end;
+  end;
+end;
 
 constructor TTarget.Create(target_set_date: TDate; target_value: Real;
   user_id: integer);
@@ -30,19 +63,56 @@ begin
 end;
 
 procedure TTarget.InsertTargetRecord;
+var
+  rPrevTargetValue: Real;
+  i: integer;
 begin
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
-    qryWaterBoard.SQL.Add('INSERT INTO TARGET');
-    qryWaterBoard.SQL.Add('(target_set_date, target_value, user_id)');
+    qryWaterBoard.SQL.Add('SELECT target_set_date, target_value, user_id');
     qryWaterBoard.SQL.Add
-      ('VALUES (:target_set_date, :target_value, :user_id)');
+      ('FROM TARGET WHERE user_id = :user_id ORDER BY target_set_date');
+    qryWaterBoard.Parameters.ParamByName('user_id').Value := user_id;
+    qryWaterBoard.Open;
+
+    qryWaterBoard.Last;
+
+    rPrevTargetValue := qryWaterBoard['target_value'];
+
+    for i := 1 to 2 do
+    begin
+      qryWaterBoard.SQL.Clear;
+      qryWaterBoard.SQL.Add('INSERT INTO TARGET');
+      qryWaterBoard.SQL.Add('(target_set_date, target_value, user_id)');
+      qryWaterBoard.SQL.Add
+        ('VALUES (:target_set_date, :target_value, :user_id)');
+      with qryWaterBoard.Parameters do
+      begin
+        ParamByName('target_set_date').Value := Self.target_set_date;
+        ParamByName('target_value').Value := rPrevTargetValue;
+        ParamByName('user_id').Value := Self.user_id;
+      end;
+
+      qryWaterBoard.ExecSQL;
+      rPrevTargetValue := Self.target_value;
+    end;
+  end;
+end;
+
+procedure TTarget.UpdateTargetRecord;
+begin
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add('UPDATE TARGET');
+    qryWaterBoard.SQL.Add('SET target_value = :target_value');
+    qryWaterBoard.SQL.Add('WHERE target_id = :target_id');
+
     with qryWaterBoard.Parameters do
     begin
-      ParamByName('target_set_date').Value := Self.target_set_date;
+      ParamByName('target_id').Value := iTargetID;
       ParamByName('target_value').Value := Self.target_value;
-      ParamByName('user_id').Value := Self.user_id;
     end;
 
     qryWaterBoard.ExecSQL;

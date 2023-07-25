@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics, UITypes,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.Imaging.pngimage, clsUSER_u, clsValidation_u, Data.DB, Vcl.Grids,
-  Vcl.DBGrids, dmWaterBoard_u, clsADDRESS_u;
+  Vcl.DBGrids, dmWaterBoard_u, clsADDRESS_u, clsTarget_u;
 
 type
   TfrmSignUp = class(TForm)
@@ -49,6 +49,7 @@ type
     objNewUser: TUser;
     objNewAddress: TAddress;
     objValidate: TValidate;
+    objNewTarget: TTarget;
   public
     { Public declarations }
     sValidateStr: String;
@@ -112,6 +113,9 @@ var
   iPos, iNum: Integer;
   arrErrorFields: TArray<Integer>;
   i: Integer;
+  rTargetValue: Real;
+  sTargetValue: String;
+  bComplete: Boolean;
 begin
   sValidateStr := '';
 
@@ -155,7 +159,24 @@ begin
   arrErrorFields := objNewUser.Validate(sValidateStr);
 
   if sValidateStr = '' then
-    objNewUser.InsertUserRecord(objNewAddress)
+  begin
+    objNewUser.InsertUserRecord(objNewAddress);
+
+    bComplete := False;
+    Repeat
+      sTargetValue := InputBox('Enter new target',
+        'Please enter a monthly water usage target to get started:', '');
+
+      if objValidate.CheckReal(sTargetValue) then
+      begin
+        objNewTarget := TTarget.Create(now, rTargetValue, objNewUser.GetUserID);
+        bComplete := True;
+      end
+      else
+        Showmessage
+          ('Please enter a valid monthly water usage target in kilo litres. Eg. 6,33 kl');
+    until bComplete = True;
+  end
   else
   begin
     for i := 0 to Length(arrErrorFields) - 1 do

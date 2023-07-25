@@ -14,9 +14,11 @@ uses
   clsADDRESS_u in 'User Defined Objects\clsADDRESS_u.pas',
   clsValidation_u in 'User Defined Objects\clsValidation_u.pas',
   clsDamReading_u in 'User Defined Objects\clsDamReading_u.pas',
-  Graph_u in 'User Defined Objects\Graph_u.pas',
+  clsDamGraph_u in 'User Defined Objects\clsDamGraph_u.pas',
   clsWaterMeterReading_u in 'User Defined Objects\clsWaterMeterReading_u.pas',
-  clsTarget_u in 'User Defined Objects\clsTarget_u.pas';
+  clsTarget_u in 'User Defined Objects\clsTarget_u.pas',
+  frmLoadingPage_u in 'frmLoadingPage_u.pas' {frmLoadingPage},
+  clsUserGraph_u in 'User Defined Objects\clsUserGraph_u.pas';
 
 {$R *.res}
 
@@ -31,5 +33,6 @@ begin
   Application.CreateForm(TfrmSignUp, frmSignUp);
   Application.CreateForm(TfrmHomeLoggedIn, frmHomeLoggedIn);
   Application.CreateForm(TdmWaterboard, dmWaterboard);
+  Application.CreateForm(TfrmLoadingPage, frmLoadingPage);
   Application.Run;
 end.

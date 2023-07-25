@@ -24,6 +24,8 @@ type
     Shape1: TShape;
     Panel3: TPanel;
     Image1: TImage;
+    imgSignOut: TImage;
+    imgSignOut_hover: TImage;
     procedure FormResize(Sender: TObject);
     procedure ResizeRePos(MainImage, MovingImage: TImage);
     procedure imgUserStatsMouseEnter(Sender: TObject);
@@ -38,6 +40,9 @@ type
     procedure imgMapViewHoverClick(Sender: TObject);
     procedure imgUserStatsHoverClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure imgSignOutMouseEnter(Sender: TObject);
+    procedure imgSignOut_hoverMouseLeave(Sender: TObject);
+    procedure imgSignOut_hoverClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,6 +78,7 @@ end;
 procedure TfrmHomeLoggedIn.FormShow(Sender: TObject);
 begin
   // GUI CODE BEGIN
+  imgSignOut_hover.Visible := False;
   WindowState := frmHomePage.MasterWindowState;
   // GUI CODE END
 end;
@@ -118,6 +124,28 @@ procedure TfrmHomeLoggedIn.imgMapViewMouseEnter(Sender: TObject);
 begin
   // GUI CODE BEGIN
   imgMapViewHover.Visible := True;
+  // GUI CODE END
+end;
+
+procedure TfrmHomeLoggedIn.imgSignOutMouseEnter(Sender: TObject);
+begin
+  // GUI CODE BEGIN
+  imgSignOut_hover.Visible := True;
+  // GUI CODE END
+end;
+
+procedure TfrmHomeLoggedIn.imgSignOut_hoverClick(Sender: TObject);
+begin
+  frmHomePage.Show;
+  frmHomeLoggedIn.Hide;
+
+  frmGraphView.ActiveUser.Free;
+end;
+
+procedure TfrmHomeLoggedIn.imgSignOut_hoverMouseLeave(Sender: TObject);
+begin
+  // GUI CODE BEGIN
+  imgSignOut_hover.Visible := False;
   // GUI CODE END
 end;
 
