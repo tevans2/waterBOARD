@@ -59,10 +59,14 @@ type
     procedure PopulateDamGraph;
     procedure PopulateUserGraph;
     procedure PopulateTargetGraph;
+
+    function MyMessageDlg(CONST Msg: string; DlgTypt: TmsgDlgType;
+      button: TMsgDlgButtons; Caption: ARRAY OF string;
+      dlgcaption: string): Integer;
   public
     { Public declarations }
-    OrigionForm: integer;
-    DamID: integer;
+    OrigionForm: Integer;
+    DamID: Integer;
     ActiveUser: TUser;
     objValidation: TValidate;
     objNewWaterMeterReading: TWaterMeterReading;
@@ -115,7 +119,7 @@ end;
 procedure TfrmGraphView.FormShow(Sender: TObject);
 var
   dStartDate, dEndDate: TDate;
-  iDamID: integer;
+  iDamID: Integer;
 begin
   // GUI CODE BEGIN
   imgHome_hover.Visible := False;
@@ -165,39 +169,91 @@ var
   sReading: String;
   dDate: TDate;
   sDate: String;
-  iAddressID: integer;
+  iAddressID: Integer;
   fmt: TFormatSettings;
+  txtInput: TextFile;
+  openDialog: TOpenDialog;
+  sLine: String;
+  iLineCount: Integer;
 begin
 
-  sReading := Inputbox('Water Meter Reading',
-    'Enter water meter reading (kl):', '');
+  iAddressID := ActiveUser.GetAddressID;
 
-  if objValidation.CheckReal(sReading) then
-  begin
-    iAddressID := ActiveUser.GetAddressID;
+  case MyMessageDlg('Caption', TmsgDlgType.mtInformation, [mbYes, mbNo],
+    ['Upload from file', 'Enter manually'], 'TGesttg') of
 
-    sDate := FormatDateTime('yyyy/mm/dd', Now);
+    mrYes:
+      begin
+        openDialog := TOpenDialog.Create(Self);
+        openDialog.Filter := 'Text files only|*.txt';
+        openDialog.Title := 'Please select water meter reading input file';
+        if openDialog.Execute then
+        begin
+          objNewWaterMeterReading := TWaterMeterReading.Create;
+          iLineCount := 0;
 
-    fmt := TFormatSettings.Create;
-    fmt.ShortDateFormat := 'yyyy/mm/dd';
+          AssignFile(txtInput, openDialog.FileName);
+          Reset(txtInput);
+          while not Eof(txtInput) do
+          begin
+            inc(iLineCount);
+            ReadLn(txtInput, sLine);
 
-    dDate := StrToDate(sDate, fmt);
+            rReading := objNewWaterMeterReading.ExtractFromFileLine
+              (sLine, dDate);
 
-    rReading := strtofloat(sReading);
+            if sLine = '' then
+            begin
+              with objNewWaterMeterReading do
+              begin
+                SetReadingDate(dDate);
+                SetReading(rReading);
+                SetAddressID(iAddressID);
 
-    objNewWaterMeterReading := TWaterMeterReading.Create(rReading, dDate,
-      iAddressID);
-    objNewWaterMeterReading.InsertWaterMeterReading;
+                InsertWaterMeterReading;
 
-    PopulateUserGraph;
-  end
-  else
-  begin
-    Showmessage
-      ('Please enter a valid water meter reading in kilo litres. Eg. 7,33 kl');
-    Exit
+                PopulateUserGraph;
+              end;
+            end
+            else
+            begin
+              ShowMessage(' on line ' + iLineCount.ToString);
+              Exit
+            end;
+          end;
+        end;
+      end;
+
+    mrNo:
+      begin
+        sReading := Inputbox('Water Meter Reading',
+          'Enter water meter reading (kl):', '');
+
+        if objValidation.CheckReal(sReading) then
+        begin
+          sDate := FormatDateTime('yyyy/mm/dd', Now);
+
+          fmt := TFormatSettings.Create;
+          fmt.ShortDateFormat := 'yyyy/mm/dd';
+
+          dDate := StrToDate(sDate, fmt);
+
+          rReading := strtofloat(sReading);
+
+          objNewWaterMeterReading := TWaterMeterReading.Create(rReading, dDate,
+            iAddressID);
+          objNewWaterMeterReading.InsertWaterMeterReading;
+
+          PopulateUserGraph;
+        end
+        else if sReading <> '' then
+        begin
+          ShowMessage
+            ('Please enter a valid water meter reading in kilo litres. Eg. 7,33 kl');
+          Exit
+        end;
+      end;
   end;
-
 end;
 
 procedure TfrmGraphView.imgAddReadingHoverMouseLeave(Sender: TObject);
@@ -216,7 +272,7 @@ var
   sTarget: String;
   dDate: TDate;
   sDate: String;
-  iUserID: integer;
+  iUserID: Integer;
   fmt: TFormatSettings;
 begin
 
@@ -247,7 +303,7 @@ begin
   end
   else
   begin
-    Showmessage
+    ShowMessage
       ('Please enter a valid monthly water usage target in kilo litres. Eg. 6,33 kl');
     Exit
   end;
@@ -322,9 +378,43 @@ begin
   // GUI CODE END
 end;
 
+function TfrmGraphView.MyMessageDlg(const Msg: string; DlgTypt: TmsgDlgType;
+  button: TMsgDlgButtons; Caption: array of string; dlgcaption: string)
+  : Integer;
+var
+  aMsgdlg: TForm;
+  i: Integer;
+  Dlgbutton: Tbutton;
+  Captionindex: Integer;
+begin
+  aMsgdlg := createMessageDialog(Msg, DlgTypt, button);
+  aMsgdlg.Caption := dlgcaption;
+  aMsgdlg.BiDiMode := bdRightToLeft;
+  Captionindex := 0;
+  for i := 0 to aMsgdlg.componentcount - 1 Do
+  begin
+    if (aMsgdlg.components[i] is Tbutton) then
+    Begin
+      Dlgbutton := Tbutton(aMsgdlg.components[i]);
+      if Captionindex <= High(Caption) then
+      begin
+        Dlgbutton.Caption := Caption[Captionindex];
+        Dlgbutton.Width := 200;
+        if i = 3 then
+          Dlgbutton.Left := 250;
+
+      end;
+      inc(Captionindex);
+    end;
+  end;
+
+  aMsgdlg.Width := 480;
+  Result := aMsgdlg.Showmodal;
+end;
+
 procedure TfrmGraphView.PopulateDamGraph;
 var
-  iCount: integer;
+  iCount: Integer;
   dStartDate: TDate;
 begin
   chrtGraph.Series[0].Clear;
@@ -336,8 +426,8 @@ begin
   dStartDate := objDamGraph.CalculateStartDate(cbbTimeFrame.ItemIndex);
   objDamGraph.SetupDamData(DamID, dStartDate);
 
-  chrtGraph.Title.Text.Clear;
-  chrtGraph.Title.Text.Add(objDamGraph.GetGraphTitle(DamID));
+  chrtGraph.Title.text.Clear;
+  chrtGraph.Title.text.Add(objDamGraph.GetGraphTitle(DamID));
 
   with dmWaterboard do
   begin
@@ -353,7 +443,7 @@ end;
 
 procedure TfrmGraphView.PopulateTargetGraph;
 var
-  iCount: integer;
+  iCount: Integer;
   dStartDate: TDate;
 begin
   chrtGraph.Series[2].Clear;
@@ -377,7 +467,7 @@ end;
 
 procedure TfrmGraphView.PopulateUserGraph;
 var
-  iCount: integer;
+  iCount: Integer;
   dStartDate: TDate;
   rMaxReading: Real;
 begin
@@ -397,8 +487,8 @@ begin
   dStartDate := objUserGraph.CalculateStartDate(cbbTimeFrame.ItemIndex);
   objUserGraph.SetupUserData(ActiveUser.GetAddressID, dStartDate);
 
-  chrtGraph.Title.Text.Clear;
-  chrtGraph.Title.Text.Add(ActiveUser.GetName + ' - Water Usage');
+  chrtGraph.Title.text.Clear;
+  chrtGraph.Title.text.Add(ActiveUser.GetName + ' - Water Usage');
 
   with dmWaterboard do
   begin

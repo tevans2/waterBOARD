@@ -28,8 +28,8 @@ object frmGraphView: TfrmGraphView
     Constraints.MinWidth = 1274
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1280
-    ExplicitHeight = 801
+    ExplicitWidth = 1282
+    ExplicitHeight = 809
     object Panel1: TPanel
       AlignWithMargins = True
       Left = 100
@@ -50,8 +50,8 @@ object frmGraphView: TfrmGraphView
       Locked = True
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 1080
-      ExplicitHeight = 510
+      ExplicitWidth = 1082
+      ExplicitHeight = 518
       object shpGraph: TShape
         Left = 0
         Top = 0
@@ -80,8 +80,8 @@ object frmGraphView: TfrmGraphView
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 1074
-        ExplicitHeight = 14
+        ExplicitWidth = 1076
+        ExplicitHeight = 22
         object imgAddReading: TImage
           AlignWithMargins = True
           Left = 390
@@ -372,6 +372,7 @@ object frmGraphView: TfrmGraphView
         Margins.Bottom = 30
         AllowPanning = pmNone
         BorderRound = 66
+        Legend.Visible = False
         Title.Font.Color = clBlack
         Title.Font.Height = -23
         Title.Font.Name = 'Montserrat ExtraBold'
@@ -395,8 +396,8 @@ object frmGraphView: TfrmGraphView
         BevelWidth = 8
         Color = clWhite
         TabOrder = 0
-        ExplicitWidth = 980
-        ExplicitHeight = 420
+        ExplicitWidth = 982
+        ExplicitHeight = 428
         DefaultCanvas = 'TGDIPlusCanvas'
         PrintMargins = (
           15
@@ -463,7 +464,7 @@ object frmGraphView: TfrmGraphView
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1280
+      ExplicitWidth = 1282
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -492,7 +493,7 @@ object frmGraphView: TfrmGraphView
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1280
+        ExplicitWidth = 1282
         object imgHome: TImage
           Left = 1165
           Top = 0
