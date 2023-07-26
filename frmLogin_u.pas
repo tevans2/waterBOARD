@@ -26,6 +26,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure imgLoginHoverClick(Sender: TObject);
     procedure edtPasswordClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     objExistingUser: TUser;
@@ -50,6 +51,12 @@ begin
     edtPassword.PasswordChar := #0;
 
     edtPassword.AutoSelect := False;
+end;
+
+procedure TfrmLogin.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  edtUsername.Clear;
+  edtPassword.Clear;
 end;
 
 procedure TfrmLogin.FormResize(Sender: TObject);

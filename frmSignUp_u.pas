@@ -46,6 +46,7 @@ type
     procedure edtUsernameExit(Sender: TObject);
     procedure edtConfirmPasswordClick(Sender: TObject);
     procedure edtPasswordClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     objNewUser: TUser;
@@ -100,6 +101,19 @@ begin
     edtUsername.Clear;
     edtUsername.SetFocus;
   end;
+end;
+
+procedure TfrmSignUp.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  edtFirstName.Clear;
+  edtSurname.Clear;
+  edtUsername.Clear;
+  edtPassword.Clear;
+  edtConfirmPassword.Clear;
+  edtEmail.Clear;
+  edtStreetNo.Clear;
+  edtStreetName.Clear;
+  edtSuburb.Clear;
 end;
 
 procedure TfrmSignUp.FormResize(Sender: TObject);
@@ -192,10 +206,18 @@ begin
     // GUI CODE START
     // Log In
     frmHomeLoggedIn.Show;
-    frmLogin.Hide;
+    frmSignUp.Hide;
+    frmHomePage.Hide;
+
+    edtFirstName.Clear;
+    edtSurname.Clear;
     edtUsername.Clear;
     edtPassword.Clear;
-    frmHomePage.Hide;
+    edtConfirmPassword.Clear;
+    edtEmail.Clear;
+    edtStreetNo.Clear;
+    edtStreetName.Clear;
+    edtSuburb.Clear;
 
     frmHomeLoggedIn.bLoggedIn := True;
 

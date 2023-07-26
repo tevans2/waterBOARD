@@ -15,6 +15,7 @@ object frmLogin: TfrmLogin
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnClose = FormClose
   OnResize = FormResize
   OnShow = FormShow
   TextHeight = 15
@@ -273,8 +274,8 @@ object frmLogin: TfrmLogin
     object lblUsername: TLabel
       Left = 90
       Top = 24
-      Width = 114
-      Height = 29
+      Width = 130
+      Height = 33
       Caption = 'Username'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWhite
@@ -286,8 +287,8 @@ object frmLogin: TfrmLogin
     object lblPassword: TLabel
       Left = 90
       Top = 120
-      Width = 113
-      Height = 29
+      Width = 126
+      Height = 33
       Caption = 'Password'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWhite
@@ -454,13 +455,14 @@ object frmLogin: TfrmLogin
       ParentFont = False
       TabOrder = 0
       ExplicitWidth = 327
+      ExplicitHeight = 47
     end
     object edtPassword: TEdit
       AlignWithMargins = True
       Left = 90
       Top = 160
       Width = 331
-      Height = 45
+      Height = 44
       Hint = 'Click to show/hide password'
       Margins.Left = 90
       Margins.Top = 160
@@ -485,7 +487,8 @@ object frmLogin: TfrmLogin
       ShowHint = True
       TabOrder = 1
       OnClick = edtPasswordClick
-      ExplicitHeight = 42
+      ExplicitWidth = 327
+      ExplicitHeight = 47
     end
   end
 end
