@@ -21,6 +21,8 @@ type
       email: string); overload;
     constructor Create(username, password: string); overload;
     procedure InsertUserRecord(objAddress: TAddress);
+    procedure DeleteUserRecord(UserID: integer);
+    procedure UpdateUserRecord(UserID: integer; username: string);
 
     function GetUserID: integer;
     function GetAddressID: integer;
@@ -51,6 +53,22 @@ constructor TUser.Create(username, password: string);
 begin
   Self.username := username;
   Self.password := password;
+end;
+
+procedure TUser.DeleteUserRecord(UserID: integer);
+begin
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add('DELETE FROM [USER]');
+    qryWaterBoard.SQL.Add('WHERE user_ID = :UserID');
+    with qryWaterBoard.Parameters do
+    begin
+      ParamByName('UserID').Value := UserID;
+    end;
+
+    qryWaterBoard.ExecSQL;
+  end;
 end;
 
 function TUser.GetAddressID: integer;
@@ -89,6 +107,25 @@ begin
       ParamByName('username').Value := Self.username;
       ParamByName('password').Value := Self.password;
       ParamByName('address_id').Value := Self.address_id;
+    end;
+
+    qryWaterBoard.ExecSQL;
+  end;
+end;
+
+procedure TUser.UpdateUserRecord(UserID: integer; username: string);
+begin
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add('UPDATE USER');
+    qryWaterBoard.SQL.Add('SET username = :username');
+    qryWaterBoard.SQL.Add('WHERE user_ID = :UserID');
+
+    with qryWaterBoard.Parameters do
+    begin
+      ParamByName('username').Value := username;
+      ParamByName('UserID').Value := UserID;
     end;
 
     qryWaterBoard.ExecSQL;

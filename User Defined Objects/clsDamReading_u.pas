@@ -33,14 +33,11 @@ type
 
     function CheckReadingDateInTable(ReadingDate: TDate): Boolean;
     procedure InsertDamReading;
+    procedure DeleteDamReading(Reading_id: integer);
     procedure InsertDailyDamReadings(ReadingDate: TDate;
       arrDamLevels: TArray<Real>);
 
     procedure InsertFromWeb;
-
-    procedure SetDamLevel;
-    procedure SetDamID;
-    procedure SetReadingDate;
   end;
 
 implementation
@@ -88,6 +85,22 @@ end;
 constructor TDamReading.CreateFromString(FormattedCSVString: String);
 begin
 
+end;
+
+procedure TDamReading.DeleteDamReading(Reading_id: integer);
+begin
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add('DELETE FROM [DAM_READING]');
+    qryWaterBoard.SQL.Add('WHERE ID = :ReadingID');
+    with qryWaterBoard.Parameters do
+    begin
+      ParamByName('ReadingID').Value := Reading_id;
+    end;
+
+    qryWaterBoard.ExecSQL;
+  end;
 end;
 
 function TDamReading.ExtractFromString(var ReadingDate: TDate;
@@ -313,21 +326,6 @@ begin
 
   if not CheckReadingDateInTable(dReadingDate) then
     InsertDailyDamReadings(dReadingDate, arrDamData);
-end;
-
-procedure TDamReading.SetDamID;
-begin
-
-end;
-
-procedure TDamReading.SetDamLevel;
-begin
-
-end;
-
-procedure TDamReading.SetReadingDate;
-begin
-
 end;
 
 end.

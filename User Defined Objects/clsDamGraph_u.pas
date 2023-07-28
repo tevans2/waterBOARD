@@ -87,7 +87,7 @@ begin
     qryWaterBoard.SQL.Add
       ('SELECT reading_date, level_percent, dam_id FROM DAM_READING ');
     qryWaterBoard.SQL.Add('WHERE (dam_id = :dam_id) AND (reading_date >= #' +
-      DateToStr(start_date) + '#)');
+      DateToStr(start_date) + '#) ORDER BY reading_date ASC');
 
     qryWaterBoard.Parameters.ParamByName('dam_id').Value := dam_id;
 

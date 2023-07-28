@@ -81,7 +81,7 @@ begin
     qryWaterBoard.SQL.Add('FROM WATER_METER_READING ');
     qryWaterBoard.SQL.Add
       ('WHERE (address_id = :address_id) AND (reading_date >= #' +
-      DateToStr(start_date) + '#)');
+      DateToStr(start_date) + '#) ORDER BY reading_date ASC');
 
     qryWaterBoard.Parameters.ParamByName('address_id').Value := address_id;
 

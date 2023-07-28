@@ -41,8 +41,8 @@ begin
     while not qryWaterBoard.Eof do
     begin
       DBDate := qryWaterBoard['target_set_date'];
-      sDBDate := FormatDateTime('mm', DBDate);
-      sTargetDate := FormatDateTime('mm', Self.target_set_date);
+      sDBDate := FormatDateTime('yyyy/mm', DBDate);
+      sTargetDate := FormatDateTime('yyyy/mm', Self.target_set_date);
       if sDBDate = sTargetDate then
       begin
         Result := True;

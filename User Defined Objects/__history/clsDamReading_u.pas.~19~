@@ -1,0 +1,314 @@
+unit clsDamReading_u;
+
+interface
+
+uses
+  System.SysUtils,
+  System.StrUtils,
+  REST.Types,
+  REST.Client,
+  dmWaterBoard_u,
+  Vcl.Dialogs,
+  DateUtils;
+
+type
+  TDamReading = class(TObject)
+  private
+    dam_id: integer;
+    level_percent: Real;
+    reading_date: TDateTime;
+
+  public
+    constructor Create(dam_id: integer; level_percent: Real;
+      reading_date: TDate); overload;
+    constructor Create; overload;
+    constructor CreateFromString(FormattedCSVString: String);
+
+    function ExtractFromString(var ReadingDate: TDate;
+      FormattedCSVString: String): TArray<TArray<String>>;
+
+    function FetchReadingDate(HTMLTable: String): TDate;
+    function FetchTable: String;
+    function FetchDamLevels(HTMLTable: String): TArray<Real>;
+
+    function CheckReadingDateInTable(ReadingDate: TDate): Boolean;
+    procedure InsertDamReading;
+    procedure InsertDailyDamReadings(ReadingDate: TDate;
+      arrDamLevels: TArray<Real>);
+
+    procedure InsertFromWeb;
+  end;
+
+implementation
+
+{ TDamReading }
+
+constructor TDamReading.Create(dam_id: integer; level_percent: Real;
+  reading_date: TDate);
+begin
+  Self.dam_id := dam_id;
+  Self.level_percent := level_percent;
+  Self.reading_date := reading_date;
+end;
+
+function TDamReading.CheckReadingDateInTable(ReadingDate: TDate): Boolean;
+var
+  DBDate: TDate;
+begin
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Text := 'SELECT reading_date FROM [DAM_READING]';
+    qryWaterBoard.Open;
+    Result := False;
+
+    qryWaterBoard.First;
+    while not qryWaterBoard.Eof do
+    begin
+      DBDate := qryWaterBoard['reading_date'];
+      if DBDate = ReadingDate then
+      begin
+        Result := True;
+        exit
+      end;
+      qryWaterBoard.Next;
+    end;
+  end;
+end;
+
+constructor TDamReading.Create;
+begin
+
+end;
+
+constructor TDamReading.CreateFromString(FormattedCSVString: String);
+begin
+
+end;
+
+function TDamReading.ExtractFromString(var ReadingDate: TDate;
+  FormattedCSVString: String): TArray<TArray<String>>;
+var
+  sDate: string;
+  rLevelPercent: Real;
+  iDamID, i, iStartPos, iEndpos: integer;
+  fmt: TFormatSettings;
+begin
+  // Government CSV file format:  DATE,HEIGHT,STORAGE,Current(%),Last Year
+  // Dam Order:                   WEMMERSHOEK, STEENBRAS LOWER, STEENBRAS UPPER, VOËLVLEI, THEEWATERSKLOOF, BERG RIVER
+  // Result Array Format:         [0]WEMMERSHOEK, [1]STEENBRAS LOWER, [2]STEENBRAS UPPER, [3]VOËLVLEI, [4]THEEWATERSKLOOF, [5]BERG RIVER
+  // Example String:               6-May-12,49.2,45,40.4,43.2,52.1,61.1,,
+
+  fmt := TFormatSettings.Create;
+  fmt.ShortDateFormat := 'dd-m-yy';
+  sDate := Copy(FormattedCSVString, 0, pos(',', FormattedCSVString) - 1);
+
+  for i := 1 to 12 do
+    sDate := sDate.Replace(fmt.ShortMonthNames[i], i.ToString);
+
+  ReadingDate := StrToDate(sDate, fmt);
+
+  SetLength(Result, 2, 6);
+  // For WEMMERSHOEK
+  Result[0, 0] := 'WEMMERSHOEK';
+
+  // For STEENBRAS LOWER
+  Result[0, 1] := 'STEENBRAS LOWER';
+
+  // For STEENBRAS UPPER
+  Result[0, 2] := 'STEENBRAS UPPER';
+
+  // For VOELVLEI
+  Result[0, 3] := 'VOELVLEI';
+
+  // For THEEWATERSKLOOF
+  Result[0, 4] := 'THEEWATERSKLOOF';
+
+  // For BERG RIVER
+  Result[0, 5] := 'BERG RIVER';
+
+  iStartPos := pos(',', FormattedCSVString) + 1;
+  for i := 0 to 5 do
+  begin
+    iEndpos := pos(',', FormattedCSVString, iStartPos);
+    Result[1, i] := Copy(FormattedCSVString, iStartPos, iEndpos - iStartPos);
+    iStartPos := iEndpos + 1;
+  end;
+end;
+
+function TDamReading.FetchDamLevels(HTMLTable: String): TArray<Real>;
+var
+  tag, table, val_str, level_percent: string;
+  i, j, tag_len, tag_start_pos, tag_end_pos: integer;
+  arrDamData: TArray<Real>;
+  iCount: integer;
+  ReadingDate: TDate;
+const
+  Komma: TFormatSettings = (DecimalSeparator: ',');
+begin
+  SetLength(arrDamData, 6);
+  iCount := 0;
+
+  table := HTMLTable;
+
+  tag := '&lt;/td&gt;&lt;td style="height:31px;text-align:right;"&gt;';
+  tag_len := length(tag);
+  tag_start_pos := pos(tag, table);
+
+  // Get first dam (Berg River) data
+  for i := 1 to 2 do
+  begin
+    tag_end_pos := PosEx('&lt;br&gt;', table, tag_start_pos);
+    val_str := Copy(table, tag_start_pos + tag_len, tag_end_pos - tag_start_pos
+      - tag_len);
+
+    tag_start_pos := PosEx(tag, table, tag_start_pos + tag_len);
+
+    if i mod 2 = 0 then // Get only level percent (ommit capacity)
+    begin
+      level_percent := StringReplace(val_str, '.', ',', []);
+      arrDamData[iCount] := strtofloat(level_percent, Komma);
+      inc(iCount);
+    end;
+  end;
+
+  // Get other 5 dam datas
+  tag := '&lt;/td&gt;&lt;td style="text-align:right;"&gt;';
+  tag_len := length(tag);
+  tag_start_pos := pos(tag, table);
+
+  for j := 1 to 10 do
+  begin
+    tag_end_pos := PosEx('&lt;br&gt;', table, tag_start_pos);
+    val_str := Copy(table, tag_start_pos + tag_len, tag_end_pos - tag_start_pos
+      - tag_len);
+
+    tag_start_pos := PosEx(tag, table, tag_start_pos + tag_len);
+
+    if j mod 2 = 0 then
+    begin
+      level_percent := StringReplace(val_str, '.', ',', []);
+      arrDamData[iCount] := strtofloat(level_percent, Komma);
+      inc(iCount);
+    end;
+  end;
+  Result := arrDamData;
+end;
+
+function TDamReading.FetchReadingDate(HTMLTable: String): TDate;
+var
+  tag, val_str: String;
+  tag_len, tag_start_pos, tag_end_pos: integer;
+  fmt: TFormatSettings;
+begin
+  tag := 'Current Dam Water Levels - ';
+
+  tag_len := length(tag);
+  tag_start_pos := pos(tag, HTMLTable);
+
+  tag_end_pos := PosEx('&lt;/b&gt; &lt;/caption&gt;', HTMLTable, tag_start_pos);
+  val_str := Copy(HTMLTable, tag_start_pos + tag_len,
+    tag_end_pos - tag_start_pos - tag_len);
+
+  val_str := StringReplace(val_str, #$200B, '', [rfReplaceAll]);
+
+  fmt := TFormatSettings.Create;
+  fmt.ShortDateFormat := 'd/m/yyyy';
+
+  Result := StrToDate(val_str, fmt);
+end;
+
+function TDamReading.FetchTable: String;
+var
+  Client: TRESTClient;
+  request: TRESTRequest;
+  response: TCustomRESTResponse;
+  table_begin_pos, table_end_pos: integer;
+  page, table: String;
+begin
+  Client := TRESTClient.Create(nil);
+  Client.BaseURL := 'https://www.capetown.gov.za/';
+
+  request := TRESTRequest.Create(nil);
+  request.Client := Client;
+  request.Method := rmGET;
+  request.Resource :=
+    'Family%20and%20home/residential-utility-services/residential-water-and-sanitation-services/this-weeks-dam-levels';
+
+  request.Execute;
+
+  response := request.response;
+
+  if response.Status.Success then
+  begin
+    page := response.Content;
+    table_begin_pos := pos('Current Dam Water Levels', page);
+    table_end_pos := PosEx('Because each dam size is different', page,
+      table_begin_pos);
+
+    table := Copy(page, table_begin_pos, table_end_pos);
+
+    Result := table;
+  end
+  else
+  begin
+    Showmessage('Failed with ' + response.StatusText + ': ' + response.Content);
+    exit
+  end;
+end;
+
+procedure TDamReading.InsertDailyDamReadings(ReadingDate: TDate;
+  arrDamLevels: TArray<Real>);
+var
+  sHTMLTable: String;
+  i: integer;
+begin
+  Self.reading_date := ReadingDate;
+  for i := 0 to length(arrDamLevels) - 1 do
+  begin
+    Self.level_percent := arrDamLevels[i];
+    Self.dam_id := i + 1;
+
+    InsertDamReading;
+  end;
+end;
+
+procedure TDamReading.InsertDamReading;
+begin
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add('INSERT INTO DAM_READING');
+    qryWaterBoard.SQL.Add('(reading_date, level_percent, dam_id)');
+    qryWaterBoard.SQL.Add('VALUES (:reading_date, :level_percent, :dam_id)');
+
+    with qryWaterBoard.Parameters do
+    begin
+      ParamByName('reading_date').Value := Self.reading_date;
+      ParamByName('level_percent').Value := Self.level_percent;
+      ParamByName('dam_id').Value := Self.dam_id;
+    end;
+
+    qryWaterBoard.ExecSQL;
+  end;
+end;
+
+procedure TDamReading.InsertFromWeb;
+var
+  arrDamData: TArray<Real>;
+  sOutput: String;
+  dReadingDate: TDate;
+  sHTMLTable: String;
+begin
+  SetLength(arrDamData, 6);
+
+  // Insert from WEB
+  sHTMLTable := FetchTable;
+  arrDamData := FetchDamLevels(sHTMLTable);
+  dReadingDate := FetchReadingDate(sHTMLTable);
+
+  if not CheckReadingDateInTable(dReadingDate) then
+    InsertDailyDamReadings(dReadingDate, arrDamData);
+end;
+
+end.

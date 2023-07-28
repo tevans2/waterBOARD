@@ -1,7 +1,7 @@
 object frmHomeLoggedIn: TfrmHomeLoggedIn
   Left = 0
   Top = 0
-  Caption = 'frmHomeLoggedIn'
+  Caption = 'Home'
   ClientHeight = 702
   ClientWidth = 1270
   Color = clBtnFace
@@ -27,8 +27,8 @@ object frmHomeLoggedIn: TfrmHomeLoggedIn
     Constraints.MinWidth = 1264
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1264
-    ExplicitHeight = 693
+    ExplicitWidth = 1266
+    ExplicitHeight = 701
     object Panel1: TPanel
       AlignWithMargins = True
       Left = 100
@@ -50,7 +50,7 @@ object frmHomeLoggedIn: TfrmHomeLoggedIn
       ParentBackground = False
       TabOrder = 0
       OnResize = Panel1Resize
-      ExplicitHeight = 402
+      ExplicitHeight = 410
       object Shape2: TShape
         Left = 0
         Top = 0
@@ -1536,7 +1536,7 @@ object frmHomeLoggedIn: TfrmHomeLoggedIn
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1264
+      ExplicitWidth = 1266
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -1565,7 +1565,7 @@ object frmHomeLoggedIn: TfrmHomeLoggedIn
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1164
+        ExplicitWidth = 1166
         object Image1: TImage
           AlignWithMargins = True
           Left = 10

@@ -1,7 +1,7 @@
 object frmSignUp: TfrmSignUp
   Left = 0
   Top = 0
-  Caption = 'frmSignUp'
+  Caption = 'Sign Up'
   ClientHeight = 686
   ClientWidth = 1025
   Color = clBtnFace

@@ -1,7 +1,7 @@
 object frmGraphView: TfrmGraphView
   Left = 0
   Top = 0
-  Caption = 'frmGraphView'
+  Caption = 'View Graph'
   ClientHeight = 810
   ClientWidth = 1286
   Color = 5388294

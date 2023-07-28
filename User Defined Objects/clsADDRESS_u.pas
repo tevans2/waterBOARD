@@ -17,7 +17,11 @@ type
   public
     constructor Create(unit_no, street_name, suburb: string);
     function GetAddressID: integer;
+
     procedure InsertAddressRecord;
+    procedure DeleteAddressRecord(AddressID: integer);
+    procedure UpdateAddressRecord(AddressID: integer);
+
     function Validate(var Validation_Str: String): TArray<integer>;
     procedure AddToArray(var Input_Array: TArray<integer>; To_add: integer);
   end;
@@ -26,10 +30,11 @@ implementation
 
 { TAddress }
 
-procedure TAddress.AddToArray(var Input_Array: TArray<integer>; To_add: integer);
+procedure TAddress.AddToArray(var Input_Array: TArray<integer>;
+  To_add: integer);
 begin
   SetLength(Input_Array, length(Input_Array) + 1);
-  Input_Array[length(Input_Array)-1] := To_add;
+  Input_Array[length(Input_Array) - 1] := To_add;
 end;
 
 constructor TAddress.Create(unit_no, street_name, suburb: string);
@@ -38,6 +43,22 @@ begin
   Self.street_name := street_name;
   Self.suburb := suburb;
   Self.address_id := GenerateID;
+end;
+
+procedure TAddress.DeleteAddressRecord(AddressID: integer);
+begin
+  with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add('DELETE FROM [ADDRESS]');
+    qryWaterBoard.SQL.Add('WHERE address_ID = :AddressID');
+    with qryWaterBoard.Parameters do
+    begin
+      ParamByName('AddressID').Value := AddressID;
+    end;
+
+    qryWaterBoard.ExecSQL;
+  end;
 end;
 
 function TAddress.GenerateID: integer;
@@ -74,6 +95,25 @@ begin
       ParamByName('unit_no').Value := Self.unit_no;
       ParamByName('street').Value := Self.street_name;
       ParamByName('suburb').Value := Self.suburb;
+    end;
+
+    qryWaterBoard.ExecSQL;
+  end;
+end;
+
+procedure TAddress.UpdateAddressRecord(AddressID: integer);
+begin
+    with dmWaterboard do
+  begin
+    qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add('UPDATE ADDRESS');
+    qryWaterBoard.SQL.Add('SET suburb = :suburb');
+    qryWaterBoard.SQL.Add('WHERE address_id = :AddressID');
+
+    with qryWaterBoard.Parameters do
+    begin
+      ParamByName('AddressID').Value := AddressID;
+      ParamByName('suburb').Value := self.suburb;
     end;
 
     qryWaterBoard.ExecSQL;

@@ -1,0 +1,4 @@
+*.identcache
+__history/*
+_recovery/*
+Win32/*

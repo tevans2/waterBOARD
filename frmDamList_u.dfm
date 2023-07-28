@@ -1,7 +1,7 @@
 object frmDamList: TfrmDamList
   Left = 0
   Top = 0
-  Caption = 'frmDamList'
+  Caption = 'Dam List'
   ClientHeight = 720
   ClientWidth = 1280
   Color = clBtnFace
@@ -28,8 +28,8 @@ object frmDamList: TfrmDamList
     Constraints.MinWidth = 1274
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1274
-    ExplicitHeight = 711
+    ExplicitWidth = 1276
+    ExplicitHeight = 719
     object pnlContainer: TPanel
       AlignWithMargins = True
       Left = 100
@@ -51,8 +51,8 @@ object frmDamList: TfrmDamList
       ParentBackground = False
       TabOrder = 0
       OnResize = pnlContainerResize
-      ExplicitWidth = 1074
-      ExplicitHeight = 420
+      ExplicitWidth = 1076
+      ExplicitHeight = 428
       object rectContainer: TShape
         Left = 0
         Top = 0
@@ -20412,7 +20412,7 @@ object frmDamList: TfrmDamList
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1274
+      ExplicitWidth = 1276
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -20441,7 +20441,7 @@ object frmDamList: TfrmDamList
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1274
+        ExplicitWidth = 1276
         object imgLogoIcon: TImage
           AlignWithMargins = True
           Left = 121

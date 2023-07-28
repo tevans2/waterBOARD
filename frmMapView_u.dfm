@@ -1,7 +1,7 @@
 object frmMapView: TfrmMapView
   Left = 0
   Top = 0
-  Caption = 'frmMapView'
+  Caption = 'Map of Dams'
   ClientHeight = 720
   ClientWidth = 1280
   Color = clBtnFace
@@ -28,8 +28,8 @@ object frmMapView: TfrmMapView
     Constraints.MinWidth = 1274
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1274
-    ExplicitHeight = 711
+    ExplicitWidth = 1276
+    ExplicitHeight = 719
     object Panel1: TPanel
       AlignWithMargins = True
       Left = 100
@@ -50,8 +50,8 @@ object frmMapView: TfrmMapView
       ParentBackground = False
       TabOrder = 0
       OnResize = Panel1Resize
-      ExplicitWidth = 1074
-      ExplicitHeight = 420
+      ExplicitWidth = 1076
+      ExplicitHeight = 428
       object Shape2: TShape
         Left = 0
         Top = 0
@@ -27566,7 +27566,7 @@ object frmMapView: TfrmMapView
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1274
+      ExplicitWidth = 1276
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -27595,7 +27595,7 @@ object frmMapView: TfrmMapView
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1274
+        ExplicitWidth = 1276
         object imgLogoIcon: TImage
           AlignWithMargins = True
           Left = 121

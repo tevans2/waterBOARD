@@ -479,10 +479,6 @@ begin
 
   chrtGraph.LeftAxis.StartPosition := 0;
 
-  // rMaxReading := objUserGraph.GetMaxReading(ActiveUser.GetAddressID);
-  // rMaxReading := rMaxReading + trunc(rMaxReading / 3);
-  // chrtGraph.LeftAxis.EndPosition := rMaxReading;
-
   objUserGraph := TUserGraph.Create;
   dStartDate := objUserGraph.CalculateStartDate(cbbTimeFrame.ItemIndex);
   objUserGraph.SetupUserData(ActiveUser.GetAddressID, dStartDate);
