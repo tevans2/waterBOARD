@@ -2,7 +2,7 @@
 
 ## Overview
 
-D is a Windows-based application written in Delphi that allows users to track the capacity of the 6 major dams supplying water to Cape Town. It provides 10 years of historical data on the dams and fetches the most recent data from the City of Cape Town's website every time the application runs. Additionally, waterBOARD enables users to monitor and manage their personal water usage by inputting their monthly readings and setting usage goals to promote water conservation.
+waterBOARD is a Windows-based application written in Delphi that allows users to track the capacity of the 6 major dams supplying water to Cape Town. It provides 10 years of historical data on the dams and fetches the most recent data from the City of Cape Town's website every time the application runs. Additionally, waterBOARD enables users to monitor and manage their personal water usage by inputting their monthly readings and setting usage goals to promote water conservation.
 
 ## Features
 
