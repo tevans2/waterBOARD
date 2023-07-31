@@ -50,47 +50,33 @@ var
   objValidation: TValidate;
   fmt: TFormatSettings;
 begin
-  // Format of the line to be parsed: 11,1 - yyyy/mm/dd
+  // FORMAT: 11,1 - yyyy/mm/dd
 
-  // Make a copy of the line
   sLine := line;
-
-  // Find the position of the '-' character in the line
   iPos := pos('-', sLine);
-
-  // Extract the water meter reading string before the '-' character and remove any spaces
   sReading := Copy(sLine, 0, iPos - 1);
   sReading := StringReplace(sReading, ' ', '', [rfReplaceAll]);
 
-  // Remove the already processed part of the line (including the '-')
   Delete(sLine, 1, iPos + 1);
 
-  // Extract the date string after the '-' character and remove any spaces
   sDate := StringReplace(sLine, ' ', '', [rfReplaceAll]);
 
-  // Clear the input line in case of an error
   line := '';
-
-  // Create an object to perform validations
   objValidation := TValidate.Create;
 
-  // Validate and convert the water meter reading to a real number
   if objValidation.CheckReal(sReading) then
     Result := strtofloat(sReading)
   else
   begin
-    // If the water meter reading is invalid, update the line with an error message
     line := 'Invalid water meter reading';
   end;
 
-  // Try to convert the date string to a TDate using the specified date format
   try
     fmt := TFormatSettings.Create;
     fmt.ShortDateFormat := 'yyyy/mm/dd';
 
     dDate := StrToDate(sDate, fmt);
   except
-    // If the date conversion fails, update the line with an error message
     line := 'Invalid date (format - yyyy/mm/dd)';
   end;
 
@@ -99,7 +85,7 @@ end;
 procedure TWaterMeterReading.InsertWaterMeterReading;
 begin
   with dmWaterboard do
-  begin // Insert a new water meter reading record into the database
+  begin
     qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('INSERT INTO WATER_METER_READING');
     qryWaterBoard.SQL.Add('(reading_date, reading_in_kl, address_id)');

@@ -1,14 +1,14 @@
 To do: Fix sign out  button on resize, add multi table qry
 
-Phase 2 Marking Aid
+# Phase 2 Marking Aid
 
 
-DATABASE DESIGN
+## DATABASE DESIGN
 •Implementation of database design:	
 	-waterBOARD.mdb (located in Win32\Debug folder)
 	-dmWaterBOARD_u
 
-GUI DESIGN
+## GUI DESIGN
 •Ease of use/HCI principles:
 	-all forms
 •Excellent layout and communication (screen tips, feedback, help, etc.): 
@@ -20,7 +20,7 @@ GUI DESIGN
 •Excellent use of effects/colour/ icons/shortcuts/tool tip text, etc.: 
 	-all forms
 
-DATA DICTIONARY
+## DATA DICTIONARY
 Variables and components
 •Variety of appropriate variable types: 
 	-all forms
@@ -39,19 +39,19 @@ Variables and components
 
 DATA STRUCTURES (Excl. Database)
 •Text files(s):
-	-frmGraphView_u, line 187-225
+	-frmGraphView_u, line 185-223
 
 •Class(es) and object(s): 	
 	-waterBOARD\User Defined objects folder
-		1.frmHomePage_u, line 96 + line 104-106
-		2.frmSignUp_u, line 175-198
-		3.frmGraphView_u, line 508-512
+		1.frmHomePage_u, line 94 + line 104 - 106
+		2.frmSignUp_u, line 173 - 194
+		3.frmGraphView_u, line 486 - 488
 
 •Array OR advanced programming concepts:
 	-Arrays	
-		1.frmHomePage_u, line 103
-		2.clsUSER_u, line 252-262
-		3.clsADDRESS_u, line 35-42
+		1.frmHomePage_u, line 98
+		2.clsUSER_u, line 212
+		3.clsADDRESS_u, line 30
 Advanced:
 	-Overloaded methods
 		1.clsWaterMeterReading_u, line 14-16
@@ -171,15 +171,12 @@ such as minimum, maximum, sum and average
 	-clsUserGraph_u, line 61-69
 
 •At least one query involving two tables
-	-clsUserGraph_u, line 77-90		
+			
 
 •At least one dynamic query using a variable
 	-clsUserGraph_u, line 77-88
 	-clsDamReading_u, line 295-309
-
 Documentation
-	-waterBOARD_Marking_ Aid.txt
-	-README.docx/README.pdf
 Comments/Notes (Explanation of program and code)
 Exceptional features
 

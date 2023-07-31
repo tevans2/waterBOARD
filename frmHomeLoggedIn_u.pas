@@ -71,6 +71,9 @@ begin
   ResizeRePos(imgMapView, imgMapViewHover);
   ResizeRePos(imgUserStats, imgUserStatsHover);
 
+  imgSignOut_hover.Left := imgSignOut.Left;
+  imgSignOut_hover.Top := imgSignOut.Top;
+
   frmHomePage.MasterWindowState := Self.WindowState;
   // GUI CODE END
 end;
@@ -136,10 +139,12 @@ end;
 
 procedure TfrmHomeLoggedIn.imgSignOut_hoverClick(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   frmHomePage.Show;
   frmHomeLoggedIn.Hide;
 
   frmGraphView.ActiveUser.Free;
+  // GUI CODE END
 end;
 
 procedure TfrmHomeLoggedIn.imgSignOut_hoverMouseLeave(Sender: TObject);

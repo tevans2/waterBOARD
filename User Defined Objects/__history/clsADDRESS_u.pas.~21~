@@ -33,11 +33,7 @@ implementation
 procedure TAddress.AddToArray(var Input_Array: TArray<integer>;
   To_add: integer);
 begin
-  // Increase the size of the Input_Array by one to make space for a new element
   SetLength(Input_Array, length(Input_Array) + 1);
-
-  // Add the new element (To_add) at the end of the array
-  // Since array indices start at 0, we subtract 1 from the length to get the last index
   Input_Array[length(Input_Array) - 1] := To_add;
 end;
 
@@ -52,7 +48,7 @@ end;
 procedure TAddress.DeleteAddressRecord(AddressID: integer);
 begin
   with dmWaterboard do
-  begin // Delete specific address record from database
+  begin
     qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('DELETE FROM [ADDRESS]');
     qryWaterBoard.SQL.Add('WHERE address_ID = :AddressID');
@@ -69,18 +65,13 @@ function TAddress.GenerateID: integer;
 begin
   with dmWaterboard do
   begin
-    qryWaterBoard.SQL.Clear;
-    // Get the maximum address_id from the ADDRESS table
+    qryWaterBoard.SQL.clear;
     qryWaterBoard.SQL.Add('SELECT MAX(address_id) AS MaxID FROM ADDRESS');
-
     qryWaterBoard.Open;
 
-    // If the maximum ID is greater than 0
     if qryWaterBoard['MaxID'] > 0 then
-      // Set the result as the next number after the maximum ID
       Result := qryWaterBoard['MaxID'] + 1
     else
-      // If there are no records in the table, set the result as 1
       Result := 1;
   end;
 end;
@@ -93,8 +84,8 @@ end;
 procedure TAddress.InsertAddressRecord;
 begin
   with dmWaterboard do
-  begin // Insert a new address into the database
-    qryWaterBoard.SQL.Clear;
+  begin
+    qryWaterBoard.SQL.clear;
     qryWaterBoard.SQL.Add('INSERT INTO ADDRESS');
     qryWaterBoard.SQL.Add('(address_id, unit_no, street, suburb)');
     qryWaterBoard.SQL.Add('VALUES (:address_id, :unit_no, :street, :suburb)');
@@ -112,8 +103,8 @@ end;
 
 procedure TAddress.UpdateAddressRecord(AddressID: integer);
 begin
-  with dmWaterboard do
-  begin // Update an existing address record in the database
+    with dmWaterboard do
+  begin
     qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('UPDATE ADDRESS');
     qryWaterBoard.SQL.Add('SET suburb = :suburb');
@@ -122,7 +113,7 @@ begin
     with qryWaterBoard.Parameters do
     begin
       ParamByName('AddressID').Value := AddressID;
-      ParamByName('suburb').Value := Self.suburb;
+      ParamByName('suburb').Value := self.suburb;
     end;
 
     qryWaterBoard.ExecSQL;
@@ -134,46 +125,30 @@ var
   objValidate: TValidate;
   bAddToArray: Boolean;
 begin
-  // Instantiate the TValidate object
   objValidate := TValidate.Create;
 
-  // Initially, set the boolean flag to False
   bAddToArray := False;
-
   with objValidate do
   begin
-    // If unit_no is null
     if CheckNull(Self.unit_no) then
     begin
-      // Add the error message to the validation string
       Validation_Str := Validation_Str + 'Please enter your unit number' + #13;
-
-      // Add the field index (6 for unit number) to the result array
       AddToArray(Result, 6);
     end;
 
-    // If street_name is null
     if CheckNull(Self.street_name) then
     begin
-      // Add the error message to the validation string
       Validation_Str := Validation_Str + 'Please enter your street name' + #13;
-
-      // Add the field index (7 for street name) to the result array
       AddToArray(Result, 7);
     end;
 
-    // If suburb is null
     if CheckNull(Self.suburb) then
     begin
-      // Add the error message to the validation string
       Validation_Str := Validation_Str + 'Please enter your suburb' + #13;
-
-      // Add the field index (8 for suburb) to the result array
       AddToArray(Result, 8);
     end;
 
   end;
 end;
-
 
 end.

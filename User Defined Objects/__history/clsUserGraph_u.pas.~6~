@@ -80,78 +80,56 @@ begin
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
-
-    // Add SQL command to select specific fields from the WATER_METER_READING and TARGET tables.
     qryWaterBoard.SQL.Add
       ('SELECT W.address_id, T.user_id, W.reading_date, W.reading_in_kl, T.target_value');
     qryWaterBoard.SQL.Add('FROM WATER_METER_READING AS W, TARGET AS T ');
     qryWaterBoard.SQL.Add
       ('WHERE (((W.address_id)= :address_id) AND ((T.user_id)= :user_id))');
 
-    // Prepare the parameters to be used in the SQL query.
     with qryWaterBoard.Parameters do
     begin
-      // Set the address_id parameter to the provided address_id.
       ParamByName('address_id').Value := address_id;
-      // Set the user_id parameter to the provided user_id.
       ParamByName('user_id').Value := user_id;
     end;
 
     qryWaterBoard.Open;
   end;
+
 end;
 
-// This procedure is used to set up the user data for the graph.
 procedure TUserGraph.SetupUserData(address_id: integer; start_date: TDate);
 begin
-  // Setting the address id.
   Self.address_id := address_id;
-  // Setting the starting date for fetching the data.
   Self.start_date := start_date;
 
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
-
-    // Add SQL command to select specific fields from the WATER_METER_READING table.
     qryWaterBoard.SQL.Add('SELECT reading_date, reading_in_kl, address_id');
     qryWaterBoard.SQL.Add('FROM WATER_METER_READING ');
-
-    // Add a WHERE clause to filter records that have an address_id equal to the provided address_id and
-    // a reading_date that is on or after the provided start_date.
     qryWaterBoard.SQL.Add
       ('WHERE (address_id = :address_id) AND (reading_date >= #' +
       DateToStr(start_date) + '#) ORDER BY reading_date ASC');
 
-    // Assign the value of the address_id parameter for the SQL command.
     qryWaterBoard.Parameters.ParamByName('address_id').Value := address_id;
 
     qryWaterBoard.Open;
   end;
 end;
 
-// This procedure is used to set up the user target data.
 procedure TUserGraph.SetupUserTargetData(user_id: integer; start_date: TDate);
 begin
-  // Setting the user id.
   Self.user_id := user_id;
-  // Setting the starting date for fetching the data.
   Self.start_date := start_date;
 
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
-
-    // Add SQL command to select specific fields from the TARGET table.
     qryWaterBoard.SQL.Add('SELECT target_set_date, target_value, user_id');
     qryWaterBoard.SQL.Add('FROM TARGET ');
-
-    // Add a WHERE clause to filter records that have a user_id equal to the provided user_id and
-    // a target_set_date that is on or after the provided start_date.
     qryWaterBoard.SQL.Add('WHERE (user_id = :user_id) AND (target_set_date >= #'
       + DateToStr(start_date) + '#)');
 
-    // Assign the value of the user_id parameter for the SQL command.
     qryWaterBoard.Parameters.ParamByName('user_id').Value := user_id;
 
     qryWaterBoard.Open;

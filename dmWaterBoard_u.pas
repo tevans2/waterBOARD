@@ -9,7 +9,6 @@ type
   TdmWaterboard = class(TDataModule)
     qryWaterBoard: TADOQuery;
     dscWaterBoard: TDataSource;
-    conWATERboard: TADOConnection;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -28,17 +27,27 @@ implementation
 
 procedure TdmWaterboard.DataModuleCreate(Sender: TObject);
 begin
+  // Create a new TADOConnection object with dmWaterboard as its owner.
   conWaterBoard_code := TADOConnection.Create(dmWaterboard);
 
+  // Ensure the connection is initially closed.
   conWaterBoard_code.Close;
+
+  // Configure the connection string to point to a Microsoft Access database file named 'waterBOARD.mdb'.
+  // The file is expected to be located in the same directory as the executing program (ParamStr(0) gives the path of the executing program).
+  // Also specify the provider as 'Microsoft.Jet.OLEDB.4.0' and disable persisting security info and login prompt for the connection.
   conWaterBoard_code.ConnectionString :=
     'Provider=Microsoft.Jet.OLEDB.4.0;Data Source =' +
     ExtractFilePath(ParamStr(0)) + 'waterBOARD.mdb' +
     ';Persist Security Info = False';
   conWaterBoard_code.LoginPrompt := False;
+
+  // Open the database connection.
   conWaterBoard_code.Open;
 
+  // Assign the database connection to the qryWaterBoard query object.
   qryWaterBoard.Connection := conWaterBoard_code;
 end;
+
 
 end.

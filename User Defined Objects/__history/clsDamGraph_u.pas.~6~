@@ -26,36 +26,29 @@ implementation
 
 function TDamGraph.CalculateStartDate(time_frame: integer): TDate;
 begin
-  // Using a case statement to switch between different time frames
   case time_frame of
-    0: // If time frame is 0
+    0:
       begin
-        // Returns the date of one month prior to the current date
         Result := IncMonth(now, -1);
       end;
-    1: // If time frame is 1
+    1:
       begin
-        // Returns the date of six months prior to the current date
         Result := IncMonth(now, -6);
       end;
-    2: // If time frame is 2
+    2:
       begin
-        // Returns the date of one year prior to the current date
         Result := IncYear(now, -1);
       end;
-    3: // If time frame is 3
+    3:
       begin
-        // Returns the date of five years prior to the current date
         Result := IncYear(now, -5);
       end;
-    4: // If time frame is 4
+    4:
       begin
-        // Returns the date of ten years prior to the current date
         Result := IncYear(now, -10);
       end;
   end;
 end;
-
 
 constructor TDamGraph.Create;
 begin
@@ -91,21 +84,15 @@ begin
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
-
-    // Add a new SQL command to select the reading date, level percent, and dam_id from DAM_READING
     qryWaterBoard.SQL.Add
       ('SELECT reading_date, level_percent, dam_id FROM DAM_READING ');
-
-    // Add a WHERE clause to filter by dam_id and reading_date
     qryWaterBoard.SQL.Add('WHERE (dam_id = :dam_id) AND (reading_date >= #' +
       DateToStr(start_date) + '#) ORDER BY reading_date ASC');
 
-    // Set the dam_id parameter to the dam_id passed in as argument
     qryWaterBoard.Parameters.ParamByName('dam_id').Value := dam_id;
 
     qryWaterBoard.Open;
   end;
 end;
-
 
 end.

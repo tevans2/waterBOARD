@@ -52,7 +52,6 @@ begin
   Self.reading_date := reading_date;
 end;
 
-// Function to check if the given reading date exists in the table DAM_READING
 function TDamReading.CheckReadingDateInTable(ReadingDate: TDate): Boolean;
 var
   DBDate: TDate;
@@ -60,32 +59,19 @@ begin
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
-
-    // Set the SQL command to select the reading_date from the DAM_READING table
     qryWaterBoard.SQL.Text := 'SELECT reading_date FROM [DAM_READING]';
-
     qryWaterBoard.Open;
-
     Result := False;
 
-    // Start from the first record in the query result
     qryWaterBoard.First;
-
-    // Loop through all records in the query result
     while not qryWaterBoard.Eof do
     begin
-      // Fetch the reading_date from the current record
       DBDate := qryWaterBoard['reading_date'];
-
-      // If the fetched date matches the input ReadingDate
       if DBDate = ReadingDate then
       begin
-        // Set the result to True and exit the function
         Result := True;
         exit
       end;
-
-      // Move to the next record in the query result
       qryWaterBoard.Next;
     end;
   end;
@@ -104,7 +90,7 @@ end;
 procedure TDamReading.DeleteDamReading(Reading_id: integer);
 begin
   with dmWaterboard do
-  begin // Delete a specified dam reading from the database
+  begin
     qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('DELETE FROM [DAM_READING]');
     qryWaterBoard.SQL.Add('WHERE ID = :ReadingID');
@@ -167,7 +153,6 @@ begin
   end;
 end;
 
-// Function to fetch dam levels from a HTML Table string
 function TDamReading.FetchDamLevels(HTMLTable: String): TArray<Real>;
 var
   tag, table, val_str, level_percent: string;
@@ -176,17 +161,13 @@ var
   iCount: integer;
   ReadingDate: TDate;
 const
-  // Custom format settings to consider ',' as decimal separator
   Komma: TFormatSettings = (DecimalSeparator: ',');
 begin
-  // Initializing the array to hold dam data
   SetLength(arrDamData, 6);
   iCount := 0;
 
-  // Storing HTML table into a variable
   table := HTMLTable;
 
-  // First tag pattern for extracting data
   tag := '&lt;/td&gt;&lt;td style="height:31px;text-align:right;"&gt;';
   tag_len := length(tag);
   tag_start_pos := pos(tag, table);
@@ -194,41 +175,33 @@ begin
   // Get first dam (Berg River) data
   for i := 1 to 2 do
   begin
-    // Search for end position of tag
     tag_end_pos := PosEx('&lt;br&gt;', table, tag_start_pos);
-
-    // Extract the value from the table string
     val_str := Copy(table, tag_start_pos + tag_len, tag_end_pos - tag_start_pos
       - tag_len);
 
-    // Get the position of next tag
     tag_start_pos := PosEx(tag, table, tag_start_pos + tag_len);
 
-    // We only need the level percent, so we ommit the capacity (only values at even index positions)
-    if i mod 2 = 0 then
+    if i mod 2 = 0 then // Get only level percent (ommit capacity)
     begin
-      // Replacing '.' with ',' to prepare for conversion to float
       level_percent := StringReplace(val_str, '.', ',', []);
       arrDamData[iCount] := strtofloat(level_percent, Komma);
       inc(iCount);
     end;
   end;
 
-  // Get other 5 dam data
-  // Adjust tag pattern for other dams
+  // Get other 5 dam datas
   tag := '&lt;/td&gt;&lt;td style="text-align:right;"&gt;';
   tag_len := length(tag);
   tag_start_pos := pos(tag, table);
 
   for j := 1 to 10 do
   begin
-    // Similar procedure as the one used above for extracting dam data
     tag_end_pos := PosEx('&lt;br&gt;', table, tag_start_pos);
     val_str := Copy(table, tag_start_pos + tag_len, tag_end_pos - tag_start_pos
       - tag_len);
+
     tag_start_pos := PosEx(tag, table, tag_start_pos + tag_len);
 
-    // Again, we only need the level percent (only values at even index positions)
     if j mod 2 = 0 then
     begin
       level_percent := StringReplace(val_str, '.', ',', []);
@@ -236,44 +209,32 @@ begin
       inc(iCount);
     end;
   end;
-
-  // Return the array of dam data
   Result := arrDamData;
 end;
 
-// Function to fetch the reading date from the HTML Table
 function TDamReading.FetchReadingDate(HTMLTable: String): TDate;
 var
   tag, val_str: String;
   tag_len, tag_start_pos, tag_end_pos: integer;
   fmt: TFormatSettings;
 begin
-  // The string pattern preceding the reading date in the HTML
   tag := 'Current Dam Water Levels - ';
 
-  // Calculating the length of the tag and finding its position in the HTML
   tag_len := length(tag);
   tag_start_pos := pos(tag, HTMLTable);
 
-  // Finding the end position of the date string in the HTML
   tag_end_pos := PosEx('&lt;/b&gt; &lt;/caption&gt;', HTMLTable, tag_start_pos);
-
-  // Extracting the date string from the HTML
   val_str := Copy(HTMLTable, tag_start_pos + tag_len,
     tag_end_pos - tag_start_pos - tag_len);
 
-  // Replacing special unicode character
   val_str := StringReplace(val_str, #$200B, '', [rfReplaceAll]);
 
-  // Creating a format settings object with the specific date format
   fmt := TFormatSettings.Create;
   fmt.ShortDateFormat := 'd/m/yyyy';
 
-  // Converting the date string to a TDate value
   Result := StrToDate(val_str, fmt);
 end;
 
-// Function to fetch the table data from the website
 function TDamReading.FetchTable: String;
 var
   Client: TRESTClient;
@@ -282,44 +243,31 @@ var
   table_begin_pos, table_end_pos: integer;
   page, table: String;
 begin
-  // Initialize the REST client with the base URL
   Client := TRESTClient.Create(nil);
   Client.BaseURL := 'https://www.capetown.gov.za/';
 
-  // Create a new REST request
   request := TRESTRequest.Create(nil);
   request.Client := Client;
-  // Specify the request method as GET
   request.Method := rmGET;
-  // Specify the resource path
   request.Resource :=
     'Family%20and%20home/residential-utility-services/residential-water-and-sanitation-services/this-weeks-dam-levels';
 
-  // Execute the request
   request.Execute;
 
-  // Obtain the response from the request
   response := request.response;
 
-  // If the request was successful, extract the table data from the page content
   if response.Status.Success then
   begin
-    // Get the full page content
     page := response.Content;
-    // Find the position of the beginning of the table
     table_begin_pos := pos('Current Dam Water Levels', page);
-    // Find the position of the end of the table
     table_end_pos := PosEx('Because each dam size is different', page,
       table_begin_pos);
 
-    // Extract the table content from the full page content
     table := Copy(page, table_begin_pos, table_end_pos);
 
-    // Return the table content
     Result := table;
   end
   else
-  // If the request was not successful, display an error message
   begin
     Showmessage('Failed with ' + response.StatusText + ': ' + response.Content);
     exit
@@ -334,7 +282,7 @@ var
 begin
   Self.reading_date := ReadingDate;
   for i := 0 to length(arrDamLevels) - 1 do
-  begin // Insert all 6 daily dam reading into the database
+  begin
     Self.level_percent := arrDamLevels[i];
     Self.dam_id := i + 1;
 
@@ -345,7 +293,7 @@ end;
 procedure TDamReading.InsertDamReading;
 begin
   with dmWaterboard do
-  begin // Insert a new dam reading into database
+  begin
     qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('INSERT INTO DAM_READING');
     qryWaterBoard.SQL.Add('(reading_date, level_percent, dam_id)');

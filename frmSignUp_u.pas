@@ -92,19 +92,31 @@ procedure TfrmSignUp.edtUsernameExit(Sender: TObject);
 var
   bUnique: Boolean;
 begin
+  // Create a new validation object
   objValidate := TValidate.Create;
+
+  // Check if the entered username is unique in the user table
+  // using the CheckUnique method of the validation object
   bUnique := objValidate.CheckUnique(edtUsername.Text, 'USER', 'username');
 
+  // If the username is not unique
   if not bUnique then
   begin
+    // Display a message dialog to inform the user that the username already exists
     MessageDlg('Username already exists', mtError, [mbOK], 0);
+
+    // Clear the username input field
     edtUsername.Clear;
+
+    // Set the focus to the username input field so the user can enter a new username
     edtUsername.SetFocus;
   end;
 end;
 
+
 procedure TfrmSignUp.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  //Clear all inputs
   edtFirstName.Clear;
   edtSurname.Clear;
   edtUsername.Clear;
@@ -156,8 +168,10 @@ var
   sTargetValue: String;
   bComplete: Boolean;
 begin
+  // Initialize validation string
   sValidateStr := '';
 
+  // Get user input from the form
   sFirstName := edtFirstName.Text;
   sSurname := edtSurname.Text;
   sUsername := edtUsername.Text;
@@ -169,46 +183,60 @@ begin
   sStreetName := edtStreetName.Text;
   sSuburb := edtSuburb.Text;
 
-  // VALIDATION
+  // Start the validation process
   with objValidate do
   begin
+    // Check if password confirmation field is not empty
     if CheckNull(sConfirmPassword) then
     begin
+      // Display error message
       MessageDlg('Please confirm your password', mtError, [mbOK], 0);
       Exit
     end;
 
-    // Check passwords match
+    // Check if passwords match
     if not CheckSame(sPassword, sConfirmPassword) then
     begin
+      // Display error message
       MessageDlg('Passwords do not match', mtError, [mbOK], 0);
+      // Clear the password fields
       edtPassword.Clear;
       edtConfirmPassword.Clear;
+      // Set focus to password field
       edtPassword.SetFocus;
 
       Exit
     end;
   end;
 
+  // Create a new address with user input
   objNewAddress := TAddress.Create(sUnitNumber, sStreetName, sSuburb);
+  // Validate address fields
   arrErrorFields := objNewAddress.Validate(sValidateStr);
 
+  // Hash the password using BCrypt
   sPassword := TBCrypt.HashPassword(sPassword);
+  // Create a new user with user input
   objNewUser := TUser.Create(sFirstName, sSurname, sUsername,
     sPassword, sEmail);
 
+  // Validate user fields
   arrErrorFields := objNewUser.Validate(sValidateStr);
 
+  // Check if validation string is empty
   if sValidateStr = '' then
   begin
+    // Insert user record into the database
     objNewUser.InsertUserRecord(objNewAddress);
 
     // GUI CODE START
-    // Log In
+    // Log in and display home page
     frmHomeLoggedIn.Show;
+    // Hide sign up and home pages
     frmSignUp.Hide;
     frmHomePage.Hide;
 
+    // Clear input fields
     edtFirstName.Clear;
     edtSurname.Clear;
     edtUsername.Clear;
@@ -219,22 +247,30 @@ begin
     edtStreetName.Clear;
     edtSuburb.Clear;
 
+    // Set the login status to true
     frmHomeLoggedIn.bLoggedIn := True;
 
+    // Set the active user for the graph view form
     frmGraphView.ActiveUser := objNewUser;
     // GUI CODE END
 
+    // Loop until a valid target value is entered
     bComplete := False;
     Repeat
+      // Ask the user to enter a target value
       sTargetValue := InputBox('Enter new target',
         'Please enter a monthly water usage target to get started:', '');
 
+      // Check if the entered target value is a real number
       if objValidate.CheckReal(sTargetValue) then
       begin
+        // Create a new target with the current date, target value, and user id
         objNewTarget := TTarget.Create(now, rTargetValue, objNewUser.GetUserID);
+        // Mark the process as complete
         bComplete := True;
       end
       else
+        // Show error message if the entered target value is not a real number
         Showmessage
           ('Please enter a valid monthly water usage target in kilo litres. Eg. 6,33 kl');
     until bComplete = True;

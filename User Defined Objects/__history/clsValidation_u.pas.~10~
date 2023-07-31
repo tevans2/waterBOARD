@@ -178,74 +178,49 @@ begin
       Result := False;
 end;
 
-// This function checks if a date (InputDate) is unique within the specified field (DB_field) in a given database table (DB_table).
-// It returns true if the date is unique, false otherwise.
 function TValidate.CheckUnique(InputDate: TDate;
   DB_table, DB_field: String): Boolean;
 begin
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add('SElECT ' + DB_field + ' FROM' + DB_table);
 
-    // Formulate and add the SQL command to the query.
-    qryWaterBoard.SQL.Add('SELECT ' + DB_field + ' FROM ' + DB_table);
-
-    qryWaterBoard.Open;
-
-    // If the date is found in the selected field, the function returns false, indicating that the date is not unique.
     if qryWaterBoard.Locate(DB_field, InputDate, []) then
       Result := False
-      // If the date is not found, the function returns true, indicating that the date is unique.
     else if qryWaterBoard.Locate(DB_field, InputDate, []) = False then
       Result := True;
   end;
 end;
 
-// This function checks if an integer (InputInt) is unique within the specified field (DB_field) in a given database table (DB_table).
-// It returns true if the integer is unique, false otherwise.
 function TValidate.CheckUnique(InputInt: Integer;
   DB_table, DB_field: String): Boolean;
 begin
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
+    qryWaterBoard.SQL.Add('SElECT ' + DB_field + ' FROM' + DB_table);
 
-    // Formulate and add the SQL command to the query.
-    qryWaterBoard.SQL.Add('SELECT ' + DB_field + ' FROM ' + DB_table);
-
-    qryWaterBoard.Open;
-
-    // If the integer is found in the selected field, the function returns false, indicating that the integer is not unique.
     if qryWaterBoard.Locate(DB_field, InputInt, []) then
       Result := False
-      // If the integer is not found, the function returns true, indicating that the integer is unique.
     else if qryWaterBoard.Locate(DB_field, InputInt, []) = False then
       Result := True;
   end;
 end;
 
-// This function checks if a string (InputStr) is unique within the specified field (DB_field) in a given database table (DB_table).
-// It returns true if the string is unique, false otherwise.
 function TValidate.CheckUnique(InputStr, DB_table, DB_field: String): Boolean;
-var
+vAR
   sSQL: String;
 begin
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
-
-    // Formulate the SQL query string to select the specified field from the given table.
     sSQL := 'SELECT ' + DB_field + ' FROM [' + DB_table + ']';
-
-    // Add the SQL command to the query.
     qryWaterBoard.SQL.Add(sSQL);
-
     qryWaterBoard.Open;
 
-    // If the string is found in the selected field, the function returns false, indicating that the string is not unique.
     if qryWaterBoard.Locate(DB_field, InputStr, []) then
       Result := False
-      // If the string is not found, the function returns true, indicating that the string is unique.
     else if qryWaterBoard.Locate(DB_field, InputStr, []) = False then
       Result := True;
   end;

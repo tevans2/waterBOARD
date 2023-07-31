@@ -30,7 +30,7 @@ object frmLogin: TfrmLogin
     Color = 5388294
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 507
+    ExplicitWidth = 505
     object Shape1: TShape
       AlignWithMargins = True
       Left = 3
@@ -269,8 +269,8 @@ object frmLogin: TfrmLogin
     Constraints.MinWidth = 503
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 507
-    ExplicitHeight = 464
+    ExplicitWidth = 505
+    ExplicitHeight = 456
     object lblUsername: TLabel
       Left = 90
       Top = 24
@@ -454,7 +454,7 @@ object frmLogin: TfrmLogin
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 327
+      ExplicitWidth = 325
       ExplicitHeight = 47
     end
     object edtPassword: TEdit
@@ -487,7 +487,7 @@ object frmLogin: TfrmLogin
       ShowHint = True
       TabOrder = 1
       OnClick = edtPasswordClick
-      ExplicitWidth = 327
+      ExplicitWidth = 325
       ExplicitHeight = 47
     end
   end

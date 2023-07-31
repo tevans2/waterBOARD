@@ -27,8 +27,8 @@ object frmHomeLoggedIn: TfrmHomeLoggedIn
     Constraints.MinWidth = 1264
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1266
-    ExplicitHeight = 701
+    ExplicitWidth = 1264
+    ExplicitHeight = 693
     object Panel1: TPanel
       AlignWithMargins = True
       Left = 100
@@ -50,7 +50,7 @@ object frmHomeLoggedIn: TfrmHomeLoggedIn
       ParentBackground = False
       TabOrder = 0
       OnResize = Panel1Resize
-      ExplicitHeight = 410
+      ExplicitHeight = 402
       object Shape2: TShape
         Left = 0
         Top = 0
@@ -1536,7 +1536,7 @@ object frmHomeLoggedIn: TfrmHomeLoggedIn
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1266
+      ExplicitWidth = 1264
       object Shape1: TShape
         AlignWithMargins = True
         Left = 3
@@ -1565,7 +1565,7 @@ object frmHomeLoggedIn: TfrmHomeLoggedIn
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1166
+        ExplicitWidth = 1164
         object Image1: TImage
           AlignWithMargins = True
           Left = 10

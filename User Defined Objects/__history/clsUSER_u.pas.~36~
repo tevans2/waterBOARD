@@ -58,7 +58,7 @@ end;
 procedure TUser.DeleteUserRecord(UserID: integer);
 begin
   with dmWaterboard do
-  begin // Delete a specified user from the database
+  begin
     qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('DELETE FROM [USER]');
     qryWaterBoard.SQL.Add('WHERE user_ID = :UserID');
@@ -73,17 +73,17 @@ end;
 
 function TUser.GetAddressID: integer;
 begin
-  Result := Self.address_id; // Returns user's address id
+  Result := Self.address_id;
 end;
 
 function TUser.GetName: String;
 begin
-  Result := Self.first_name + ' ' + Self.surname; // Returns user's full name
+  Result := Self.first_name + ' ' + Self.surname;
 end;
 
 function TUser.GetUserID: integer;
 begin
-  Result := Self.user_id; // Returns user's user id
+  Result := Self.user_id;
 end;
 
 procedure TUser.InsertUserRecord(objAddress: TAddress);
@@ -92,7 +92,7 @@ begin
   Self.address_id := objAddress.GetAddressID;
 
   with dmWaterboard do
-  begin // Inserts a new User record into the database
+  begin
     qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('INSERT INTO [USER]');
     qryWaterBoard.SQL.Add
@@ -116,7 +116,7 @@ end;
 procedure TUser.UpdateUserRecord(UserID: integer; username: string);
 begin
   with dmWaterboard do
-  begin // Updates a specified existing User record with a new username
+  begin
     qryWaterBoard.SQL.Clear;
     qryWaterBoard.SQL.Add('UPDATE USER');
     qryWaterBoard.SQL.Add('SET username = :username');
@@ -132,27 +132,25 @@ begin
   end;
 end;
 
-// This function is used to validate user details.
-// It checks if the first name, surname, email, username, and password meet the required criteria.
-// It returns an array of integers where each number corresponds to a specific detail that failed the validation process.
-// 1 = First Name
-// 2 = Surname
-// 3 = Email
-// 4 = Username
-// 5 = Password
 function TUser.Validate(var Validation_Str: String): TArray<integer>;
 var
   objValidate: Tvalidate;
   bAddToArray: Boolean;
 begin
-  // Creating a validation object.
   objValidate := Tvalidate.Create;
 
   with objValidate do
   begin
+    // Validation Result Key:
+    // 1 = First Name
+    // 2 = Surname
+    // 3 = Email
+    // 4 = Username
+    // 5 = Password
+
     bAddToArray := False;
 
-    // Validate the First Name. Check if it's null, its length, and if it contains numbers.
+    // Validate First Name
     if CheckNull(Self.first_name) then
     begin
       Validation_Str := Validation_Str + 'Please enter your first name' + #13;
@@ -160,12 +158,14 @@ begin
     end;
     if CheckLength(Self.first_name, 20) then
     begin
-      Validation_Str := Validation_Str + 'The first name you entered is too long' + #13;
+      Validation_Str := Validation_Str +
+        'The first name you entered is too long' + #13;
       bAddToArray := True;
     end;
     if not CheckStr(Self.first_name) then
     begin
-      Validation_Str := Validation_Str + 'Please remove any numbers from your first name' + #13;
+      Validation_Str := Validation_Str +
+        'Please remove any numbers from your first name' + #13;
       bAddToArray := True;
     end;
     if bAddToArray then
@@ -173,7 +173,7 @@ begin
 
     bAddToArray := False;
 
-    // Validate the Surname. Check if it's null, its length, and if it contains numbers.
+    // Validate Surname
     if CheckNull(Self.surname) then
     begin
       Validation_Str := Validation_Str + 'Please enter your surname' + #13;
@@ -181,12 +181,14 @@ begin
     end;
     if CheckLength(Self.surname, 20) then
     begin
-      Validation_Str := Validation_Str + 'The surname you entered is too long' + #13;
+      Validation_Str := Validation_Str +
+        'The surname you entered is too long' + #13;
       bAddToArray := True;
     end;
     if not CheckStr(Self.surname) then
     begin
-      Validation_Str := Validation_Str + 'Please remove any numbers from your surname' + #13;
+      Validation_Str := Validation_Str +
+        'Please remove any numbers from your surname' + #13;
       bAddToArray := True;
     end;
     if bAddToArray then
@@ -194,7 +196,7 @@ begin
 
     bAddToArray := False;
 
-    // Validate the Email. Check if it's null, its length, and if it is in a correct format.
+    // Validate Email
     if CheckNull(Self.email) then
     begin
       Validation_Str := Validation_Str + 'Please enter your email' + #13;
@@ -202,12 +204,13 @@ begin
     end;
     if CheckLength(Self.email, 20) then
     begin
-      Validation_Str := Validation_Str + 'The email you entered is too long' + #13;
+      Validation_Str := Validation_Str + 'The email entered is too long' + #13;
       bAddToArray := True;
     end;
     if not CheckEmail(Self.email) then
     begin
-      Validation_Str := Validation_Str + 'Please enter a valid Email address' + #13;
+      Validation_Str := Validation_Str +
+        'Please enter a valid Email address' + #13;
       bAddToArray := True;
     end;
     if bAddToArray then
@@ -215,7 +218,7 @@ begin
 
     bAddToArray := False;
 
-    // Validate the Username. Check if it's null and its length.
+    // Validate Username
     if CheckNull(Self.username) then
     begin
       Validation_Str := Validation_Str + 'Please enter your username' + #13;
@@ -223,7 +226,8 @@ begin
     end;
     if CheckLength(Self.username, 20) then
     begin
-      Validation_Str := Validation_Str + 'The username you entered is too long' + #13;
+      Validation_Str := Validation_Str +
+        'The username entered is too long' + #13;
       bAddToArray := True;
     end;
     if bAddToArray then
@@ -231,7 +235,7 @@ begin
 
     bAddToArray := False;
 
-    // Validate the Password. Check if it's null.
+    // Validate Password
     if CheckNull(Self.password) then
     begin
       Validation_Str := Validation_Str + 'Please enter your password' + #13;
@@ -241,7 +245,6 @@ begin
       AddToArray(Result, 5);
   end;
 end;
-
 
 procedure TUser.AddToArray(var Input_Array: TArray<integer>; To_add: integer);
 var
@@ -258,45 +261,31 @@ begin
   Input_Array[ilength - 1] := To_add;
 end;
 
-// This function checks if the login details provided by a user are valid.
-// It returns true if the login is successful, and false otherwise.
+
 function TUser.CheckLogin: Boolean;
 var
-  objValidateLogin: Tvalidate; // Validation object.
-  sDBHash: String; // String to hold the hashed password retrieved from the database.
+  objValidateLogin: Tvalidate;
+  sDBHash: String;
   bReHash: Boolean;
 begin
-  // Create validation object.
   objValidateLogin := Tvalidate.Create;
-
-  // Default the result to false.
   Result := False;
-
-  // Check if the username provided by the user is not unique,
-  // i.e., it exists in the 'USER' table of the database.
   if not objValidateLogin.CheckUnique(Self.username, 'USER', 'username') then
   begin
     with dmWaterboard do
     begin
       qryWaterBoard.SQL.Clear;
-
-      // Add SQL command to select user details where username matches the one provided by the user.
       qryWaterBoard.SQL.Add
         ('SELECT user_id, first_name, surname, username, password, address_id FROM [USER] WHERE username = '
         + QuotedStr(Self.username));
-
       qryWaterBoard.Open;
 
-      // Store the hashed password from the database.
       sDBHash := qryWaterBoard['password'];
 
-      // Check if the hashed password matches with the one provided by the user.
       if TBCrypt.CheckPassword(Self.password, sDBHash, bReHash) then
       begin
-        // If the password is correct, set the result to true.
         Result := True;
 
-        // Set the user details from the database to the current user object.
         Self.first_name := qryWaterBoard['first_name'];
         Self.surname := qryWaterBoard['surname'];
         Self.address_id := qryWaterBoard['address_id'];
@@ -305,6 +294,5 @@ begin
     end;
   end;
 end;
-
 
 end.

@@ -31,12 +31,14 @@ implementation
 
 procedure TfrmLoadingPage.FormShow(Sender: TObject);
 begin
+  // GUI CODE BEGIN
   (imgLoading.Picture.Graphic as TGIFImage).Animate := True;
   (imgLoading.Picture.Graphic as TGIFImage).AnimationSpeed := 2000;
 
   frmLoadingPage.DoubleBuffered := True;
 
   imgTick.Visible := False;
+  // GUI CODE END
 end;
 
 end.

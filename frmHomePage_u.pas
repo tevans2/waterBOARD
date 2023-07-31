@@ -87,50 +87,71 @@ var
   i: integer;
 
 begin
-  // GUI CODE BEGIN
+  // Set the window state based on the MasterWindowState of frmHomePage
   WindowState := frmHomePage.MasterWindowState;
+  // Set bLoggedIn property of frmHomeLoggedIn to false indicating that user is not logged in
   frmHomeLoggedIn.bLoggedIn := False;
 
+  // Create a new instance of TDamReading
   objDamReading := TDamReading.Create;
+
+  // Create a new task
   aTask := TTask.Create(
     procedure
     begin
+      // Initialize arrDamData array with size 6
       SetLength(arrDamData, 6);
 
-      // Insert from WEB
+      // Fetch dam reading data from the web
       with objDamReading do
       begin
         try
+          // Fetch the HTML table data
           sHTMLTable := FetchTable;
+          // Get the dam levels from the fetched HTML table
           arrDamData := FetchDamLevels(sHTMLTable);
+          // Get the reading date from the fetched HTML table
           dReadingDate := FetchReadingDate(sHTMLTable);
+          // Delay the execution for 5 seconds
           sleep(5000);
+          // Set the visibility of the tick image on the loading page to true
           frmLoadingPage.imgTick.Visible := True;
 
+          // Hide the loading image on the loading page
           frmLoadingPage.imgLoading.Visible := False;
 
         except
+          // Show error message when unable to fetch the latest dam data
           Showmessage('Unable to fetch latest dam data.');
         end;
 
+        // Synchronize the following block of code to the main thread
         TThread.Synchronize(TThread.Current,
           procedure
           begin
             try
-            if not CheckReadingDateInTable(dReadingDate) then
-              InsertDailyDamReadings(dReadingDate, arrDamData);
-            bFetched := True;
-            frmLoadingPage.Refresh;
+              // Check if the fetched reading date is already in the database
+              if not CheckReadingDateInTable(dReadingDate) then
+                // If not, insert the daily dam readings to the database
+                InsertDailyDamReadings(dReadingDate, arrDamData);
+              // Set bFetched to true, indicating the data has been fetched successfully
+              bFetched := True;
+              // Refresh the loading page
+              frmLoadingPage.Refresh;
             except
-            Showmessage('Unable to fetch latest dam data.');
-            Exit
+              // Show error message when unable to fetch the latest dam data
+              Showmessage('Unable to fetch latest dam data.');
+              Exit
             end;
           end);
+        // Refresh the loading page again
         frmLoadingPage.Refresh;
+        // Close the loading page
         frmLoadingPage.Close;
       end;
     end);
 
+  // If the data has not been fetched, start the task and show the loading page
   if bFetched = False then
   begin
     aTask.Start;

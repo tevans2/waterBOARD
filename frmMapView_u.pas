@@ -104,9 +104,9 @@ procedure TfrmMapView.imgBergRiverClick(Sender: TObject);
 begin
   // GUI CODE START
   frmGraphView.DamID := 1;
+  frmGraphView.OrigionForm := 2;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 2;
   // GUI CODE END
 end;
 
@@ -157,9 +157,9 @@ procedure TfrmMapView.imgSteenbrasLowClick(Sender: TObject);
 begin
   // GUI CODE START
   frmGraphView.DamID := 2;
+  frmGraphView.OrigionForm := 2;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 2;
   // GUI CODE END
 end;
 
@@ -182,9 +182,9 @@ procedure TfrmMapView.imgSteenbrasUpClick(Sender: TObject);
 begin
   // GUI CODE START
   frmGraphView.DamID := 3;
+  frmGraphView.OrigionForm := 2;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 2;
   // GUI CODE END
 end;
 
@@ -207,9 +207,9 @@ procedure TfrmMapView.imgTheewaterskloofClick(Sender: TObject);
 begin
   // GUI CODE START
   frmGraphView.DamID := 4;
-  frmGraphView.Show;
   Self.Hide;
   frmGraphView.OrigionForm := 2;
+  frmGraphView.Show;
   // GUI CODE END
 end;
 
@@ -232,9 +232,9 @@ procedure TfrmMapView.imgVoelVleiClick(Sender: TObject);
 begin
   // GUI CODE START
   frmGraphView.DamID := 5;
+  frmGraphView.OrigionForm := 2;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 2;
   // GUI CODE END
 end;
 
@@ -257,9 +257,9 @@ procedure TfrmMapView.imgWemmershoekClick(Sender: TObject);
 begin
   // GUI CODE START
   frmGraphView.DamID := 6;
+  frmGraphView.OrigionForm := 2;
   frmGraphView.Show;
   Self.Hide;
-  frmGraphView.OrigionForm := 2;
   // GUI CODE END
 end;
 

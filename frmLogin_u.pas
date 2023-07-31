@@ -50,7 +50,7 @@ begin
   else
     edtPassword.PasswordChar := #0;
 
-    edtPassword.AutoSelect := False;
+  edtPassword.AutoSelect := False;
 end;
 
 procedure TfrmLogin.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -83,36 +83,50 @@ var
   sUsername, sPassword: String;
   bValidUser: Boolean;
 begin
+  // Extract entered username and password from the respective text fields
   sUsername := edtUsername.Text;
   sPassword := edtPassword.Text;
 
+  // Create a new user object with the entered username and password
   objExistingUser := TUser.Create(sUsername, sPassword);
+
+  // Check if the entered username and password are valid
   bValidUser := objExistingUser.CheckLogin;
 
   if bValidUser then
-  begin // success
+  begin // login success
 
     // GUI CODE START
-    // Logged In
+    // Display the logged in home page and hide the login form
     frmHomeLoggedIn.Show;
     frmLogin.Hide;
+
+    // Clear the username and password text fields
     edtUsername.Clear;
     edtPassword.Clear;
+
+    // Hide the home page form
     frmHomePage.Hide;
 
+    // Set the logged in status to true
     frmHomeLoggedIn.bLoggedIn := True;
 
+    // Set the active user for the graph view form
     frmGraphView.ActiveUser := objExistingUser;
     // GUI CODE END
   end
-  else // error
+  else // login error
   begin
+    // Show an error message to the user
     Showmessage('Username or password incorrect');
+
+    // Clear and focus the password field to allow the user to try again
     edtPassword.Clear;
     edtPassword.SetFocus;
   end;
 
 end;
+
 
 procedure TfrmLogin.imgLoginHoverMouseLeave(Sender: TObject);
 begin

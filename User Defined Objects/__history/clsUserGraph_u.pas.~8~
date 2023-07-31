@@ -130,28 +130,20 @@ begin
   end;
 end;
 
-// This procedure is used to set up the user target data.
+
 procedure TUserGraph.SetupUserTargetData(user_id: integer; start_date: TDate);
 begin
-  // Setting the user id.
   Self.user_id := user_id;
-  // Setting the starting date for fetching the data.
   Self.start_date := start_date;
 
   with dmWaterboard do
   begin
     qryWaterBoard.SQL.Clear;
-
-    // Add SQL command to select specific fields from the TARGET table.
     qryWaterBoard.SQL.Add('SELECT target_set_date, target_value, user_id');
     qryWaterBoard.SQL.Add('FROM TARGET ');
-
-    // Add a WHERE clause to filter records that have a user_id equal to the provided user_id and
-    // a target_set_date that is on or after the provided start_date.
     qryWaterBoard.SQL.Add('WHERE (user_id = :user_id) AND (target_set_date >= #'
       + DateToStr(start_date) + '#)');
 
-    // Assign the value of the user_id parameter for the SQL command.
     qryWaterBoard.Parameters.ParamByName('user_id').Value := user_id;
 
     qryWaterBoard.Open;
