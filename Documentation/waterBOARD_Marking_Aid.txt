@@ -5,7 +5,7 @@ To do: Fix sign out  button on resize, add multi table qry
 
 ## DATABASE DESIGN
 •Implementation of database design:	
-	-waterBOARD.mdb (located in Win32\Debug folder)
+	-waterBOARD.mdb (located in project directory)
 	-dmWaterBOARD_u
 
 ## GUI DESIGN
@@ -39,32 +39,32 @@ Variables and components
 
 DATA STRUCTURES (Excl. Database)
 •Text files(s):
-	-frmGraphView_u, line 185-223
+	-frmGraphView_u, line 185-236 
 
 •Class(es) and object(s): 	
 	-waterBOARD\User Defined objects folder
-		1.frmHomePage_u, line 94 + line 104 - 106
-		2.frmSignUp_u, line 173 - 194
-		3.frmGraphView_u, line 486 - 488
+		1.frmHomePage_u, line 94 + line 104 - 106 *
+		2.frmSignUp_u, line 173 - 194 *
+		3.frmGraphView_u, line 486 - 488 *
 
 •Array OR advanced programming concepts:
 	-Arrays	
-		1.frmHomePage_u, line 98
-		2.clsUSER_u, line 212
-		3.clsADDRESS_u, line 30
+		1.frmHomePage_u, line 98 *
+		2.clsUSER_u, line 212 *
+		3.clsADDRESS_u, line 30 *
 Advanced:
 	-Overloaded methods
-		1.clsWaterMeterReading_u, line 14-16
-		2.clsValidation_u, line 22-27
-		3.clsDamReading_u, line 22-24
+		1.clsWaterMeterReading_u, line 14-16 *
+		2.clsValidation_u, line 22-27 *
+		3.clsDamReading_u, line 22-24 *
 
 
 INPUT
 Input data
 • Variety of sources of input, such as from the keyboard, text file,
 array or the database:
-	-frmGraphView_u, line 415-502 (methods PopulateDamGraph, PopulateUserGraph and PopulateTargetGraph all provide input from the database)
-	-frmGraphView_u, line 185-223 (input data from text file)
+	-frmGraphView_u, line 415-502 (methods PopulateDamGraph, PopulateUserGraph and PopulateTargetGraph all provide input from the database) *
+	-frmGraphView_u, line 185-223 (input data from text file) *
 	-frmSignUp_u, entire form
 	-frmLogin_u, entire form
 
@@ -74,8 +74,8 @@ array or the database:
 	-frmGraphView_u, entire form
  	
 • Appropriate format used for example date, gender (M/F):
-	-frmGraphView_u, line 234-239
-	-clsValidation_u, line 68-119
+	-frmGraphView_u, line 234-239 *
+	-clsValidation_u, line 68-119 *
 
 • GUI component used:
 	-frmSignUp_u, entire form
@@ -83,15 +83,15 @@ array or the database:
 
 Validation/Error catching
 A variety of validation/error catching for relevant input:
-	-frmSignUp_u, line 159-278
+	-frmSignUp_u, line 159-278 *
 	-clsValidation_u, entire unit
 	
 
 Clear and appropriate error messages and exception handling mechanisms
-	-frmGraphView_u, line 251 + line 306
-	-clsWaterMeterReading_u, line 70-81
-	-frmLogin_u, line 90-110
-	-frmHomePage_u, line 103-113 + line 119-125
+	-frmGraphView_u, line 251 + line 306 *
+	-clsWaterMeterReading_u, line 70-81 *
+	-frmLogin_u, line 90-110 *
+	-frmHomePage_u, line 103-113 + line 119-125 *
 
 PROCESSING
 Algorithm correctness/ Processing
@@ -108,19 +108,20 @@ Good programming techniques used
 Effective modular design with correct use of own functions and procedures
 	-all forms and units
 		-Examples:
-			1.frmLogin_u, line 90
-			2.frmSignUp_u, line 175, 182, 194, 200
-			3.frmGraphView_u, line 93, 158, 90, 153, 215, 247, 302
-			4.frmHomePage_u, line 104, 105, 106, 120, 121
-			5.frmDamLisr_u, line 148, 172, 196, 111, 126, 265
+			1.frmLogin_u, line 90 *
+			2.frmSignUp_u, line 175, 182, 194, 200 *
+			3.frmGraphView_u, line 93, 158, 90, 153, 215, 247, 302 *
+			4.frmHomePage_u, line 104, 105, 106, 120, 121 *
+			5.frmDamLisr_u, line 148, 172, 196, 111, 126, 265 *
 
 Relevant and appropriate use of complex code, e.g. Dynamic component
 	1.Fetching data from the web
-		-clsDamReading_u, line 225-278 + line 143-200
+		-clsDamReading_u, line 225-278 + line 143-200 *
 	2.Asyncronous Proccessing
-		-frmHomePage_u, line 95-138
-	3.Dynamic and customised message box
-		-frmGraphView, line 381-413 + line 182
+		-frmHomePage_u, line 95-138 *
+	3.Dynamic and customised ADOConnection and message box
+		-dmWaterBoard_u, line 31-54
+		-frmGraphView, line 381-413 + line 182 *
 
 OUTPUT
 • Layout
@@ -131,52 +132,63 @@ OUTPUT
 
 Database manipulation (Delphi code AND/OR SQL)
 •Sort records in a table
-	-clsTarget_u, line 70-77
-	-clsDamGraph_u, line 84-95
-	-clsUserGraph_u, line 77-88
+	-clsTarget_u, line 70-77 *
+	-clsDamGraph_u, line 84-95 *
+	-clsUserGraph_u, line 77-88 *
 
 •Search for data in a table
-	-clsTarget_u, line 33-54
-	-clsDamReading_u, line 58-77
-	-clsValidation, line 215-226
+	-clsTarget_u, line 33-54 *
+	-clsDamReading_u, line 58-77 *
+	-clsValidation, line 215-226 *
 	
 •Insert a new record to a table
-	-clsADDRESS_u, line 65-80
-	-clsUSER_u, line 95-111
-	-clsDamReading_u, line 295-309
+	-clsADDRESS_u, line 65-80 *
+	-clsUSER_u, line 95-111 *
+	-clsDamReading_u, line 295-309 *
 
 •Delete a record from a table
-	-clsUSER, line 61-69
-	-clsADDRESS_u, line 50-60
-	-clsDamReading, line 94-102
+	-clsUSER, line 61-69 *
+	-clsADDRESS_u, line 50-60 *
+	-clsDamReading, line 94-102 *
 
 •Edit selected fields in a record
-	-clsTarget_u, line 105-119
-	-clsUSER_u, line 118-131
-	-clsADDRESS_u, line 106-120
+	-clsTarget_u, line 105-119 *
+	-clsUSER_u, line 118-131 *
+	-clsADDRESS_u, line 106-120 *
 
 •Show all/selected fields/records – Selection query
-	-clsUSER_u, line 248-254
-	-clsUserGraph_u, line 77-88
-	-clsUserGraph_u, line 97-108
+	-clsUSER_u, line 248-254 *
+	-clsUserGraph_u, line 77-88 *
+	-clsUserGraph_u, line 97-108 *
 	
 •Complex selection query, e.g. using AND/OR/LIKE/HAVING
-	-clsDamGraph_u, line 80-94
-	-clsUserGraph_u, line 99-107
-	-clsUserGraph_u, line 61-69
+	-clsDamGraph_u, line 80-94 *
+	-clsUserGraph_u, line 99-107 *
+	-clsUserGraph_u, line 61-69 *
 
 •At least two queries using calculations,
 such as minimum, maximum, sum and average
-	-clsAddress_u, line 66-77
-	-clsUserGraph_u, line 61-69
+	-clsAddress_u, line 66-77 *
+	-clsUserGraph_u, line 61-69 *
 
 •At least one query involving two tables
-			
+	-frmUserGraph_u, line 81-102			
 
 •At least one dynamic query using a variable
-	-clsUserGraph_u, line 77-88
-	-clsDamReading_u, line 295-309
+	-clsUserGraph_u, line 77-88 *
+	-clsDamReading_u, line 295-309 *
+
 Documentation
+	-Documentation folder:
+		-README.pdf/README.docx
+		-waterBOARD_Marking_Aid.txt
+
 Comments/Notes (Explanation of program and code)
+	-Comments on all forms and units
+	-README.pdf/README.docx
+	
 Exceptional features
+	-Web scraping capabilities
+	-Unique, scalable and intuitive GUI design
+	-Heavy use of modular code and object orientated programming
 
