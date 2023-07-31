@@ -1,14 +1,11 @@
-To do: Fix sign out  button on resize, add multi table qry
+waterBOARD Marking Aid
 
-# Phase 2 Marking Aid
-
-
-## DATABASE DESIGN
+DATABASE DESIGN
 •Implementation of database design:	
 	-waterBOARD.mdb (located in project directory)
 	-dmWaterBOARD_u
 
-## GUI DESIGN
+GUI DESIGN
 •Ease of use/HCI principles:
 	-all forms
 •Excellent layout and communication (screen tips, feedback, help, etc.): 
@@ -20,8 +17,8 @@ To do: Fix sign out  button on resize, add multi table qry
 •Excellent use of effects/colour/ icons/shortcuts/tool tip text, etc.: 
 	-all forms
 
-## DATA DICTIONARY
-Variables and components
+DATA DICTIONARY
+Variables and components:
 •Variety of appropriate variable types: 
 	-all forms
 •Correct use of local and global variables: 
@@ -43,28 +40,28 @@ DATA STRUCTURES (Excl. Database)
 
 •Class(es) and object(s): 	
 	-waterBOARD\User Defined objects folder
-		1.frmHomePage_u, line 94 + line 104 - 106 *
-		2.frmSignUp_u, line 173 - 194 *
-		3.frmGraphView_u, line 486 - 488 *
+		1.frmHomePage_u, line 96 + line 110-114
+		2.frmSignUp_u, line 213-224
+		3.frmGraphView_u, line 494-504
 
 •Array OR advanced programming concepts:
 	-Arrays	
-		1.frmHomePage_u, line 98 *
-		2.clsUSER_u, line 212 *
-		3.clsADDRESS_u, line 30 *
-Advanced:
+		1.frmHomePage_u, line 103
+		2.clsUSER_u, line 214
+		3.clsADDRESS_u, line 35-42
+•Advanced:
 	-Overloaded methods
-		1.clsWaterMeterReading_u, line 14-16 *
-		2.clsValidation_u, line 22-27 *
-		3.clsDamReading_u, line 22-24 *
+		1.clsWaterMeterReading_u, line 14-16
+		2.clsValidation_u, line 22-27
+		3.clsDamReading_u, line 22-24
 
 
 INPUT
 Input data
 • Variety of sources of input, such as from the keyboard, text file,
 array or the database:
-	-frmGraphView_u, line 415-502 (methods PopulateDamGraph, PopulateUserGraph and PopulateTargetGraph all provide input from the database) *
-	-frmGraphView_u, line 185-223 (input data from text file) *
+	-frmGraphView_u, line 480-610 (methods PopulateDamGraph, PopulateUserGraph and PopulateTargetGraph all provide input from the database)
+	-frmGraphView_u, line 185-246 (input data from text file)
 	-frmSignUp_u, entire form
 	-frmLogin_u, entire form
 
@@ -74,54 +71,54 @@ array or the database:
 	-frmGraphView_u, entire form
  	
 • Appropriate format used for example date, gender (M/F):
-	-frmGraphView_u, line 234-239 *
-	-clsValidation_u, line 68-119 *
+	-frmGraphView_u, line 258-265
+	-clsValidation_u, line 68-119
 
 • GUI component used:
 	-frmSignUp_u, entire form
 	-frmLogin_u, entire form
 
-Validation/Error catching
-A variety of validation/error catching for relevant input:
-	-frmSignUp_u, line 159-278 *
+Validation/Error catching:
+•A variety of validation/error catching for relevant input:
+	-frmSignUp_u, line 170-314
 	-clsValidation_u, entire unit
 	
 
-Clear and appropriate error messages and exception handling mechanisms
-	-frmGraphView_u, line 251 + line 306 *
-	-clsWaterMeterReading_u, line 70-81 *
-	-frmLogin_u, line 90-110 *
-	-frmHomePage_u, line 103-113 + line 119-125 *
+•Clear and appropriate error messages and exception handling mechanisms
+	-frmGraphView_u, line 283 + line 350
+	-clsWaterMeterReading_u, line 81-95
+	-frmLogin_u, line 119-126
+	-frmHomePage_u, line 125 + line 143
 
 PROCESSING
-Algorithm correctness/ Processing
-	•All algorithms used are appropriate,
-	work correctly and meet all processing requirements
-		-all forms and units
-Algorithm efficiency
-	•All algorithms provide the most efficient solutions
+Algorithm correctness/ Processing:
+•All algorithms used are appropriate, work correctly and meet all processing requirements
 		-all forms and units
 
-Good programming techniques used
+Algorithm efficiency:
+•All algorithms provide the most efficient solutions
+		-all forms and units
+
+•Good programming techniques used
 	-all forms and units
 
-Effective modular design with correct use of own functions and procedures
+•Effective modular design with correct use of own functions and procedures
 	-all forms and units
 		-Examples:
-			1.frmLogin_u, line 90 *
-			2.frmSignUp_u, line 175, 182, 194, 200 *
-			3.frmGraphView_u, line 93, 158, 90, 153, 215, 247, 302 *
-			4.frmHomePage_u, line 104, 105, 106, 120, 121 *
-			5.frmDamLisr_u, line 148, 172, 196, 111, 126, 265 *
+			1.frmLogin_u, line 94
+			2.frmSignUp_u, line 190, 198, 215, 224
+			3.frmGraphView_u, line 90, 93, 153, 158, 214, 275, 337
+			4.frmHomePage_u, line 110, 112, 114, 134, 136
+			5.frmDamList_u, line 111, 126, 148, 172, 196, 265
 
 Relevant and appropriate use of complex code, e.g. Dynamic component
 	1.Fetching data from the web
-		-clsDamReading_u, line 225-278 + line 143-200 *
+		-clsDamReading_u, line 170-242 + line 244-327
 	2.Asyncronous Proccessing
-		-frmHomePage_u, line 95-138 *
+		-frmHomePage_u, line 99-159
 	3.Dynamic and customised ADOConnection and message box
 		-dmWaterBoard_u, line 31-54
-		-frmGraphView, line 381-413 + line 182 *
+		-frmGraphView, line 433-478 + line 182
 
 OUTPUT
 • Layout
@@ -138,26 +135,26 @@ Database manipulation (Delphi code AND/OR SQL)
 
 •Search for data in a table
 	-clsTarget_u, line 33-54 *
-	-clsDamReading_u, line 58-77 *
-	-clsValidation, line 215-226 *
+	-clsDamReading_u, line 59-77
+	-clsValidation, line 187-201 + line 210-224 + line 234-251
 	
 •Insert a new record to a table
-	-clsADDRESS_u, line 65-80 *
-	-clsUSER_u, line 95-111 *
-	-clsDamReading_u, line 295-309 *
+	-clsADDRESS_u, line 95-110
+	-clsUSER_u, line 95-112
+	-clsDamReading_u, line 348-362
 
 •Delete a record from a table
-	-clsUSER, line 61-69 *
-	-clsADDRESS_u, line 50-60 *
-	-clsDamReading, line 94-102 *
+	-clsUSER, line 61-71
+	-clsADDRESS_u, line 55-66
+	-clsDamReading, line 107-117
 
 •Edit selected fields in a record
 	-clsTarget_u, line 105-119 *
-	-clsUSER_u, line 118-131 *
-	-clsADDRESS_u, line 106-120 *
+	-clsUSER_u, line 119-132
+	-clsADDRESS_u, line 116-129
 
 •Show all/selected fields/records – Selection query
-	-clsUSER_u, line 248-254 *
+	-clsUSER_u, line 281-288
 	-clsUserGraph_u, line 77-88 *
 	-clsUserGraph_u, line 97-108 *
 	
@@ -176,7 +173,7 @@ such as minimum, maximum, sum and average
 
 •At least one dynamic query using a variable
 	-clsUserGraph_u, line 77-88 *
-	-clsDamReading_u, line 295-309 *
+	-clsDamReading_u, line 348-362
 
 Documentation
 	-Documentation folder:
