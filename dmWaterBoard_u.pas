@@ -26,6 +26,8 @@ implementation
 {$R *.dfm}
 
 procedure TdmWaterboard.DataModuleCreate(Sender: TObject);
+var
+  sFilePath: String;
 begin
   // Create a new TADOConnection object with dmWaterboard as its owner.
   conWaterBoard_code := TADOConnection.Create(dmWaterboard);

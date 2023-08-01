@@ -179,8 +179,10 @@ begin
 
   iAddressID := ActiveUser.GetAddressID;
 
-  case MyMessageDlg('Caption', TmsgDlgType.mtInformation, [mbYes, mbNo],
-    ['Upload from file', 'Enter manually'], 'TGesttg') of
+  case MyMessageDlg
+    ('Select an option',
+    TmsgDlgType.mtInformation, [mbYes, mbNo],
+    ['Upload from file', 'Enter manually'], 'Add water meter reading') of
 
     mrYes:
       begin
@@ -557,7 +559,6 @@ begin
     end;
   end;
 end;
-
 
 procedure TfrmGraphView.PopulateUserGraph;
 var
