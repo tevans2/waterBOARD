@@ -33,12 +33,14 @@ begin
   // Ensure the connection is initially closed.
   conWaterBoard_code.Close;
 
-  // Configure the connection string to point to a Microsoft Access database file named 'waterBOARD.mdb'.
   // The file is expected to be located in the same directory as the executing program (ParamStr(0) gives the path of the executing program).
+  sFilePath := ExtractFilePath(Copy(ParamStr(0), 0, pos('Win32', ParamStr(0))))
+    + 'waterBOARD.mdb';
+
+  // Configure the connection string to point to a Microsoft Access database file named 'waterBOARD.mdb'.
   // Also specify the provider as 'Microsoft.Jet.OLEDB.4.0' and disable persisting security info and login prompt for the connection.
   conWaterBoard_code.ConnectionString :=
-    'Provider=Microsoft.Jet.OLEDB.4.0;Data Source =' +
-    ExtractFilePath(ParamStr(0)) + 'waterBOARD.mdb' +
+    'Provider=Microsoft.Jet.OLEDB.4.0;Data Source =' + sFilePath +
     ';Persist Security Info = False';
   conWaterBoard_code.LoginPrompt := False;
 
